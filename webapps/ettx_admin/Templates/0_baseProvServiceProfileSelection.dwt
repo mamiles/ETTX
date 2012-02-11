@@ -1,0 +1,201 @@
+<% String contextPath = request.getContextPath(); %>
+<script language="JavaScript" src="<%=contextPath%>/scripts/utils.js"></script>
+<BODY LANGUAGE=JavaScript onload="return window_onload()"/>
+<!-- IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT
+  -- IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT
+  --
+  -- IF YOU ARE SEEING THIS COMMENT AND YOU ARE NOT EDITTING A TEMPLATE FILE STOP
+  -- EDITING AND GO EDIT THE TEMPLATE FILE ASSOCIATED WITH IT.
+  -->
+
+<%@ page language="java" %>
+<%@ taglib uri="/WEB-INF/tlds/uii-contentarea-taglib.tld" prefix="uii" %>
+<%@ taglib uri="/WEB-INF/tlds/ogs-objectselector-taglib.tld" prefix="ogs" %>
+<%@ page import="com.cisco.dslnms.gui.web.actions.WizardAction" %>
+<%@ page import="com.cisco.dslnms.gui.web.util.WebGuiConstants" %>
+<%
+	String buttonAction = (String) session.getAttribute(WizardAction.SESSION_WIZARD_ACTION);
+	String provMode = (String) session.getAttribute(WizardAction.WIZARD_PROVISIONING_MODE);
+	String provString = "";
+	if (provMode != null) {
+		if (provMode.equals(WebGuiConstants.SUBSCRIBER_PROV_MODE)) {
+			provString = "Subscriber Provisioning - ";
+		} else if (provMode.equals(WebGuiConstants.DEVICE_PROV_MODE)) {
+			provString = "Device Provisioning - ";
+		}
+	}
+%>
+
+<script language="JavaScript" src="<%=contextPath%>/uii/jsrsClient.js"></script> 
+<script language="JavaScript" src="<%=contextPath%>/objectselector/scripts/ccnscDefinedFunctions.js"></script> 
+
+<!-- #BeginEditable "actionName" -->
+<uii:form method="post" action="">
+<!-- #EndEditable -->
+<table height="100%" border="0" cellspacing="0" cellpadding="5"  BGCOLOR="E1E1E1" align="center">
+  <tr> 
+    <td width="100%"> 
+      <table border="0" cellspacing="1" cellpadding="2" align="center">
+        <tr> 
+			<td valign="top" width="89%" height="350"> 		
+              <table width="350" border="0" cellspacing="1" cellpadding="1" align="center" bgcolor="#FFFFFF">
+                <tr> 
+                  <td colspan="2" nowrap background="/RSRC/en_US/images/vertlines_dk.gif" bgcolor="#669999"> 
+                    <uii:img page="/RSRC/en_US/images/shim.gif"/></td>
+                </tr>
+                <tr> 
+                  
+                <td noWrap height=22 background="/RSRC/en_US/images/dia_title_bg2.gif" colspan="2" align="center"> 
+                  <b><%= provString%>Service Profile Selection</b></td>
+                </tr>
+                <tr> 
+                  <td nowrap bgcolor="#cecfce" align="right">&nbsp;</td>
+                  <td width="100%" bgcolor="#cecfce">&nbsp;</td>
+                </tr>
+			    
+				<tr> 
+                  <td colspan="2" nowrap>		  	  
+				  <ogs:contentAreaSelector osName="serviceProfileInventory"
+				    treeGenerator="com.cisco.nm.xms.ogs.client.ostaglib.util.ServiceProfileTreeGenerator"
+					selectionMode="single" 
+					preserveSelection="false" 
+					isGroupSelector="false" 
+					mixSelection="false" 
+					width="300"
+            		height="300"/></td>
+                </tr>
+                <tr bgcolor="silver"> 
+                  <td colspan="2" nowrap><uii:img page="/RSRC/en_US/images/shim.gif" /></td>
+                </tr>
+                <tr> 
+                  <td colspan="2" nowrap bgcolor="#cecfce" background="/RSRC/en_US/images/vertlines_dk.gif"> 
+                    <uii:img page="/RSRC/en_US/images/shim.gif"/></td>
+                </tr>
+              </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+    <td valign="top"> 
+      <TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="0" ALIGN="center">
+        <tr> 
+          <td> 
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr> 
+                <td><uii:img page="/RSRC/en_US/images/snv_left_04.gif" /></td>
+                <TD WIDTH="100%" NOWRAP BACKGROUND="/RSRC/en_US/images/snv_bg_04.gif"><b><FONT COLOR="White">&nbsp;Instruction</FONT></b> 
+                </TD>
+                <td><uii:img page="/RSRC/en_US/images/snv_right_04.gif" /></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr> 
+          <td bgcolor="FFFFCC"> 
+            <table width="100%" border="0" cellspacing="0" cellpadding="3">
+              <tr> 
+                <td> 
+                  <p>Please enter the transaction and role id, and select a service profile.</p>
+                  </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr> 
+          <td> 
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr> 
+                <td><uii:img page="/RSRC/en_US/images/snv_left_btm_04.gif"/></td>
+                <td width="100%" background="/RSRC/en_US/images/snv_bg_btm_04.gif"> 
+                  <uii:img page="/RSRC/en_US/images/shim.gif"/></td>
+                <td><uii:img page="/RSRC/en_US/images/snv_right_btm_04.gif"/></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+
+<script language="JavaScript" type="text/javascript">
+<!--
+ //
+ //Application javascript functions for object selector start here
+ //
+ 
+function osOnLoad() {
+    objselSlide();
+}
+
+function singleSelectionTriggerHandler(selectionArray) {
+	var theObjID = selectionArray.elementAt(0).elementAt(1);
+	if(theObjID.equals("")) {
+	    // If it is a non-leaf node the object ID is ""
+		// Clear the selection.  This forces users to only select leaf nodes (the service features).
+		clearAll();
+		return;
+	}
+		
+	var theData = new Array(selectionArray.elementAt(0).elementAt(0), selectionArray.elementAt(0).elementAt(1));
+	jsrsExecute("<%= contextPath%>/device_provisioning.do", populateScreen, "doSelected", theData, false);
+}
+
+function populateScreen(aDataStr) {
+	var theVals = aDataStr.split("#!/");
+    document.forms[0].parent.value = theVals[0];
+    document.forms[0].name.value   = theVals[1];
+    document.forms[0].description.value = theVals[2];
+	document.forms[0].type.value = theVals[3];
+}
+
+function doNodeCheck(aType) {
+	var selection = getSelection();
+	if(selection == null || selection.size() <= 0) {
+		alert("Nothing is currently selected in the tree to perform this action on.");
+		return false;
+	} 
+	var theObjID = selection.elementAt(0).elementAt(1);
+	if(theObjID.equals("")) {
+		// If it is a non-leaf node the object ID is ""
+		if(aType == "show") {
+			alert("Admin Networks do not have ports.");
+			return false;
+		}
+	} else {
+		// It is a leaf node.
+		if(aType == "createAdmin") {
+			alert("Can not create an Admin Network under a device.");
+			return false;
+		} else 	if(aType == "createDevice") {
+			alert("Can not create another device under a device.");
+			return false;
+		}
+	}
+	
+	return true;
+}
+
+function window_onload() {
+	disableWizardCancelAndBackValidation();
+	wizardItemHandlers.push( "checkThatSomethingIsSelected(wizid, wizAction)" );
+}
+function checkThatSomethingIsSelected(anId, anAction) {
+	if ( anAction == 'Next') {
+		var theSelection = getSelection();
+        if(theSelection != null && theSelection.size() > 0) {
+			return true;
+		} else {
+			alert("A role must be selected in order to continue.");
+			return false;
+		}
+	}
+	
+	// otherwise return true
+	return true;
+}
+//-->
+</script>
+
+</uii:form>

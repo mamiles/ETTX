@@ -1,0 +1,112 @@
+<% String contextPath = request.getContextPath(); %>
+<BODY LANGUAGE=JavaScript onload="return window_onload()"/>
+<!-- IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT
+  -- IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT
+  --
+  -- IF YOU ARE SEEING THIS COMMENT AND YOU ARE NOT EDITTING A TEMPLATE FILE STOP
+  -- EDITING AND GO EDIT THE TEMPLATE FILE ASSOCIATED WITH IT.
+  -->
+  
+<%@ taglib uri="/WEB-INF/tlds/uii-contentarea-taglib.tld" prefix="uii" %>
+<%@ page import="com.cisco.dslnms.gui.web.beans.helper.generic.*" %>
+<!-- #BeginEditable "beanName" -->
+<jsp:useBean id="" scope="session" class=""/>
+<!-- #EndEditable -->
+
+<script language="JavaScript" src="<%=contextPath%>/uii/jsrsClient.js"></script>
+<script language="JavaScript" src="<%=contextPath%>/objectselector/scripts/ccnscDefinedFunctions.js"></script> 
+<script language="JavaScript" src="<%=contextPath%>/scripts/utils.js"></script> 
+
+<link rel="stylesheet" href="<%=contextPath%>/uii/global.css">
+
+<table width="100%" height="100%" border="0" cellspacing="0" cellpadding="5"  BGCOLOR="E1E1E1">
+  <tr> 
+    <td width="100%" align="center" valign="center"> 
+<!-- #BeginEditable "actionName" -->
+	  <uii:form action=""> 
+<!-- #EndEditable -->
+        <table width="350" border="0" cellspacing="1" cellpadding="2" bgcolor="#FFFFFF">
+          <tr> 
+            <td colspan="2" nowrap background="/RSRC/en_US/images/vertlines_dk.gif" bgcolor="#669999"> 
+              <uii:img page="/RSRC/en_US/images/shim.gif"/></td>
+          </tr>
+          <tr> 
+            <td noWrap height=22 background="/RSRC/en_US/images/dia_title_bg2.gif" colspan="2" align="center"> 
+              <b>Device Configuration Preview</b></td>
+          </tr>
+          <tr> 
+             <td nowrap bgcolor="#cecfce" align="right">Device:</td>
+             <td width="100%" bgcolor="#cecfce"><uii:select property="configPreview.deviceId" onchange="javascript:deviceIdChanged(this)"><uii:options property="configPreview.deviceIdList" /></uii:select></td>
+          </tr>
+          <tr> 
+		     <td nowrap bgcolor="#cecfce" align="right">Config:</td>
+            <td width="100%" bgcolor="#cecfce">
+			<uii:textarea property="configPreview.deviceConfig" cols="45" rows="15" readonly="true"/>
+			</td>
+          </tr>
+          <tr bgcolor="#999999"> 
+            <td colspan="2" nowrap><uii:img page="/RSRC/en_US/images/shim.gif" /></td>
+          </tr>
+          <tr> 
+            <td colspan="2" bgcolor="silver"> 
+              <table cellspacing=3 cellpadding=0 border=0 width="100%">
+                <tr> 
+                  <td width="100%"><uii:img page="/RSRC/en_US/images/shim.gif" width="20" height="5"/></td>
+                  <td nowrap> <uii:button value="Save As" onclick="return saveAsButtonClicked(document.getElementById('configPreview.deviceConfig'));"/> </td>
+				  <td nowrap><uii:button value="Close" onclick="return self.close();"/></td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr> 
+            <td colspan="2" nowrap bgcolor="#cecfce" background="/RSRC/en_US/images/vertlines_dk.gif"> 
+              <uii:img page="/RSRC/en_US/images/shim.gif"/></td>
+          </tr>
+        </table>
+        </uii:form>
+    </td>
+  </tr>
+</table>
+
+<iframe id="SaveFrame" style="display:none"></iframe>
+
+<script language="JavaScript" type="text/javascript">
+
+<!--
+
+function window_onload() {
+	deviceIdChanged(document.getElementById("configPreview.deviceId"));
+}
+
+function doneGetConfig(aConfig) {
+	document.getElementById("configPreview.deviceConfig").value = aConfig;
+}
+
+function deviceIdChanged(aSelect) {
+	var index = aSelect.selectedIndex;
+	
+	if (index != -1) {
+		var deviceId = aSelect.options[index].value;
+		var theData = new Array(deviceId);
+<!-- #BeginEditable "deviceIdChanged" -->		
+	    jsrsExecute("<%= contextPath%>/*.do", doneGetConfig, "doGetConfig", theData, false);
+<!-- #EndEditable -->
+	} else {
+		document.getElementById("configPreview.deviceConfig").value = "";
+	}
+	return true;
+}
+
+function saveAsButtonClicked(someVar) {
+	
+	SaveFrame.document.open("text/html","replace");
+  	SaveFrame.document.write(someVar.value);
+  	SaveFrame.document.close();
+  	SaveFrame.focus();
+  	SaveFrame.document.execCommand('SaveAs', false, ".txt");
+	
+	return false;
+}
+
+//-->
+</script>

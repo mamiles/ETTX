@@ -1,0 +1,25 @@
+
+package com.cisco.ettx.admin.gui.web.helper;
+
+import com.cisco.ettx.admin.common.*;
+import java.util.Vector;
+import org.apache.log4j.Logger;
+
+
+public class AuthenticateHelper {
+	public static final String UNABLE_TO_EXECUTE_SERVICE = "Unable to execute service";
+	private static Logger logger = Logger.getLogger(AuthenticateHelper.class);
+	
+	public static void logout() throws java.rmi.RemoteException {
+		try {
+			AdminServicesLocator loc = new AdminServicesLocator();
+			Authenticate stub = loc.getAuthenticate();
+			stub.logout();
+		}
+		catch (javax.xml.rpc.ServiceException ex) {
+			logger.error("Unable to get service executed",ex);
+			throw new java.rmi.RemoteException(UNABLE_TO_EXECUTE_SERVICE);
+		}
+		
+	}
+}

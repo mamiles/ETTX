@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.0//EN"
+		  "http://jakarta.apache.org/struts/dtds/struts-config_1_0.dtd">
+<!--
+	 This is a blank Struts configuration file based on the example application,
+	 with commented examples of some items.
+
+	 NOTE: If you have a generator tool to create the corresponding Java classes 
+	 for you, you could include the details in the "form-bean" declarations.  
+	 Otherwise, you would only define the "form-bean" element itself, with the 
+	 corresponding "name" and "type" attributes, as shown here.
+-->
+<struts-config>
+	<!-- ========== Form Bean Definitions =================================== -->
+	<form-beans>
+		<!-- the nullFormBean is useful when you content area has uii:form tag
+		 but no data from that page needs to be kept in a bean -->
+		<form-bean name="nullFB" type="com.cisco.nm.uii.nullFormBean"/>
+		<!-- the login form bean -->
+		<form-bean name="loginFB" type="com.cisco.ettx.admin.gui.web.beans.LoginFormBean"/>
+		<form-bean name="querySubscribersFB" type="com.cisco.ettx.admin.gui.web.beans.QuerySubscribersFormBean"/>
+		<form-bean name="subscriberListFB" type="com.cisco.ettx.admin.gui.web.beans.SubscriberListFormBean"/>
+		<form-bean name="systemConfigFB" type="com.cisco.ettx.admin.gui.web.beans.SystemConfigurationFormBean"/>
+		<form-bean name="applLogListFB" type="com.cisco.ettx.admin.gui.web.beans.ApplLogListActionFormBean"/>
+		<form-bean name="applLogObjSelectorFB" type="com.cisco.ettx.admin.gui.web.beans.ApplLogObjSelectorFormBean" />
+		<form-bean name="componentConfigFB" type="com.cisco.ettx.admin.gui.web.beans.CompConfigurationFormBean"/>
+		<form-bean name="toolbarFB" type="com.cisco.ettx.admin.gui.web.beans.ToolbarFormBean"/>
+		<form-bean name="subsTSResultFB" type="com.cisco.ettx.admin.gui.web.beans.SubsTSResultFormBean"/>
+		<form-bean name="leaseHistoryExportFB" type="com.cisco.ettx.admin.gui.web.beans.LeaseHistoryExportFormBean"/>
+		<form-bean name="leaseHistoryQueryFB" type="com.cisco.ettx.admin.gui.web.beans.LeaseHistoryQueryFormBean"/>
+		<form-bean name="leaseHistoryListFB" type="com.cisco.ettx.admin.gui.web.beans.LeaseHistoryListFormBean"/>
+	        <form-bean name="viewSubscriberRecordFB" type="com.cisco.ettx.admin.gui.web.beans.ViewSubscriberRecordFormBean"/>
+	        <form-bean name="subscriberInfoFB" type="com.cisco.ettx.admin.gui.web.beans.SubscriberInfoFormBean"/>
+	        <form-bean name="serviceParmsFB" type="com.cisco.ettx.admin.gui.web.beans.ServiceInfoFormBean"/>
+	        <form-bean name="subscriberCreateFB" type="com.cisco.ettx.admin.gui.web.beans.SubscriberCreateFormBean"/>
+	        <form-bean name="postalAddressMapFB" type="com.cisco.ettx.admin.gui.web.beans.PostalAddressMapFormBean"/>
+	        <form-bean name="subsDeviceFB" type="com.cisco.ettx.admin.gui.web.beans.SubsDevicesFormBean"/>
+	        <form-bean name="subsDeviceFB" type="com.cisco.ettx.admin.gui.web.beans.SubsDevicesFormBean"/>
+	</form-beans>
+	<!-- ========== Global Forward Definitions ============================== -->
+	<global-forwards>
+		<!-- START GLOBAL FORWARDS USED BY UII "internally", DO NOT REMOVE -->
+
+		<!-- Removed home forward so it will not cause confusion with the 
+			defaultHome page and the customHome page global-forwards
+			<forward name="home" path="/WEB-INF/screens/uii/index.jsp" /> -->
+
+		<!-- Replaces the above "home" entry, this was done so as not to confuse
+			the term 'home' with how we used to use it and how we now use it.
+			The string 'root' is now used to refer to the
+			/WEB-INF/screens/uii/index.jsp forward
+			which will use the screenID 'root' entry in the siteMap which has
+			no screenID selected -->
+		<forward name="root" path="/WEB-INF/screens/uii/index.jsp" />
+
+		<!-- END GLOBAL FORWARDS USED BY UII "internally", DO NOT REMOVE -->
+		
+		
+		<!-- start report framework global forwards -->
+		<forward name="singleColumn"             path="/WEB-INF/screens/uii/singleColumn.jsp" />
+	 	<forward name="stackedSingleColumnPrint" path="/WEB-INF/screens/uii/singleColumnPrint.jsp" />
+
+		<forward name="stackedTables"           path="/WEB-INF/screens/uii/stackedTables.jsp" />
+		<forward name="stackedTablesPrint"      path="/WEB-INF/screens/uii/stackedTablesPrint.jsp" />
+		<forward name="stackedTablesSaveAsCSV"  path="/WEB-INF/screens/uii/stackedTablesCSV.jsp" />
+
+		<forward name="launchReport"            path="/WEB-INF/screens/rfw/RFTabularReport.jsp" />
+		<forward name="printReport"             path="/WEB-INF/screens/rfw/RFPrintFriendly.jsp" />
+		<forward name="exportReport"            path="/WEB-INF/screens/rfw/RFExportCSV.jsp" />
+		<forward name="exportReport2"           path="/WEB-INF/screens/rfw/RFExportCSV2.jsp" />
+		<forward name="errorReport"             path="/WEB-INF/screens/rfw/ReportError.jsp" /> 
+		<!-- end report framework global forwards -->
+
+		<!-- These global forwards enable Action classes to forward the user
+		 to any page which is accessble from the UII navigational
+		 links; ( links in AreaBar, SubAreaBar, TOC and SubTOC ) -->
+		<!-- Example global forward for a screenid	
+	<forward name="s004" path="/WEB-INF/screens/uii/index.jsp?sid=s004" />
+	-->
+		<!-- forward section for Home tab-->
+		<forward name="logout" path="/WEB-INF/screens/uii/index.jsp?sid=logout"/>
+		<forward name="feedback" path="/WEB-INF/screens/uii/index.jsp?sid=feedback"/>
+		<forward name="globalHelp" path="/WEB-INF/screens/uii/index.jsp?sid=globalHelp"/>
+		<forward name="about" path="/WEB-INF/screens/uii/index.jsp?sid=about"/>
+		<!-- forward section for ETTX -->
+	        <forward name="viewSubscriberRecord" path="/WEB-INF/screens/popup.jsp?sid=viewSubscriberRecord"/>
+		<forward name="querySubs" path="/WEB-INF/screens/uii/index.jsp?sid=querySubs"/>
+		<forward name="subsRecords" path="/WEB-INF/screens/popup.jsp?sid=subsRecords"/>
+		<forward name="systemConfig" path="/WEB-INF/screens/uii/index.jsp?sid=systemConfig"/>
+		<forward name="trouSubs" path="/WEB-INF/screens/uii/index.jsp?sid=trouSubs"/>
+		<forward name="viewLogs" path="/WEB-INF/screens/popup.jsp?sid=viewLogs"/>
+		<forward name="selectLogs" path="/WEB-INF/screens/uii/index.jsp?sid=selectLogs"/>
+		<forward name="troubleshoot" path="/WEB-INF/screens/uii/index.jsp?sid=troubleshoot"/>
+		<forward name="SPE" path="/WEB-INF/screens/uii/index.jsp?sid=SPE"/>
+		<forward name="editCompHostSPE" path="/WEB-INF/screens/uii/index.jsp?sid=editCompHostSPE"/>
+		<forward name="SMS" path="/WEB-INF/screens/uii/index.jsp?sid=SMS"/>
+		<forward name="editCompHostSMS" path="/WEB-INF/screens/uii/index.jsp?sid=editCompHostSMS"/>
+		<forward name="BPR" path="/WEB-INF/screens/uii/index.jsp?sid=BPR"/>
+		<forward name="editCompHostBPR" path="/WEB-INF/screens/uii/index.jsp?sid=editCompHostBPR"/>
+		<forward name="CNR" path="/WEB-INF/screens/uii/index.jsp?sid=CNR"/>
+		<forward name="editCompHostCNR" path="/WEB-INF/screens/uii/index.jsp?sid=editCompHostCNR"/>
+		<forward name="ReferenceApplication" path="/WEB-INF/screens/uii/index.jsp?sid=ReferenceApplication"/>
+		<forward name="editCompHostReferenceApplication" path="/WEB-INF/screens/uii/index.jsp?sid=editCompHostReferenceApplication"/>
+		<forward name="SessionManager" path="/WEB-INF/screens/uii/index.jsp?sid=SessionManager"/>
+		<forward name="editCompHostSessionManager" path="/WEB-INF/screens/uii/index.jsp?sid=editCompHostSessionManager"/>
+		<forward name="BAC" path="/WEB-INF/screens/uii/index.jsp?sid=BAC"/>
+		<forward name="editCompHostBAC" path="/WEB-INF/screens/uii/index.jsp?sid=editCompHostBAC"/>
+		<forward name="tsQuerySubs" path="/WEB-INF/screens/uii/index.jsp?sid=tsQuerySubs"/>
+		<forward name="tsSubsRecords" path="/WEB-INF/screens/popup.jsp?sid=tsSubsRecords"/>
+		<forward name="subsTSResult" path="/WEB-INF/screens/popup.jsp?sid=subsTSResult"/>
+		<forward name="editToolbar" path="/WEB-INF/screens/uii/index.jsp?sid=editToolbar"/>
+		<forward name="toolbarConfig" path="/WEB-INF/screens/uii/index.jsp?sid=toolbarConfig"/>
+		<forward name="toolbarView" path="/WEB-INF/screens/uii/index.jsp?sid=toolbarView"/>
+		<forward name="telnetToSwitch" path="/WEB-INF/screens/popup.jsp?sid=telnetToSwitch"/>
+		<forward name="leaseHistoryExport" path="/WEB-INF/screens/uii/index.jsp?sid=leaseHistoryExport"/>
+		<forward name="leaseHistoryQuery" path="/WEB-INF/screens/uii/index.jsp?sid=leaseHistoryQuery"/>
+		<forward name="leaseHistoryRecords" path="/WEB-INF/screens/popup.jsp?sid=leaseHistoryRecords"/>
+		<forward name="smQuerySubs" path="/WEB-INF/screens/uii/index.jsp?sid=smQuerySubs"/>
+		<forward name="smViewSubs" path="/WEB-INF/screens/popup.jsp?sid=smViewSubs"/>
+		<forward name="editSubsProfile" path="/WEB-INF/screens/popup.jsp?sid=editSubsProfile"/>
+		<forward name="editServiceParms" path="/WEB-INF/screens/popup.jsp?sid=editServiceParms"/>
+		<forward name="subDetails" path="/WEB-INF/screens/uii/index.jsp?sid=subDetails"/>
+		<forward name="viewAddressMap" path="/WEB-INF/screens/popup.jsp?sid=viewAddressMap"/>
+		<forward name="queryAddressMap" path="/WEB-INF/screens/uii/index.jsp?sid=queryAddressMap"/>
+		<forward name="viewSubsDevices" path="/WEB-INF/screens/popup.jsp?sid=viewSubsDevices"/>
+		<forward name="editSubsDevice" path="/WEB-INF/screens/popup.jsp?sid=editSubsDevice"/>
+    <!-- following JSP is useful for closing popup windows created using the
+         popup attributes of uii:button. This JSP allows the action class
+         to show the user notifications and also closes the popup window -->
+    <forward name="closeWindowAndNotification"
+             path="/WEB-INF/screens/uii/closeWindowAndNotification.jsp" />
+
+	</global-forwards>
+	<!-- ========== Action Mapping Definitions ============================== -->
+	<action-mappings>
+	    <!-- Need this admin_network_inventory path just for the UII framework since it calls it since it is a main tab name. -->
+	    <action path="/subDetails" name="subscriberCreateFB" scope="session" validate="false" type="com.cisco.ettx.admin.gui.web.actions.SubscriberCreateAction">
+	    	<forward name="loginDetails" path="/WEB-INF/screens/uii/index.jsp?sid=loginDetails" />
+	    	<forward name="serviceDetails" path="/WEB-INF/screens/uii/index.jsp?sid=serviceDetails" />
+	    	<forward name="subSummary" path="/WEB-INF/screens/uii/index.jsp?sid=subSummary" />
+	    	<forward name="smQuerySubs" path="/smQuerySubs.do"/>
+	    </action>
+	    <action path="/viewSubscriberRecord" name="viewSubscriberRecordFB"	scope="session" validate="false" type="com.cisco.ettx.admin.gui.web.actions.ViewSubscriberRecordAction">
+	    </action>
+	    <action path="/querySubs" name="querySubscribersFB" scope="session" validate="false" type="com.cisco.ettx.admin.gui.web.actions.RepQuerySubscribersAction">
+		<forward name="subsRecords" path="/subsRecords.do"/>
+	    </action>
+	    <action path="/tsQuerySubs" name="querySubscribersFB" scope="session" validate="false" type="com.cisco.ettx.admin.gui.web.actions.TSQuerySubscribersAction">
+		<forward name="tsSubsRecords" path="/tsSubsRecords.do" />
+	    </action>
+	    <action path="/tsSubsRecords" name="subscriberListFB" scope="session" validate="false" type="com.cisco.ettx.admin.gui.web.actions.TSSubscriberListAction">
+		<forward name="subsTSResult" path="/subsTSResult.do" />
+	    </action>
+	    <action path="/subsTSResult" name="subsTSResultFB" scope="session" validate="false" type="com.cisco.ettx.admin.gui.web.actions.SubsTSResultAction">
+		<forward name="telnetToSwitch" path="/WEB-INF/screens/popup.jsp?sid=telnetToSwitch"/>
+	    </action>
+	    <action path="/subsRecords" name="subscriberListFB" scope="session" validate="false" type="com.cisco.ettx.admin.gui.web.actions.RepSubscriberListAction">
+	        <forward name="viewSubscriberRecord" path="/viewSubscriberRecord.do"/>
+	    </action>
+	    <action path="/systemConfig" name="systemConfigFB" scope="session" validate="false" type="com.cisco.ettx.admin.gui.web.actions.SystemConfigurationAction"/>
+            <action path="/viewLogs" name="applLogListFB" scope="session" validate="false" type="com.cisco.ettx.admin.gui.web.actions.ApplLogListAction"/>
+            <action path="/selectLogs" name="applLogObjSelectorFB" scope="session" validate="false" type="com.cisco.ettx.admin.gui.web.actions.ApplLogObjSelectorFormAction">
+          	<forward name="viewLogs" path="/viewLogs.do"/>
+            </action>
+            <action path="/componentConfig" name="componentConfigFB" scope="session" validate="false" type="com.cisco.ettx.admin.gui.web.actions.CompConfigurationAction"/>
+            <action path="/SPE" name="componentConfigFB" scope="session" validate="false" type="com.cisco.ettx.admin.gui.web.actions.CompConfigurationAction"/>
+            <action path="/SMS" name="componentConfigFB" scope="session" validate="false" type="com.cisco.ettx.admin.gui.web.actions.CompConfigurationAction"/>
+            <action path="/CNR" name="componentConfigFB" scope="session" validate="false" type="com.cisco.ettx.admin.gui.web.actions.CompConfigurationAction"/>
+            <action path="/BPR" name="componentConfigFB" scope="session" validate="false" type="com.cisco.ettx.admin.gui.web.actions.CompConfigurationAction"/>
+            <action path="/ReferenceApplication" name="componentConfigFB" scope="session" validate="false" type="com.cisco.ettx.admin.gui.web.actions.CompConfigurationAction"/>
+            <action path="/SessionManager" name="componentConfigFB" scope="session" validate="false" type="com.cisco.ettx.admin.gui.web.actions.CompConfigurationAction"/>
+            <action path="/BAC" name="componentConfigFB" scope="session" validate="false" type="com.cisco.ettx.admin.gui.web.actions.CompConfigurationAction"/>
+	    <action path="/editCompHost" name="componentConfigFB" scope="session" validate="false" type="com.cisco.ettx.admin.gui.web.actions.CompConfigurationAction"/>
+	    <action path="/toolbarView" name="toolbarFB" scope="session" validate="false" type="com.cisco.ettx.admin.gui.web.actions.ToolbarAction"/>
+	    <action path="/editToolbar" name="toolbarFB" scope="session" validate="false" type="com.cisco.ettx.admin.gui.web.actions.ToolbarAction"/>
+	    <action path="/toolbarConfig" name="toolbarFB" scope="session" validate="false" type="com.cisco.ettx.admin.gui.web.actions.ToolbarAction"/>
+	    <action path="/leaseHistoryExport" name="leaseHistoryExportFB" scope="session" validate="false" type="com.cisco.ettx.admin.gui.web.actions.LeaseHistoryExportAction"/>
+	    <action path="/leaseHistoryQuery" name="leaseHistoryQueryFB" scope="session" validate="false" type="com.cisco.ettx.admin.gui.web.actions.LeaseHistoryQueryAction">
+		<forward name="leaseHistoryRecords" path="/leaseHistoryRecords.do"/>
+	    </action>
+	    <action path="/leaseHistoryRecords" name="leaseHistoryListFB" scope="session" validate="false" type="com.cisco.ettx.admin.gui.web.actions.ReportLeaseHistoryListAction">
+	        <forward name="viewSubscriberRecord" path="/viewSubscriberRecord.do"/>
+	    </action>
+	    <action path="/smQuerySubs" name="querySubscribersFB" scope="session" validate="false" type="com.cisco.ettx.admin.gui.web.actions.SMQuerySubscribersAction">
+	        <forward name="smViewSubs" path="/smViewSubs.do"/>
+	        <forward name="subDetails" path="/subDetails.do"/>
+	</action>
+	    <action path="/smViewSubs" name="subscriberListFB" scope="session" validate="false" type="com.cisco.ettx.admin.gui.web.actions.SubscriberMgmtAction">
+	        <forward name="editSubsProfile" path="/editSubsProfile.do"/>
+	        <forward name="editServiceParms" path="/editServiceParms.do"/>
+	        <forward name="viewSubsDevices" path="/viewSubsDevices.do"/>
+	    </action>
+	    <action path="/editSubsProfile" name="subscriberInfoFB" scope="session" validate="false" type="com.cisco.ettx.admin.gui.web.actions.EditSubscriberProfileAction"/>
+	    <action path="/viewSubsDevices" name="subsDeviceFB" scope="session" validate="false" type="com.cisco.ettx.admin.gui.web.actions.EditSubsDevicesAction"/>
+	    <action path="/editSubsDevice" name="subsDeviceFB" scope="session" validate="false" type="com.cisco.ettx.admin.gui.web.actions.EditSubsDevicesAction"/>
+	    <action path="/editServiceParms" name="serviceParmsFB" scope="session" validate="false" type="com.cisco.ettx.admin.gui.web.actions.EditServiceParametersAction"/>
+	    <action path="/queryAddressMap" name="postalAddressMapFB" scope="session" validate="false" type="com.cisco.ettx.admin.gui.web.actions.PostalAddressMapAction"/>
+	    <action path="/viewAddressMap" name="postalAddressMapFB" scope="session" validate="false" type="com.cisco.ettx.admin.gui.web.actions.PostalAddressMapAction"/>
+		<!-- START ACTIONS USED BY UII "internally", DO NOT REMOVE -->
+		<action path="/openLevel" type="com.cisco.nm.uii.openLevelCornerCase"/>
+		<action path="/goHome" type="com.cisco.nm.uii.goHome"/>
+		<action path="/objselcaching" type="com.cisco.nm.xms.ogs.client.uii.ObjectSelectorCachingAction"/>
+		<action path="/objselsliding" type="com.cisco.nm.xms.ogs.client.uii.ObjectSelectorSlidingPanelAction"/>
+                <action path="/logoutAction" type="com.cisco.ettx.admin.gui.web.actions.LogoutAction" name="nullFB">
+                        <forward name="loggedout" path="/WEB-INF/screens/thankyou.jsp"/>
+                        <forward name="cancel" path="/querySubs.do"/>
+                </action>
+		<!-- END ACTIONS USED BY UII "internally", DO NOT REMOVE -->
+
+			<!-- only put forwards here that are not in the global forward list. -->
+
+		<action path="/logout" type="com.cisco.nm.uii.forwardToScreenID"/>
+		<action path="/feedback" type="com.cisco.nm.uii.forwardToScreenID"/>
+		<action path="/globalHelp" type="com.cisco.nm.uii.forwardToScreenID"/>
+		<action path="/about" type="com.cisco.nm.uii.forwardToScreenID"/>
+		<action path="/tools" type="com.cisco.nm.uii.forwardToScreenID"/>
+		<action path="/server_info" type="com.cisco.nm.uii.forwardToScreenID"/>
+		<action path="/debug_level" type="com.cisco.nm.uii.forwardToScreenID"/>
+		<action path="/ar_mgt" type="com.cisco.nm.uii.forwardToScreenID"/>
+		<action path="/generic_form" type="com.cisco.nm.uii.forwardToScreenID"/>
+		<action path="/resource_mgt" type="com.cisco.nm.uii.forwardToScreenID"/>
+		<action path="/trouSubs" type="com.cisco.nm.uii.forwardToScreenID"/>
+		<!-- action path="/viewLogs" type="com.cisco.nm.uii.forwardToScreenID" -->
+		<action path="/troubleshoot" type="com.cisco.nm.uii.forwardToScreenID"/>
+		<!-- The standard administrative actions available with Struts -->
+		<!-- These would be either omitted or protected by security -->
+		<!-- in a real application deployment -->
+		<action path="/admin/addFormBean" type="org.apache.struts.actions.AddFormBeanAction"/>
+		<action path="/admin/addForward" type="org.apache.struts.actions.AddForwardAction"/>
+		<action path="/admin/addMapping" type="org.apache.struts.actions.AddMappingAction"/>
+		<action path="/admin/reload" type="org.apache.struts.actions.ReloadAction"/>
+		<action path="/admin/removeFormBean" type="org.apache.struts.actions.RemoveFormBeanAction"/>
+		<action path="/admin/removeForward" type="org.apache.struts.actions.RemoveForwardAction"/>
+		<action path="/admin/removeMapping" type="org.apache.struts.actions.RemoveMappingAction"/>
+	</action-mappings>
+</struts-config>

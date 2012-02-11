@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XML Spy v4.3 U (http://www.xmlspy.com) by Chandrika Ramanujam (Cisco Systems, Inc.) -->
+<SMS_TASK NAME="GetDetailsForSubscriber" 
+	SERVICE="com.cisco.ettx.admin.collengine.sms.SubscriberService">
+	<ATTRIBUTE NAME="subscriberID" ATTR_MAP="subscriberID"/>
+	<ATTRIBUTE NAME="loginID" ATTR_MAP="loginID"/>
+	<ATTRIBUTE NAME="postalAddress" ATTR_MAP="postalAddress"/>
+	<ATTRIBUTE NAME="postalCity" ATTR_MAP="postalCity"/>
+	<ATTRIBUTE NAME="postalState" ATTR_MAP="postalState"/>
+	<ATTRIBUTE NAME="countryCode" ATTR_MAP="countryCode"/>
+	<ATTRIBUTE NAME="homeNumber" ATTR_MAP="homeNumber"/>
+	<ATTRIBUTE NAME="mobileNumber" ATTR_MAP="mobileNumber"/>
+	<ATTRIBUTE NAME="subscriberName" ATTR_MAP="subscriberName"/>
+	<ATTRIBUTE NAME="subscriberFirstName" ATTR_MAP="subscriberFirstName"/>
+	<ATTRIBUTE NAME="subscriberLastName" ATTR_MAP="subscriberLastName"/>
+	<ATTRIBUTE NAME="subscribedServices" ATTR_MAP="subscribedServices"/>
+	<ATTRIBUTE NAME="subscriptionLevel" ATTR_MAP="subscriptionLevel"/>
+	<ATTRIBUTE NAME="accountNumber" ATTR_MAP="accountNumber"/>
+	<ATTRIBUTE NAME="accountStatus" ATTR_MAP="accountStatus"/>
+	<ATTRIBUTE NAME="switchIPAddress" ATTR_MAP="switchIPAddress"/>
+	<ATTRIBUTE NAME="switchUserName" ATTR_MAP="switchUserName"/>
+	<ATTRIBUTE NAME="switchPassword" ATTR_MAP="switchPassword"/>
+	<ATTRIBUTE NAME="switchPortName" ATTR_MAP="switchPortName"/>
+</SMS_TASK>

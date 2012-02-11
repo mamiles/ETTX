@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--JBuilder XML Project-->
+<project>
+  <property category="module" name="ProjectConvertedToEnsureModulesHaveSupportedFeatures" value="1"/>
+  <property category="module" name="ProjectConvertedToUseFilesAndDependenciesAsDefaultContent" value="1"/>
+  <property category="module" name="ProjectConvertedToUseProperModuleDefaults" value="1"/>
+  <property category="module" name="projectConvertedFromModuleExtensionsToModuleFileTypes" value="1"/>
+  <property category="runtime" name="DefaultConfiguration" value="-1"/>
+  <property category="runtime" name="ExcludeDefaultForZero" value="1"/>
+  <property category="serverservices" name="disabled.services" value="connector;jdatastore"/>
+  <property category="serverservices" name="single.server.name" value="Tomcat 4.0"/>
+  <property category="sys" name="AuthorLabel" value="@author"/>
+  <property category="sys" name="BackupPath" value="bak"/>
+  <property category="sys" name="CheckStable" value="1"/>
+  <property category="sys" name="Company" value=""/>
+  <property category="sys" name="CompanyLabel" value="Company:"/>
+  <property category="sys" name="Copyright" value="Copyright (c) 2003"/>
+  <property category="sys" name="CopyrightLabel" value="Copyright:"/>
+  <property category="sys" name="DefaultPath" value="src"/>
+  <property category="sys" name="Description" value=""/>
+  <property category="sys" name="DescriptionLabel" value="Description:"/>
+  <property category="sys" name="DocPath" value="doc"/>
+  <property category="sys" name="ExcludeClassEnabled" value="0"/>
+  <property category="sys" name="IncludeTestPath" value="1"/>
+  <property category="sys" name="InstanceVisibility" value="2"/>
+  <property category="sys" name="JDK" value="java version 1.4.2_04-b05"/>
+  <property category="sys" name="JvmVersion" value="1.2"/>
+  <property category="sys" name="LastTag" value="0"/>
+  <property category="sys" name="Libraries" value="ETTX;Servlet"/>
+  <property category="sys" name="MakeStable" value="0"/>
+  <property category="sys" name="OutPath" value="build/server/WEB-INF/classes"/>
+  <property category="sys" name="SourcePath" value="src;test"/>
+  <property category="sys" name="TestPath" value="test"/>
+  <property category="sys" name="Title" value=""/>
+  <property category="sys" name="TitleLabel" value="Title:"/>
+  <property category="sys" name="Version" value="1.0"/>
+  <property category="sys" name="VersionLabel" value="@version"/>
+  <property category="sys" name="WorkingDirectory" value="."/>
+  <node name="csr" type="WebModuleNode">
+    <property category="archiving" name="archiverClass" value="com.borland.jbuilder.enterprise.module.web.WebModuleArchiver"/>
+    <property category="archiving" name="contentRules.1" value="i:sar"/>
+    <property category="archiving" name="contentRules.10" value="i:opentools"/>
+    <property category="archiving" name="contentRules.11" value="i:png"/>
+    <property category="archiving" name="contentRules.12" value="i:properties"/>
+    <property category="archiving" name="contentRules.13" value="i:au"/>
+    <property category="archiving" name="contentRules.14" value="i:txt"/>
+    <property category="archiving" name="contentRules.15" value="i:ram"/>
+    <property category="archiving" name="contentRules.16" value="i:css"/>
+    <property category="archiving" name="contentRules.17" value="i:wml"/>
+    <property category="archiving" name="contentRules.18" value="i:xmi"/>
+    <property category="archiving" name="contentRules.19" value="i:xul"/>
+    <property category="archiving" name="contentRules.2" value="i:gif"/>
+    <property category="archiving" name="contentRules.20" value="i:xsl"/>
+    <property category="archiving" name="contentRules.21" value="I:**/*.*"/>
+    <property category="archiving" name="contentRules.3" value="i:html"/>
+    <property category="archiving" name="contentRules.4" value="i:class"/>
+    <property category="archiving" name="contentRules.5" value="i:jnlp"/>
+    <property category="archiving" name="contentRules.6" value="i:js"/>
+    <property category="archiving" name="contentRules.7" value="i:jpg"/>
+    <property category="archiving" name="contentRules.8" value="i:jsp"/>
+    <property category="archiving" name="contentRules.9" value="i:tld"/>
+    <property category="archiving" name="defaultLibraryState" value="3"/>
+    <property category="archiving" name="includeDeps" value="1"/>
+    <property category="archiving" name="libraryStates.1" value="0:Servlet"/>
+    <property category="archiving" name="libraryStates.2" value="0:Tomcat 4.1 Servlet"/>
+    <property category="archiving" name="targetPath" value="csr.war"/>
+    <property category="archiving" name="usingRules" value="1"/>
+    <property category="legacy.module.conversion" name="legacy.module.name" value="csr"/>
+    <property category="module" name="directory" value="webapps/csr"/>
+    <property category="module" name="nodeJBuilderVersion" value="JBuilder 200"/>
+    <property category="module" name="supported.features.1" value="JSP 1.2"/>
+    <property category="module" name="supported.features.2" value="Servlet 2.3"/>
+    <property category="module" name="useModuleSpecificJavaFileNodesToBuild" value="1"/>
+    <property category="web" name="context-root" value="csr"/>
+  </node>
+  <node name="ettx_admin" type="WebModuleNode">
+    <property category="archiving" name="archiverClass" value="com.borland.jbuilder.enterprise.module.web.WebModuleArchiver"/>
+    <property category="archiving" name="contentRules.1" value="i:sar"/>
+    <property category="archiving" name="contentRules.10" value="i:opentools"/>
+    <property category="archiving" name="contentRules.11" value="i:png"/>
+    <property category="archiving" name="contentRules.12" value="i:properties"/>
+    <property category="archiving" name="contentRules.13" value="i:au"/>
+    <property category="archiving" name="contentRules.14" value="i:txt"/>
+    <property category="archiving" name="contentRules.15" value="i:ram"/>
+    <property category="archiving" name="contentRules.16" value="i:css"/>
+    <property category="archiving" name="contentRules.17" value="i:wml"/>
+    <property category="archiving" name="contentRules.18" value="i:xmi"/>
+    <property category="archiving" name="contentRules.19" value="i:xul"/>
+    <property category="archiving" name="contentRules.2" value="i:gif"/>
+    <property category="archiving" name="contentRules.20" value="i:xsl"/>
+    <property category="archiving" name="contentRules.21" value="I:**/*.*"/>
+    <property category="archiving" name="contentRules.3" value="i:html"/>
+    <property category="archiving" name="contentRules.4" value="i:class"/>
+    <property category="archiving" name="contentRules.5" value="i:jnlp"/>
+    <property category="archiving" name="contentRules.6" value="i:js"/>
+    <property category="archiving" name="contentRules.7" value="i:jpg"/>
+    <property category="archiving" name="contentRules.8" value="i:jsp"/>
+    <property category="archiving" name="contentRules.9" value="i:tld"/>
+    <property category="archiving" name="defaultLibraryState" value="3"/>
+    <property category="archiving" name="includeDeps" value="1"/>
+    <property category="archiving" name="libraryStates.1" value="0:Servlet"/>
+    <property category="archiving" name="libraryStates.2" value="0:Tomcat 4.1 Servlet"/>
+    <property category="archiving" name="targetPath" value="ettx_admin.war"/>
+    <property category="archiving" name="usingRules" value="1"/>
+    <property category="legacy.module.conversion" name="legacy.module.name" value="ettx_admin"/>
+    <property category="module" name="directory" value="webapps/ettx_admin"/>
+    <property category="module" name="nodeJBuilderVersion" value="JBuilder 200"/>
+    <property category="module" name="supported.features.1" value="JSP 1.1"/>
+    <property category="module" name="supported.features.2" value="Servlet 2.2"/>
+    <property category="module" name="useModuleSpecificJavaFileNodesToBuild" value="1"/>
+    <property category="web" name="context-root" value="ettx_admin"/>
+  </node>
+  <node name="ettx_admin_server" type="WebModuleNode">
+    <property category="archiving" name="archiverClass" value="com.borland.jbuilder.enterprise.module.web.WebModuleArchiver"/>
+    <property category="archiving" name="contentRules.1" value="i:sar"/>
+    <property category="archiving" name="contentRules.10" value="i:opentools"/>
+    <property category="archiving" name="contentRules.11" value="i:png"/>
+    <property category="archiving" name="contentRules.12" value="i:properties"/>
+    <property category="archiving" name="contentRules.13" value="i:au"/>
+    <property category="archiving" name="contentRules.14" value="i:txt"/>
+    <property category="archiving" name="contentRules.15" value="i:ram"/>
+    <property category="archiving" name="contentRules.16" value="i:css"/>
+    <property category="archiving" name="contentRules.17" value="i:wml"/>
+    <property category="archiving" name="contentRules.18" value="i:xmi"/>
+    <property category="archiving" name="contentRules.19" value="i:xul"/>
+    <property category="archiving" name="contentRules.2" value="i:gif"/>
+    <property category="archiving" name="contentRules.20" value="i:xsl"/>
+    <property category="archiving" name="contentRules.21" value="I:**/*.*"/>
+    <property category="archiving" name="contentRules.3" value="i:html"/>
+    <property category="archiving" name="contentRules.4" value="i:class"/>
+    <property category="archiving" name="contentRules.5" value="i:jnlp"/>
+    <property category="archiving" name="contentRules.6" value="i:js"/>
+    <property category="archiving" name="contentRules.7" value="i:jpg"/>
+    <property category="archiving" name="contentRules.8" value="i:jsp"/>
+    <property category="archiving" name="contentRules.9" value="i:tld"/>
+    <property category="archiving" name="defaultLibraryState" value="3"/>
+    <property category="archiving" name="includeDeps" value="1"/>
+    <property category="archiving" name="libraryStates.1" value="0:Servlet"/>
+    <property category="archiving" name="libraryStates.2" value="0:Tomcat 4.1 Servlet"/>
+    <property category="archiving" name="targetPath" value="ettx_admin_server.war"/>
+    <property category="archiving" name="usingRules" value="1"/>
+    <property category="legacy.module.conversion" name="legacy.module.name" value="ettx_admin_server"/>
+    <property category="module" name="directory" value="webapps/ettx_admin_server"/>
+    <property category="module" name="nodeJBuilderVersion" value="JBuilder 200"/>
+    <property category="module" name="supported.features.1" value="JSP 1.1"/>
+    <property category="module" name="supported.features.2" value="Servlet 2.2"/>
+    <property category="module" name="useModuleSpecificJavaFileNodesToBuild" value="1"/>
+    <property category="web" name="context-root" value="ettx_admin_server"/>
+  </node>
+  <node name="gui" type="WebModuleNode">
+    <property category="archiving" name="archiverClass" value="com.borland.jbuilder.enterprise.module.web.WebModuleArchiver"/>
+    <property category="archiving" name="contentRules.1" value="i:sar"/>
+    <property category="archiving" name="contentRules.10" value="i:opentools"/>
+    <property category="archiving" name="contentRules.11" value="i:png"/>
+    <property category="archiving" name="contentRules.12" value="i:properties"/>
+    <property category="archiving" name="contentRules.13" value="i:au"/>
+    <property category="archiving" name="contentRules.14" value="i:txt"/>
+    <property category="archiving" name="contentRules.15" value="i:ram"/>
+    <property category="archiving" name="contentRules.16" value="i:css"/>
+    <property category="archiving" name="contentRules.17" value="i:wml"/>
+    <property category="archiving" name="contentRules.18" value="i:xmi"/>
+    <property category="archiving" name="contentRules.19" value="i:xul"/>
+    <property category="archiving" name="contentRules.2" value="i:gif"/>
+    <property category="archiving" name="contentRules.20" value="i:xsl"/>
+    <property category="archiving" name="contentRules.21" value="I:**/*.*"/>
+    <property category="archiving" name="contentRules.3" value="i:html"/>
+    <property category="archiving" name="contentRules.4" value="i:class"/>
+    <property category="archiving" name="contentRules.5" value="i:jnlp"/>
+    <property category="archiving" name="contentRules.6" value="i:js"/>
+    <property category="archiving" name="contentRules.7" value="i:jpg"/>
+    <property category="archiving" name="contentRules.8" value="i:jsp"/>
+    <property category="archiving" name="contentRules.9" value="i:tld"/>
+    <property category="archiving" name="defaultLibraryState" value="3"/>
+    <property category="archiving" name="includeDeps" value="1"/>
+    <property category="archiving" name="libraryStates.1" value="0:Servlet"/>
+    <property category="archiving" name="libraryStates.2" value="0:Tomcat 4.1 Servlet"/>
+    <property category="archiving" name="targetPath" value="gui.war"/>
+    <property category="archiving" name="usingRules" value="1"/>
+    <property category="legacy.module.conversion" name="legacy.module.name" value="gui"/>
+    <property category="module" name="directory" value="build/gui"/>
+    <property category="module" name="nodeJBuilderVersion" value="JBuilder 200"/>
+    <property category="module" name="supported.features.1" value="JSP 1.2"/>
+    <property category="module" name="supported.features.2" value="Servlet 2.3"/>
+    <property category="module" name="useModuleSpecificJavaFileNodesToBuild" value="1"/>
+    <property category="web" name="context-root" value="gui"/>
+  </node>
+  <node name="server" type="WebModuleNode">
+    <property category="archiving" name="archiverClass" value="com.borland.jbuilder.enterprise.module.web.WebModuleArchiver"/>
+    <property category="archiving" name="contentRules.1" value="i:sar"/>
+    <property category="archiving" name="contentRules.10" value="i:opentools"/>
+    <property category="archiving" name="contentRules.11" value="i:png"/>
+    <property category="archiving" name="contentRules.12" value="i:properties"/>
+    <property category="archiving" name="contentRules.13" value="i:au"/>
+    <property category="archiving" name="contentRules.14" value="i:txt"/>
+    <property category="archiving" name="contentRules.15" value="i:ram"/>
+    <property category="archiving" name="contentRules.16" value="i:css"/>
+    <property category="archiving" name="contentRules.17" value="i:wml"/>
+    <property category="archiving" name="contentRules.18" value="i:xmi"/>
+    <property category="archiving" name="contentRules.19" value="i:xul"/>
+    <property category="archiving" name="contentRules.2" value="i:gif"/>
+    <property category="archiving" name="contentRules.20" value="i:xsl"/>
+    <property category="archiving" name="contentRules.21" value="I:**/*.*"/>
+    <property category="archiving" name="contentRules.3" value="i:html"/>
+    <property category="archiving" name="contentRules.4" value="i:class"/>
+    <property category="archiving" name="contentRules.5" value="i:jnlp"/>
+    <property category="archiving" name="contentRules.6" value="i:js"/>
+    <property category="archiving" name="contentRules.7" value="i:jpg"/>
+    <property category="archiving" name="contentRules.8" value="i:jsp"/>
+    <property category="archiving" name="contentRules.9" value="i:tld"/>
+    <property category="archiving" name="defaultLibraryState" value="3"/>
+    <property category="archiving" name="includeDeps" value="1"/>
+    <property category="archiving" name="libraryStates.1" value="0:Servlet"/>
+    <property category="archiving" name="libraryStates.2" value="0:Tomcat 4.1 Servlet"/>
+    <property category="archiving" name="targetPath" value="server.war"/>
+    <property category="archiving" name="usingRules" value="1"/>
+    <property category="legacy.module.conversion" name="legacy.module.name" value="server"/>
+    <property category="module" name="directory" value="build/server"/>
+    <property category="module" name="nodeJBuilderVersion" value="JBuilder 200"/>
+    <property category="module" name="supported.features.1" value="JSP 1.2"/>
+    <property category="module" name="supported.features.2" value="Servlet 2.3"/>
+    <property category="module" name="useModuleSpecificJavaFileNodesToBuild" value="1"/>
+    <property category="web" name="context-root" value="server"/>
+  </node>
+  <node name="csr" type="WebContext">
+    <property category="archiving" name="archiverClass" value="com.borland.jbuilder.wizard.webapp.WarArchiver"/>
+    <property category="archiving" name="defaultLibraryState" value="3"/>
+    <property category="archiving" name="libraryStates.1" value="0:Servlet"/>
+    <property category="archiving" name="libraryStates.2" value="0:Tomcat 4.0 Servlet"/>
+    <property category="archiving" name="targetPath" value="csr.war"/>
+    <property category="module" name="converted.to.module" value="1"/>
+    <property category="webapp" name="docroot" value="webapps/csr"/>
+  </node>
+  <node name="ettx_admin" type="WebContext">
+    <property category="archiving" name="archiverClass" value="com.borland.jbuilder.wizard.webapp.WarArchiver"/>
+    <property category="archiving" name="defaultLibraryState" value="3"/>
+    <property category="archiving" name="libraryStates.1" value="0:Servlet"/>
+    <property category="archiving" name="libraryStates.2" value="0:Tomcat 4.0 Servlet"/>
+    <property category="archiving" name="targetPath" value="ettx_admin.war"/>
+    <property category="module" name="converted.to.module" value="1"/>
+    <property category="webapp" name="docroot" value="webapps/ettx_admin"/>
+  </node>
+  <node name="ettx_admin_server" type="WebContext">
+    <property category="archiving" name="archiverClass" value="com.borland.jbuilder.wizard.webapp.WarArchiver"/>
+    <property category="archiving" name="defaultLibraryState" value="3"/>
+    <property category="archiving" name="libraryStates.1" value="0:Servlet"/>
+    <property category="archiving" name="libraryStates.2" value="0:Tomcat 4.0 Servlet"/>
+    <property category="archiving" name="targetPath" value="ettx_admin_server.war"/>
+    <property category="module" name="converted.to.module" value="1"/>
+    <property category="webapp" name="docroot" value="webapps/ettx_admin_server"/>
+  </node>
+  <node name="gui" type="WebContext">
+    <property category="archiving" name="archiverClass" value="com.borland.jbuilder.wizard.webapp.WarArchiver"/>
+    <property category="archiving" name="defaultLibraryState" value="3"/>
+    <property category="archiving" name="libraryStates.1" value="0:Servlet"/>
+    <property category="archiving" name="libraryStates.2" value="0:Tomcat 4.0 Servlet"/>
+    <property category="archiving" name="targetPath" value="gui.war"/>
+    <property category="module" name="converted.to.module" value="1"/>
+    <property category="webapp" name="docroot" value="build/gui"/>
+  </node>
+  <node name="server" type="WebContext">
+    <property category="archiving" name="archiverClass" value="com.borland.jbuilder.wizard.webapp.WarArchiver"/>
+    <property category="archiving" name="defaultLibraryState" value="3"/>
+    <property category="archiving" name="libraryStates.1" value="0:Servlet"/>
+    <property category="archiving" name="libraryStates.2" value="0:Tomcat 4.0 Servlet"/>
+    <property category="archiving" name="targetPath" value="server.war"/>
+    <property category="module" name="converted.to.module" value="1"/>
+    <property category="webapp" name="dir.exclude.1" value="/WEB-INF/classes"/>
+    <property category="webapp" name="docroot" value="build/server"/>
+  </node>
+  <file path="build.xml"/>
+</project>

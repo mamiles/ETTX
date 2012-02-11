@@ -1,0 +1,108 @@
+<!----------------------------------------------------------------------------------------
+One time starting point for Content Area developers, thereafter works independantly.
+Use File - UII Extensions - Save As JSP to save this file as a JSP Page and this automagically
+generates the HTML file. Upload the .htm file to the Mockup Server.
+
+----------->
+
+
+<!---- WARNING: Uncomment this in the JSP file to make it work properly. -----------------
+<%@ taglib uri="/WEB-INF/tlds/uii-contentarea-taglib.tld" prefix="uii" %>
+
+<%
+
+	String contextPath = request.getContextPath();
+
+%>
+--->
+
+
+<table width="100%" height="100%" border="0" cellspacing="0" cellpadding="5"  BGCOLOR="E1E1E1">
+    <tr> 
+	<td width="100%" align="center" valign="center"> 
+	  <uii:form action="" >
+		<table border="0" cellspacing="1" cellpadding="2" bgcolor="#FFFFFF">
+        <tr> 
+          <td  nowrap background="/RSRC/en_US/images/vertlines_dk.gif" bgcolor="#669999">
+			<uii:img page="/RSRC/en_US/images/shim.gif" /></td>
+        </tr>
+
+		  <tr> <td  bgcolor="CCCCCC">
+
+
+	<uii:scrollingTable id="" keyColumn="Address" height="" width="" 
+		tableName="" name=""  selectionType="single"> 
+			<uii:stColumn header="Machine" property="" />
+			<uii:stColumn header="Contact" property="" />
+			<uii:stColumn header="State" property="" />
+			<uii:stColumn header="IP Addres" property="" />
+			<uii:stColumn header="Date" property="" />
+			<uii:stColumn header="Users" property="" />		
+	</uii:scrollingTable>
+
+
+	<uii:mockupData>
+		<applet MAYSCRIPT name="scrollableTable" code="ScrollableTableApplet" ALIGN="top" VSPACE="0" HSPACE="0"  width="600" height="210"> 
+		<param name="archive" value="uii/jar/CoffeeTable_AWT.jar, uii/jar/js.jar, uii/jar/ScrollableTable.jar">
+		<param name="browser" value="1">
+		<param name="width" value="600"> 
+		<param name="height" value="210"> 
+		<param name="rowHeight" value="20"> 
+		<param name="rowHeader" value="true"> 
+		<param name="selectionType" value="single"> 
+		<param name="sortColumnName" value=""> 
+		<param name="sortOrder" value=""> 
+		<param name="tableName" value="machines"> 
+		<param name="sortFunction" value="UIIFormSubmit"> 
+		<param name="keyColumn" value="Machine"> 
+
+		<param name="data" value="Machine~0~text~text~true~0^Contact~0~text~text~true~0^State~0~text~text~true~0^IP Address~0~ip~ip~true~0^Date~0~date~date~true~0^Users~52~number~number~true~0^||
+		Machine 1^Person 1^On^100.120.4.2^1-JAN-2002^5^||
+		Machine 2^Person 1^Off^100.120.4.3^2-1-2000^10^||
+		Machine 3^Person 2^Standby^100.120.4.4^15/4/2002^15^||
+		Machine 4^Person 2^Standby^100.120.4.5^10-Feb-2001^20^||
+		Machine 5^Person 3^Off^100.120.4.6^11-6-2002^5^||
+		Machine 6^Person 3^On^100.120.4.7^12-1-2002^15^||
+		Machine 7^Person 4^On^100.120.4.8^14/3/2001^51^||
+		Machine 8^Person 4^Off^100.120.4.9^16-JAN-2002^45^||
+		Machine 9^Person 5^Standby^100.120.4.10^19-JAN-2002^23^||
+		Machine 10^Person 5^On^100.120.4.11^18-JAN-2002^15^||"> 
+
+		</applet>
+   </uii:mockupData>
+
+
+    </td></tr>
+
+
+    <tr> 
+      <td  nowrap bgcolor="#999999"><uii:img page="/RSRC/en_US/images/shim.gif"/></td>
+    </tr>
+    <tr bgcolor="silver"> 
+      <td  > 
+        <table cellspacing=3 cellpadding=0 border=0 width="100%">
+		<tr>             
+			<td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<uii:img page="/RSRC/en_US/images/icons/arrow_pt_up.gif"/>Select 
+              an item then take an action<uii:img page="/RSRC/en_US/images/icons/arrow_pt_right.gif"/></td>
+			<td align="right"><table></tr>
+				<td > <uii:button property="action" value="Add" /> </td>
+				<td > <uii:button property="action" value="Edit" /> </td>
+			</tr></table></td>
+		</tr>
+        </table>
+      </td>
+    </tr>
+        <tr> 
+          <td  nowrap background="/RSRC/en_US/images/vertlines_dk.gif"><uii:img page="/RSRC/en_US/images/shim.gif" /></td>
+        </tr>
+      </table>
+	</uii:form>
+	</td>
+    <td valign="TOP" align="right">
+   		<uii:instructions>
+			<p> Enter the content area instructions here.</p>
+			<p>Enter the content area instructions here.</p>		
+   		</uii:instructions>		
+      </td>
+    </tr>
+</table>	

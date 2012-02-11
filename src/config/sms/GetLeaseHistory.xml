@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XML Spy v4.3 U (http://www.xmlspy.com) by Chandrika Ramanujam (Cisco Systems, Inc.) -->
+<SMS_TASK NAME="GetLeaseHistory" 
+	SERVICE="com.cisco.ettx.admin.collengine.sms.LeaseService">
+	<ATTRIBUTE NAME="leaseRecords" ATTR_MAP="leaseRecords"/>
+	<ATTRIBUTE NAME="subscriberID" ATTR_MAP="subscriberID"/>
+	<ATTRIBUTE NAME="ipAddress" ATTR_MAP="ipAddress"/>
+	<ATTRIBUTE NAME="startDate" ATTR_MAP="startDate"/>
+	<ATTRIBUTE NAME="endDate" ATTR_MAP="endDate"/>
+</SMS_TASK>

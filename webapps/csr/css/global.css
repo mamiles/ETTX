@@ -1,0 +1,167 @@
+/* Global CSS by Joe NguyenLe 06.27.2000 */
+body {font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: Black;  background : White;  margin-left : 1px;  margin-top : 1px;  margin-right : 1px;  margin-bottom : 1px;     } 
+a:link {color: #6666CC; text-decoration: none} 
+a:active {color: #000000} 
+a:visited {color: #6666CC; text-decoration: none} 
+a:hover {color: Red; text-decoration : underline;  } 
+
+th {font-weight: bold}
+td {font-family: Arial, Helvetica, sans-serif; font-size: 8pt; color: Black} 
+li {color: Black;} 
+ul {color: Black; list-style-type: square} 
+ol {color: Black}
+ 
+.mytext {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; color: #666699} 
+a.mytext:link {color: #333333; text-decoration: none} 
+a.mytext:visited {color: #666666; text-decoration: none} 
+a.mytext:active {color: #333333; text-decoration: none} 
+a.mytext:hover {color: #999933; text-decoration: none}
+
+.toolBar {font-family: Arial, Helvetica, sans-serif; font-size: 8pt; color: #336666;}
+a.toolBar:link {color: #336666; text-decoration: none} 
+a.toolBar:visited {color: #336666; text-decoration: none} 
+a.toolBar:active {color: #336666; text-decoration: none} 
+a.toolBar:hover {color: Red; text-decoration: none}
+
+.areaBar {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	color: white;
+	font-weight : bold;
+	letter-spacing : 2px;
+}
+a.areaBar:link {color: white; text-decoration: none} 
+a.areaBar:visited {color: white; text-decoration: none} 
+a.areaBar:active {color: white; text-decoration: none} 
+a.areaBar:hover {color: #CCFFFF; text-decoration: none;  }
+.areaBarDash { font-weight: bold; font:11pt Arial, Helvetica, sans-serif; color : #CCCCFF;}
+ 
+.areaBarB {font-family: Geneva, Arial, Helvetica, sans-serif; font-size: 8pt; color: Black;  font-weight : bold;  letter-spacing : 2px;  }
+a.areaBarB:link {color: Black; text-decoration: none} 
+a.areaBarB:visited {color: Black; text-decoration: none} 
+a.areaBarB:active {color: Black; text-decoration: none} 
+a.areaBarB:hover {color: #CCFFFF; text-decoration: none;  }
+.areaBarBDash { font-weight: bold; font:11pt Arial, Helvetica, sans-serif; color : #CCCCFF;}
+ 
+.subAreaBar {font-family: Geneva, Arial, Helvetica, sans-serif; font-size: 8pt; color: #CCCC99; }
+a.subAreaBar:link {color: #CCCC99; text-decoration: none} 
+a.subAreaBar:visited {color: #CCCCCC; text-decoration: none} 
+a.subAreaBar:active {color: #66FF00; text-decoration: none} 
+a.subAreaBar:hover {color: White; text-decoration: none}
+
+.pathBar {font-family: Geneva, Arial, Helvetica, sans-serif; font-size: 8pt; color: #CCCC99;}
+a.pathBar:link {color: #6666CC; text-decoration: none}
+a.pathBar:visited {color: #6666CC; text-decoration: none}  
+a.pathBar:active {color: #66FF00; text-decoration: none} 
+a.pathBar:hover {color: Red; text-decoration: none}
+
+.toc {
+	font-family : Arial, Helvetica, sans-serif;
+	font-size : 8pt;
+	font-weight : bold;
+	color : Black;
+}
+ 
+.toc2 {font-family: Geneva, Arial, Helvetica, sans-serif; font-size: 8pt; color: #CCCC99;  font-weight : bold;  letter-spacing : 1px;  }
+a.toc2:link {color: white; text-decoration: none} 
+a.toc2:visited {color: white; text-decoration: none} 
+a.toc2:active {color: white; text-decoration: none} 
+a.toc2:hover {color: Red; text-decoration: none;  }
+
+.toc3 {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	color: white;
+	font-weight : normal;
+	letter-spacing : 1px;
+}
+a.toc3:link {
+	color: white;
+	text-decoration: none;
+} 
+a.toc3:visited {
+	color: white;
+	text-decoration: none;
+} 
+a.toc3:active {
+	color: white;
+	text-decoration: none;
+} 
+a.toc3:hover {
+	color: Red;
+	text-decoration: none;
+}
+
+.toc3b {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	color: Black;
+	font-weight : bold;
+	letter-spacing : 1px;
+}
+a.toc3b:link {
+	color: Black;
+	text-decoration: none;
+} 
+a.toc3b:visited {
+	color: Black;
+	text-decoration: none;
+} 
+a.toc3b:active {
+	color: Black;
+	text-decoration: none;
+} 
+a.toc3b:hover {
+	color: White;
+	text-decoration: none;
+}
+
+.lesNumB {
+	font-family : Arial, Helvetica, sans-serif;
+	font-size : 9pt;
+	font-weight : bold;
+	color : Red;
+}
+ 
+.copyright {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 9px; color: #999999} 
+
+.BannerTitle {font-family: Times, sans-serif; font-size: 14pt; color: black;  font-weight : bold;  letter-spacing : 2px;  }
+
+.pageTitle {font-family: Geneva, Arial, Helvetica, sans-serif; font-size: 9pt; color: Black;  font-weight : bold;  letter-spacing : 2px;  }
+
+.pageSubTitle {font-family: Geneva, Arial, Helvetica, sans-serif; font-size: 8pt; color: Black;  font-weight : bold;  letter-spacing : 2px;  }
+
+.disTxt {color: #999999}
+
+.notice {font-family: Arial, Helvetica, sans-serif; font-size: 9pt; color: #999999; font-style: normal; clip:   rect(   ); text-indent: .15in} 
+
+.mode {font-family: Geneva, Arial, Helvetica, sans-serif; font-size: 8pt; color: White;  font-weight : bold;  letter-spacing : 1px;  }
+
+.btn {font-family: Arial, Helvetica, sans-serif; font-size: 8pt; color: #6666CC; font-weight : bold;} 
+a.btn:link {color: #6666CC; text-decoration: none} 
+a.btn:visited {color: #6666CC; text-decoration: none} 
+a.btn:active {color: #6666CC; text-decoration: none} 
+a.btn:hover {color: red; text-decoration : underline;}
+
+.btnDisabled {font-family: Arial, Helvetica, sans-serif; font-size: 8pt; color: #999999; font-weight : bold;} 
+a.btnDisabled:link {color: #999999; text-decoration: none} 
+a.btnDisabled:visited {color: #999999; text-decoration: none} 
+a.btnDisabled:active {color: #999999; text-decoration: none} 
+a.btnDisabled:hover {color: #999999; text-decoration: none}
+
+
+.diaTxt {font-family: Arial, Helvetica, sans-serif; font-size: 8pt; color: Black} 
+
+.tree {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; color: #666699} 
+a.tree:link {color: #333333; text-decoration: none} 
+a.tree:visited {color: #666666; text-decoration: none} 
+a.tree:active {color: #333333; text-decoration: none} 
+a.tree:hover {color: #999933; text-decoration: none}
+
+#foldheader{
+	cursor:hand ;
+	font-weight: bold;
+	list-style-image:url(fold.gif)
+}
+
+#foldinglist{list-style-image:url(list.gif)}

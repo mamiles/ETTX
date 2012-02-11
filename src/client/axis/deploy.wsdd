@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+      <beanMapping
+        qname="ns1:SystemConfiguration" xmlns:ns1="urn:BeanService"
+        languageSpecificType="java:com.cisco.ettx.admin.common.SystemConfiguration"
+      />
+      <beanMapping
+        qname="ns1:ToolbarElement" xmlns:ns1="urn:BeanService"
+        languageSpecificType="java:com.cisco.ettx.admin.common.ToolbarElement"
+      />
+
+      <beanMapping qname="ns1:SMSComponent" xmlns:ns1="urn:BeanService"
+        languageSpecificType="java:com.cisco.ettx.admin.common.SMSComponent"
+      />
+      <beanMapping
+        qname="ns1:ComponentHostData" xmlns:ns1="urn:BeanService"
+        languageSpecificType="java:com.cisco.ettx.admin.common.ComponentHostData"
+      />
+      <beanMapping qname="ns1:ApplLog" xmlns:ns1="urn:BeanService"
+        languageSpecificType="java:com.cisco.ettx.admin.common.ApplLog"
+      />
+      <beanMapping qname="ns1:AttrResult" xmlns:ns1="urn:BeanService"
+        languageSpecificType="java:com.cisco.ettx.admin.common.AttrResult"
+      />
+      <beanMapping
+        qname="ns1:AdminServicesException" xmlns:ns1="urn:BeanService"
+        languageSpecificType="java:com.cisco.ettx.admin.common.AdminServicesException"
+      />
+      <beanMapping
+        qname="ns1:AdminServicesNotification" xmlns:ns1="urn:BeanService"
+        languageSpecificType="java:com.cisco.ettx.admin.common.AdminServicesNotification"
+      />
+      <beanMapping
+        qname="ns1:SubsDeviceInfo" xmlns:ns1="urn:BeanService"
+        languageSpecificType="java:com.cisco.ettx.admin.common.SubsDeviceInfo"
+      />
+
+</deployment>

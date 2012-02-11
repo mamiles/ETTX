@@ -1,0 +1,562 @@
+<!----------------------------------------------------------------------------------------
+
+One time starting point for Content Area developers, thereafter works independantly.
+
+Use File - UII Extensions - Save As JSP to save this file as a JSP Page and this automagically
+
+generates the HTML file. Upload the .htm file to the Mockup Server.
+
+
+
+----------->
+
+
+
+
+
+<!---- WARNING: Uncomment this in the JSP file to make it work properly. -----------------
+
+<%@ taglib uri="/WEB-INF/tlds/uii-contentarea-taglib.tld" prefix="uii" %>
+
+
+
+<%
+
+
+
+	String contextPath = request.getContextPath();
+
+
+
+%>
+
+--->
+
+
+
+
+
+<table width="100%" height="100%" border="0" cellspacing="0" cellpadding="5"  BGCOLOR="E1E1E1">
+
+    <tr> 
+
+	<td width="100%" align="center" valign="center"> 
+
+	 <uii:form action="" >
+
+	  <table border="0" cellspacing="1" cellpadding="2" bgcolor="#FFFFFF">
+
+        <tr> 
+
+          <td colspan="8" nowrap background="/RSRC/en_US/images/vertlines_dk.gif" bgcolor="#669999">
+
+		<uii:img page="/RSRC/en_US/images/shim.gif" /></td>
+
+        </tr>
+
+        <tr> 
+
+          <td colspan=8 bgcolor="silver"> 
+
+            <table border="0"   >
+
+              <tr> 
+
+                  <td nowrap>Data Source:</td>
+
+                  <td> 
+
+                    <uii:select property="datasource">
+
+                      <uii:option value="VLAN selected 1">VLAN 1</uii:option>
+
+                      <uii:option value="VLAN 1002">VLAN 1002</uii:option>
+
+                    </uii:select>
+
+                  </td>
+
+                  <td align="right" nowrap   >Filter Source:</td>
+
+                  <td> 
+
+                    <uii:select property="select">
+
+                      <uii:option>Address</uii:option>
+
+                      <uii:option>Input Pkts</uii:option>
+
+                      <uii:option>Output Pkts</uii:option>
+
+                      <uii:option>Input Octets</uii:option>
+
+                      <uii:option>Output Octets</uii:option>
+
+                      <uii:option>Broadcasts</uii:option>
+
+                      <uii:option>Multicasts</uii:option>
+
+                    </uii:select>
+
+                  </td>
+
+                  <td> 
+
+                    <uii:text property="textfield" />
+
+                  </td>
+
+                  <td>
+
+				    <uii:button value="Filter" />		
+
+				  </td>
+
+              </tr>
+
+            </table>
+
+          </td>
+
+        </tr>
+
+		<uii:mockupData>
+
+          <tr align="right" bgcolor="#CCCCCC"> 
+
+            <td noWrap colspan="8">Showing 1-10 of 200 records</td>
+
+          </tr>
+
+		</uii:mockupData>
+
+		<uii:pagingTable id="" indexId="" currentPageName="currentPage" rowsperpage="rowsperpage" multipleRowIDName="" >
+
+			<uii:column header=" " checkBoxName=" ">
+
+				<uii:multibox property=" " value="<%=String.valueOf(test)%>" />
+
+			</uii:column>			
+
+			<uii:column header="Address" property="" />
+
+			<uii:column header="Input Pkts" property="" />
+
+			<uii:column header="Output Pkts" property="" />
+
+			<uii:column header="Input Octets" property="" />
+
+			<uii:column header="Output Octets" property="" />
+
+			<uii:column header="Broadcasts" property="" />		
+
+		</uii:pagingTable>
+
+		<uii:mockupData>
+
+		<tr> 
+
+          <td noWrap height=22 background="/RSRC/en_US/images/dia_title_bg2.gif" align="center" width="20"> 
+
+            #</td>
+
+          <td noWrap height=22 background="/RSRC/en_US/images/dia_title_bg2.gif" align="center">&nbsp;</td>
+
+          <td noWrap height=22 background="/RSRC/en_US/images/dia_title_bg2.gif" width="100" align="center"> 
+
+            <b><a href="#">Address</a></b></td>
+
+          <td noWrap height=22 background="/RSRC/en_US/images/dia_title_bg2.gif" width="69" align="center"> 
+
+            <b><a href="#">Input Pkts</a></b></td>
+
+          <td noWrap height=22 background="/RSRC/en_US/images/dia_title_bg2.gif" width="100" align="center"> 
+
+            <b><a href="#">Output Pkts <img src="/RSRC/en_US/images/ico_sort_dn.gif" border="0"></a></b></td>
+
+          <td noWrap height=22 background="/RSRC/en_US/images/dia_title_bg2.gif" width="83" align="center"> 
+
+            <b><a href="#">Input Octets</a></b></td>
+
+          <td noWrap height=22 background="/RSRC/en_US/images/dia_title_bg2.gif" width="94" align="center"> 
+
+            <b><a href="#">Output Octets</a></b></td>
+
+          <td noWrap height=22 background="/RSRC/en_US/images/dia_title_bg2.gif" width="75" align="center"> 
+
+            <b><a href="#">Broadcasts</a></b></td>
+
+        </tr>
+
+        <tr> 
+
+          <td nowrap bgcolor="#f0f0f0" align="right" width="20">1.</td>
+
+          <td nowrap bgcolor="#f0f0f0" align="center"> 
+
+            <input type="checkbox" name="checkbox" value="checkbox">
+
+          </td>
+
+          <td nowrap bgcolor="#f0f0f0" width="100"><a href="#">00 10 7B 47 1D 
+
+            70</a></td>
+
+          <td align=right bgcolor="#f0f0f0" width="69">2836917</td>
+
+          <td align=right bgcolor="#f0f0f0" width="100">3034942</td>
+
+          <td align=right bgcolor="#f0f0f0" width="83">1519361348</td>
+
+          <td align=right bgcolor="#f0f0f0" width="94">925276352</td>
+
+          <td align=right bgcolor="#f0f0f0" width="75"> 47</td>
+
+        </tr>
+
+        <tr> 
+
+          <td nowrap bgcolor="#cecfce" align="right" width="20">2.</td>
+
+            <td nowrap bgcolor="#cecfce" align="center">
+
+              <input type="checkbox" name="checkbox2" value="checkbox">
+
+            </td>
+
+          <td nowrap bgcolor="#cecfce" width="100"><a href="#">00 A0 CC 27 4D 
+
+            F3</a></td>
+
+          <td align=right bgcolor="#cecfce" width="69">2029145</td>
+
+          <td align=right bgcolor="#cecfce" width="100">2084286</td>
+
+          <td align=right bgcolor="#cecfce" width="83">915542064</td>
+
+          <td align=right bgcolor="#cecfce" width="94">1225342986</td>
+
+          <td align=right bgcolor="#cecfce" width="75">163</td>
+
+        </tr>
+
+        <tr> 
+
+          <td nowrap bgcolor="#f0f0f0" align="right" width="20">3.</td>
+
+            <td nowrap bgcolor="#f0f0f0" align="center">
+
+              <input type="checkbox" name="checkbox3" value="checkbox">
+
+            </td>
+
+          <td nowrap bgcolor="#f0f0f0" width="100"><a href="#">00 90 27 0F A0 
+
+            DD</a></td>
+
+          <td align=right bgcolor="#f0f0f0" width="69">1785302</td>
+
+          <td align=right bgcolor="#f0f0f0" width="100">1862213</td>
+
+          <td align=right bgcolor="#f0f0f0" width="83">803802552</td>
+
+          <td align=right bgcolor="#f0f0f0" width="94">1276671289</td>
+
+          <td align=right bgcolor="#f0f0f0" width="75">76</td>
+
+        </tr>
+
+        <tr> 
+
+          <td nowrap bgcolor="#cecfce" align="right" width="20">4.</td>
+
+            <td nowrap bgcolor="#cecfce" align="center">
+
+              <input type="checkbox" name="checkbox4" value="checkbox">
+
+            </td>
+
+          <td nowrap bgcolor="#cecfce" width="100"><a href="#" class="table">00 
+
+            E0 14 0E F7 C1</a></td>
+
+          <td align=right bgcolor="#cecfce" width="69">662801</td>
+
+          <td align=right bgcolor="#cecfce" width="100">698148</td>
+
+          <td align=right bgcolor="#cecfce" width="83">623927649</td>
+
+          <td align=right bgcolor="#cecfce" width="94">727498861</td>
+
+          <td align=right bgcolor="#cecfce" width="75">55</td>
+
+        </tr>
+
+        <tr> 
+
+          <td nowrap bgcolor="#f0f0f0" align="right" width="20">5.</td>
+
+            <td nowrap bgcolor="#f0f0f0" align="center">
+
+              <input type="checkbox" name="checkbox5" value="checkbox">
+
+            </td>
+
+          <td nowrap bgcolor="#f0f0f0" width="100"><a href="#">00 E0 14 0E F7 
+
+            BD</a></td>
+
+          <td align=right bgcolor="#f0f0f0" width="69">318522</td>
+
+          <td align=right bgcolor="#f0f0f0" width="100">320511</td>
+
+          <td align=right bgcolor="#f0f0f0" width="83"> 72201166</td>
+
+          <td align=right bgcolor="#f0f0f0" width="94">120193045</td>
+
+          <td align=right bgcolor="#f0f0f0" width="75">208</td>
+
+        </tr>
+
+        <tr> 
+
+          <td nowrap bgcolor="#cecfce" align="right" width="20">6.</td>
+
+            <td nowrap bgcolor="#cecfce" align="center">
+
+              <input type="checkbox" name="checkbox6" value="checkbox">
+
+            </td>
+
+          <td nowrap bgcolor="#cecfce" width="100"><a href="#">00 A0 CC 27 54 
+
+            81</a></td>
+
+          <td align=right bgcolor="#cecfce" width="69">178779</td>
+
+          <td align=right bgcolor="#cecfce" width="100">212222</td>
+
+          <td align=right bgcolor="#cecfce" width="83">18579860</td>
+
+          <td align=right bgcolor="#cecfce" width="94">37875565</td>
+
+          <td align=right bgcolor="#cecfce" width="75">16</td>
+
+        </tr>
+
+        <tr> 
+
+          <td nowrap bgcolor="#f0f0f0" align="right" width="20">7.</td>
+
+            <td nowrap bgcolor="#f0f0f0" align="center">
+
+              <input type="checkbox" name="checkbox7" value="checkbox">
+
+            </td>
+
+          <td nowrap bgcolor="#f0f0f0" width="100"><a href="#">00 60 F3 20 19 
+
+            87</a></td>
+
+          <td align=right bgcolor="#f0f0f0" width="69">378670</td>
+
+          <td align=right bgcolor="#f0f0f0" width="100">189460</td>
+
+          <td align=right bgcolor="#f0f0f0" width="83">25776384</td>
+
+          <td align=right bgcolor="#f0f0f0" width="94">27230858</td>
+
+          <td align=right bgcolor="#f0f0f0" width="75">0</td>
+
+        </tr>
+
+        <tr> 
+
+          <td nowrap bgcolor="#cecfce" align="right" width="20">8.</td>
+
+            <td nowrap bgcolor="#cecfce" align="center">
+
+              <input type="checkbox" name="checkbox8" value="checkbox">
+
+            </td>
+
+          <td nowrap bgcolor="#cecfce" width="100"><a href="#">00 30 96 2C 67 
+
+            50</a></td>
+
+          <td align=right bgcolor="#cecfce" width="69">0</td>
+
+          <td align=right bgcolor="#cecfce" width="100">178526</td>
+
+          <td align=right bgcolor="#cecfce" width="83">0</td>
+
+          <td align=right bgcolor="#cecfce" width="94">13126417</td>
+
+          <td align=right bgcolor="#cecfce" width="75"> 0</td>
+
+        </tr>
+
+        <tr> 
+
+          <td nowrap bgcolor="#f0f0f0" align="right" width="20">9.</td>
+
+            <td nowrap bgcolor="#f0f0f0" align="center">
+
+              <input type="checkbox" name="checkbox9" value="checkbox">
+
+            </td>
+
+          <td nowrap bgcolor="#f0f0f0" width="100"><a href="#">00 10 7B 39 F2 
+
+            D1</a></td>
+
+          <td align=right bgcolor="#f0f0f0" width="69">136281</td>
+
+          <td align=right bgcolor="#f0f0f0" width="100">170063</td>
+
+          <td align=right bgcolor="#f0f0f0" width="83">8726435</td>
+
+          <td align=right bgcolor="#f0f0f0" width="94">12402673</td>
+
+          <td align=right bgcolor="#f0f0f0" width="75">5</td>
+
+        </tr>
+
+        <tr> 
+
+          <td nowrap bgcolor="#cecfce" align="right" width="20">10.</td>
+
+            <td nowrap bgcolor="#cecfce" align="center">
+
+              <input type="checkbox" name="checkbox10" value="checkbox">
+
+            </td>
+
+          <td nowrap bgcolor="#cecfce" width="100"><a href="#">00 D0 D3 3E E7 
+
+            87</a></td>
+
+          <td align=right bgcolor="#cecfce" width="69">247504</td>
+
+          <td align=right bgcolor="#cecfce" width="100">112687</td>
+
+          <td align=right bgcolor="#cecfce" width="83">229431829</td>
+
+          <td align=right bgcolor="#cecfce" width="94">45170402</td>
+
+          <td align=right bgcolor="#cecfce" width="75">54</td>
+
+        </tr>
+
+                <tr> 
+
+          <td colspan="8" nowrap bgcolor="#999999"><img src="/RSRC/en_US/images/shim.gif"></td>
+
+        </tr>
+
+        <tr> 
+
+            <td colspan=8 bgcolor="silver"> 
+
+              <table cellspacing=3 cellpadding=0 border=0   >
+
+                <tr> 
+
+                  <td nowrap><img src="/RSRC/en_US/images/shim.gif" width="40" height="5"></td>
+
+                  <td nowrap>Rows per page: 
+
+                    <select name="select2">
+
+                      <option selected>10</option>
+
+                      <option>20</option>
+
+                      <option>30</option>
+
+                      <option>40</option>
+
+                      <option>All</option>
+
+                    </select>
+
+                  </td>
+
+				  <td nowrap width="100%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+
+                  <td nowrap><b>&lt;&lt;</b> &nbsp;Page <b>1, <a href="#">2</a>, 
+
+                    <a href="#">3</a>, <a href="#">4</a>, <a href="#">5</a>, <a href="#">6</a>, 
+
+                    <a href="#">7</a>, <a href="#">8</a>, <a href="#">9</a>, <a href="#">10</a>,...</b>&nbsp;<a href="#"><b>&gt;&gt;</b></a></td>
+
+                </tr>
+
+              </table>
+
+            </td>
+
+        </tr>
+
+    </uii:mockupData>
+
+    <tr> 
+
+      <td colspan="8" nowrap bgcolor="#999999"><uii:img page="/RSRC/en_US/images/shim.gif"/></td>
+
+    </tr>
+
+    <tr bgcolor="silver"> 
+
+      <td colspan="8" > 
+
+        <table cellspacing=3 cellpadding=0 border=0 width="100%">
+
+			<tr>             
+
+				<td nowrap width="22"><uii:img page="/RSRC/en_US/images/shim.gif" width="22" height="5"/></td>
+
+				<td width="100%"><uii:img page="/RSRC/en_US/images/icons/arrow_pt_up.gif"/>Select 
+
+		              an item then take an action<uii:img page="/RSRC/en_US/images/icons/arrow_pt_right.gif"/></td>
+
+				<td> <uii:button property="action" value="Add" /> </td>
+
+				<td> <uii:button property="action" value="Edit" /> </td>
+
+			</tr>
+
+        </table>
+
+      </td>
+
+    </tr>
+
+     <tr> 
+
+          <td colspan="8" nowrap background="/RSRC/en_US/images/vertlines_dk.gif"><uii:img page="/RSRC/en_US/images/shim.gif" /></td>
+
+        </tr>
+
+      </table>
+
+	</uii:form>
+
+	</td>
+
+    <td valign="TOP" align="right">
+
+   		<uii:instructions>
+
+			<p> Enter the content area instructions here.</p>
+
+			<p>Enter the content area instructions here.</p>		
+
+   		</uii:instructions>		
+
+      </td>
+
+    </tr>
+
+</table>	
+

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+ <globalConfiguration>
+  <parameter name="adminPassword" value="admin"/>
+  <parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl"/>
+  <parameter name="sendXsiTypes" value="true"/>
+  <parameter name="sendMultiRefs" value="true"/>
+  <parameter name="sendXMLDeclaration" value="true"/>
+  <requestFlow>
+   <handler type="java:org.apache.axis.handlers.JWSHandler">
+    <parameter name="scope" value="session"/>
+   </handler>
+   <handler type="java:org.apache.axis.handlers.JWSHandler">
+    <parameter name="scope" value="request"/>
+    <parameter name="extension" value=".jwr"/>
+   </handler>
+  </requestFlow>
+ </globalConfiguration>
+ <handler name="LocalResponder" type="java:org.apache.axis.transport.local.LocalResponder"/>
+ <handler name="URLMapper" type="java:org.apache.axis.handlers.http.URLMapper"/>
+ <handler name="RPCDispatcher" type="java:org.apache.axis.providers.java.RPCProvider"/>
+ <handler name="Authenticate" type="java:org.apache.axis.handlers.SimpleAuthenticationHandler"/>
+ <handler name="MsgDispatcher" type="java:org.apache.axis.providers.java.MsgProvider"/>
+ <service name="Service" provider="java:RPC">
+  <parameter name="allowedMethods" value="*"/>
+  <parameter name="wsdlTargetNameSpace" value="http://api.sms.sesm.cisco.com"/>
+  <parameter name="className" value="com.cisco.sesm.sms.extensions.ServiceAPI"/>
+ </service>
+ <service name="Lease" provider="java:RPC">
+  <parameter name="allowedMethods" value="*"/>
+  <parameter name="wsdlTargetNameSpace" value="http://api.sms.sesm.cisco.com"/>
+  <parameter name="className" value="com.cisco.sesm.sms.extensions.LeaseAPI"/>
+ </service>
+ <service name="AdminService" provider="java:MSG">
+  <parameter name="allowedMethods" value="AdminService"/>
+  <parameter name="enableRemoteAdmin" value="false"/>
+  <parameter name="className" value="org.apache.axis.utils.Admin"/>
+  <namespace>http://xml.apache.org/axis/wsdd/</namespace>
+ </service>
+ <service name="http://authentication.soap.security.cns.cisco.com" provider="java:RPC">
+  <parameter name="allowedMethods" value="*"/>
+  <parameter name="className" value="com.cisco.cns.security.soap.authentication.AuthenticationAPI"/>
+ </service>
+ <service name="Version" provider="java:RPC">
+  <parameter name="allowedMethods" value="getVersion"/>
+  <parameter name="className" value="org.apache.axis.Version"/>
+ </service>
+ <service name="Subscriber" provider="java:RPC">
+  <parameter name="allowedMethods" value="*"/>
+  <parameter name="wsdlTargetNameSpace" value="http://api.sms.sesm.cisco.com"/>
+  <parameter name="className" value="com.cisco.sesm.sms.extensions.SubscriberAPI"/>
+ </service>
+ <service name="Inventory" provider="java:RPC">
+  <parameter name="allowedMethods" value="*"/>
+  <parameter name="wsdlTargetNameSpace" value="http://api.sms.sesm.cisco.com"/>
+  <parameter name="className" value="com.cisco.sesm.sms.extensions.InventoryAPI"/>
+ </service>
+ <transport name="http">
+  <requestFlow>
+   <handler type="URLMapper"/>
+   <handler type="java:org.apache.axis.handlers.http.HTTPAuthHandler"/>
+  </requestFlow>
+ </transport>
+ <transport name="local">
+  <responseFlow>
+   <handler type="java:org.apache.axis.transport.local.LocalResponder"/>
+  </responseFlow>
+ </transport>
+ <typeMapping encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" type="java:com.cisco.cns.security.soap.common.SVersion" qname="ns1:sVersion" xmlns:ns1="http://common.soap.security.cns.cisco.com"/>
+ <typeMapping encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" type="java:com.cisco.cns.security.soap.common.SResponse" qname="ns2:sResponse" xmlns:ns2="http://common.soap.security.cns.cisco.com"/>
+ <typeMapping encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" serializer="org.apache.axis.encoding.ser.EnumSerializerFactory" deserializer="org.apache.axis.encoding.ser.EnumDeserializerFactory" type="java:com.cisco.cns.security.soap.common.EResponseStatus" qname="ns3:eResponseStatus" xmlns:ns3="http://common.soap.security.cns.cisco.com"/>
+ <typeMapping encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" type="java:com.cisco.cns.security.soap.common.SecurityToken" qname="ns4:SecurityToken" xmlns:ns4="http://common.soap.security.cns.cisco.com"/>
+ <typeMapping encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" type="java:com.cisco.cns.security.soap.common.InvalidUserOrCredentialException" qname="ns5:InvalidUserOrCredentialException" xmlns:ns5="http://common.soap.security.cns.cisco.com"/>
+ <typeMapping encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" type="java:com.cisco.cns.security.soap.common.SExceptionData" qname="ns6:sExceptionData" xmlns:ns6="http://common.soap.security.cns.cisco.com"/>
+ <typeMapping encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" serializer="org.apache.axis.encoding.ser.EnumSerializerFactory" deserializer="org.apache.axis.encoding.ser.EnumDeserializerFactory" type="java:com.cisco.cns.security.soap.common.EErrorCategory" qname="ns7:eErrorCategory" xmlns:ns7="http://common.soap.security.cns.cisco.com"/>
+ <typeMapping encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" type="java:com.cisco.cns.security.soap.common.CNSException" qname="ns8:CNSException" xmlns:ns8="http://common.soap.security.cns.cisco.com"/>
+ <typeMapping encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" type="java:com.cisco.cns.security.soap.common.NotAuthorizedException" qname="ns9:NotAuthorizedException" xmlns:ns9="http://common.soap.security.cns.cisco.com"/>
+ <beanMapping languageSpecificType="java:com.cisco.sesm.sms.types.ServiceInfo" qname="ns10:ServiceInfo" xmlns:ns10="http://types.sms.sesm.cisco.com"/>
+ <beanMapping languageSpecificType="java:com.cisco.sesm.sms.types.SubscriberInfo" qname="ns11:SubscriberInfo" xmlns:ns11="http://types.sms.sesm.cisco.com"/>
+ <beanMapping languageSpecificType="java:com.cisco.sesm.sms.types.PortInfo" qname="ns12:PortInfo" xmlns:ns12="http://types.sms.sesm.cisco.com"/>
+ <beanMapping languageSpecificType="java:com.cisco.sesm.sms.types.LeaseInfo" qname="ns13:LeaseInfo" xmlns:ns13="http://types.sms.sesm.cisco.com"/>
+ <beanMapping languageSpecificType="java:com.cisco.sesm.sms.types.DeviceInfo" qname="ns14:DeviceInfo" xmlns:ns14="http://types.sms.sesm.cisco.com"/>
+ <beanMapping languageSpecificType="java:com.cisco.sesm.sms.types.SwitchInfo" qname="ns15:SwitchInfo" xmlns:ns15="http://types.sms.sesm.cisco.com"/>
+ <beanMapping languageSpecificType="java:com.cisco.sesm.sms.types.NetworkDeviceInfo" qname="ns16:NetworkDeviceInfo" xmlns:ns16="http://types.sms.sesm.cisco.com"/>
+ <beanMapping languageSpecificType="java:com.cisco.sesm.sms.types.EdgeDeviceInfo" qname="ns17:EdgeDeviceInfo" xmlns:ns17="http://types.sms.sesm.cisco.com"/>
+ <beanMapping languageSpecificType="java:com.cisco.sesm.sms.types.DHCPServerInfo" qname="ns18:DHCPServerInfo" xmlns:ns18="http://types.sms.sesm.cisco.com"/>
+ <beanMapping languageSpecificType="java:com.cisco.sesm.sms.types.ConnectInfo" qname="ns19:ConnectInfo" xmlns:ns19="http://types.sms.sesm.cisco.com"/>
+</deployment>

@@ -1,0 +1,32 @@
+# Set root category priority to DEBUG and its appenders.
+log4j.rootCategory=DEBUG, ConsoleLog, dailyLog
+
+# ConsoleLog is set to be a ConsoleAppender which outputs to System.out.
+log4j.appender.ConsoleLog=org.apache.log4j.ConsoleAppender
+
+# FileLog is set to be a FileAppender which outputs to MyApp.log.
+log4j.appender.dailyLog=org.apache.log4j.DailyRollingFileAppender
+log4j.appender.dailyLog.File=ettxAdminServer.log
+log4j.appender.dailyLog.DatePattern='.'yyyy-MM-dd
+
+# ConsoleLog uses PatternLayout.
+log4j.appender.ConsoleLog.layout=org.apache.log4j.PatternLayout
+#log4j.appender.Console.layout.ConversionPattern=%-4r [%t] %-5p %c %x - %m%n
+log4j.appender.ConsoleLog.layout.ConversionPattern=%d %-5p %c{1}.%M() - %m%n
+
+# dailyLog uses PatternLayout.
+log4j.appender.dailyLog.layout=org.apache.log4j.PatternLayout
+#log4j.appender.dailyLog.layout.ConversionPattern=%d [%t] %-5p %c{1}.%M() - %m%n
+log4j.appender.dailyLog.layout.ConversionPattern=%d %-5p %c{1}.%M() - %m%n
+
+#####Set information for auditLog
+log4j.logger.com.cisco.ettx.admin.auditLog.eventLog=INFO, auditLog
+
+log4j.appender.auditLog=com.cisco.ettx.admin.auditlog.FilePurgeAppender
+log4j.appender.auditLog.fileName=ettxEvent.log
+log4j.appender.auditLog.DatePattern='.'yyyy-MM-dd
+log4j.appender.auditLog.layout=org.apache.log4j.PatternLayout
+log4j.appender.auditLog.layout.ConversionPattern=%d %-5p %c{1}.%M() - %m%n
+
+log4j.logger.org.apache.axis=INFO
+log4j.logger.com.cisco.sesm.sms=INFO

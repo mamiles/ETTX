@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XML Spy v4.3 U (http://www.xmlspy.com) by Chandrika Ramanujam (Cisco Systems, Inc.) -->
+<SMS_TASK NAME="DeleteSubscriberDevice" 
+	SERVICE="com.cisco.ettx.admin.collengine.sms.SubscriberService">
+	<ATTRIBUTE NAME="subscriberID" ATTR_MAP="subscriberID"/>
+	<ATTRIBUTE NAME="subsDevice" ATTR_MAP="subsDevice"/>
+</SMS_TASK>

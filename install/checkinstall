@@ -1,0 +1,130 @@
+# Checking for patches
+
+if [ $# -eq 1 ]; then
+	PATCHFILE=$1
+else
+	PATCHFILE=$INST_DATADIR/$PKG/install/patches.dat
+fi
+if [ ! -f $PATCHFILE ]; then
+	echo "Required file, patches.dat, is missing"
+	echo "Aborting the ETTX Admin App Installation...."
+	exit 1
+fi
+
+osVersion=`uname -r`
+
+if [ $osVersion = "5.8" ]; then
+	echo "\nChecking for patches on Solaris $osVersion ...\n"
+else
+	echo "\nSolaris $osVersion is currently installed."
+	echo "ETTX requires Solaris version 5.8"
+	echo "The installation will be aborted."
+	exit 1
+fi
+
+tempGrep=/tmp/tempGrep.$$
+
+patchTmpFile=/tmp/showrev.$$
+/usr/sbin/patchadd -p \
+	| /usr/bin/sed 's%^Patch: %%; s% .*%%; s%-% %' \
+	| sort -k 1,2n \
+	>$patchTmpFile
+
+recommendedCount=0
+requiredCount=0
+missing=no
+
+/usr/bin/sed '/^#/d; /^ *$/d' < $PATCHFILE \
+	| while read component patchOsVersion patchNum \
+		patchRev required description
+	do
+		if [ "$patchOsVersion" = "$osVersion" ]; then
+			/usr/bin/grep $patchNum $patchTmpFile | tail -1 > $tempGrep
+			foundPatchNum=`cat $tempGrep | /usr/bin/awk '{print $1}'`
+			foundPatchRev=`cat $tempGrep | /usr/bin/awk '{print $2}'`
+			rm -f $tempGrep
+			# echo "$patchNum-$patchRev found: $foundPatchNum $foundPatchRev"
+			if [ "$foundPatchNum" = "" ]; then
+				if [ "$missing" = "no" ]; then
+	      				echo "The following patches are either missing or out of date: "
+	      				echo
+	      				missing=yes
+	    			fi
+	    			if [ "$required" = "required" ]; then
+	      				requiredCount=`expr $requiredCount + 1`
+	      				echo "    Required patch $patchNum-$patchRev is missing"
+	    			else
+	      				recommendedCount=`expr $recommendedCount + 1`
+	      				echo "    Recommended patch $patchNum-$patchRev is missing"
+	    			fi
+          		elif [ $foundPatchRev -lt $patchRev ]; then
+	    			if [ "$missing" = "no" ]; then
+	      				echo "The following patches are either missing or out of date: "
+	      				echo
+	      				missing=yes
+	    			fi
+	    			if [ x$required = xrequired ]; then
+	      				requiredCount=`expr $requiredCount + 1`
+	      				echo "    Required patch $patchNum-$patchRev is out of date"
+	    			else
+	      				recommendedCount=`expr $recommendedCount + 1`
+	      				echo "    Recommended patch $patchNum-$patchRev is out of date"
+	    			fi
+          		fi
+        	fi
+        	echo "$requiredCount $recommendedCount" >/tmp/patchCount.$$
+	done
+requiredCount=`cat /tmp/patchCount.$$ | /usr/bin/awk '{print $1}'`
+recommendedCount=`cat /tmp/patchCount.$$ | /usr/bin/awk '{print $2}'`
+rm -f /tmp/patchCount.$$
+if [ $requiredCount -gt 0 ]; then
+    echo
+    echo "Since required patches on this machine are either out-of-date"
+    echo "or not installed, ETTX should not proceed with the installation. "
+    echo "Please go to Sun's Java 2 SDK v1.4.1 site at "
+    echo "(http://sunsolve.sun.com/pub-cgi/show.pl?target=patches/J2SE)"
+    echo "to download the required patches for Java.  It is also"
+    echo "recommended that you download the latest recommended Patch Cluster"
+    echo "for Solaris at:"
+    echo
+    echo "http://sunsolve.sun.com/pub-cgi/show.pl?target=patches/patch-access"
+    echo
+    echo "To install the Solaris patches, please refer to the Cisco ETTX "
+    echo "Installation Guide for the complete Solaris patch installation"
+    echo "procedure."
+    echo
+    echo "NOTE: The latest Patch Cluster may not contain all the "
+    echo "necessary patches."
+    echo
+    ans=`ckyorn -d n \
+	-p "Would you like to continue installing ETTX anyway "` || exit $?
+    if [ "$ans" = "y" -o "$ans" = "yes" -o "$ans" = "Y" -o "$ans" = "YES" ]; then
+        echo "\nContinuing install.  Please update patches soon.\n"
+    else
+    	rm -f $patchTmpFile
+    	exit 1
+    fi
+elif [ $recommendedCount -gt 0 ]; then
+    echo
+    echo "Since none of these missing or out-of-date patches are Required you"
+    echo "may continue with the ETTX installation.  It is, however, "
+    echo "recommended that you go to Sun's site"
+    echo "(http://sunsolve.sun.com/pub-cgi/show.pl?target=patches/patch-access)"
+    echo "to download the latest Patch Cluster."
+    echo
+    echo "To install the Solaris patches, please refer to the Cisco ETTX "
+    echo "Installation Guide for the complete Solaris patch installation"
+    echo "procedure."
+    echo
+    echo "NOTE: The latest Patch Cluster may not contain all the "
+    echo "necessary patches."  
+    echo
+else
+    echo
+    echo "All necessary patches are installed"
+    echo
+fi
+
+rm -f $patchTmpFile
+
+exit 0

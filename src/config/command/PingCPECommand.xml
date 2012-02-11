@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XML Spy v4.3 U (http://www.xmlspy.com) by Chandrika Ramanujam (Cisco Systems, Inc.) -->
+<COMMAND_HANDLER TASK_NAME="PING_CPE">
+	<COMMAND>
+		<PART VALUE="/usr/sbin/ping "/>
+		<PART ATTR_MAP="cpeIPAddress"/>
+	</COMMAND>
+	<OUTPUT_PARSER PARSER_CLASS="com.cisco.ettx.admin.collengine.command.NoParser">
+		<OUTPUT_ATTR>pingOutput</OUTPUT_ATTR>
+	</OUTPUT_PARSER>
+	<ACCESS ACCESS_CLASS="com.cisco.ettx.admin.collengine.command.LocalHostAccess"/>
+</COMMAND_HANDLER>

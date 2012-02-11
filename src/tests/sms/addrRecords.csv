@@ -1,0 +1,5 @@
+Id,postalAddress,postalLocale,postalRegion,postalCode,switchId,portInterface
+addr1,"12515, Research Blvd",Austin,TX,78759,"10.2.1.2","Fast Ethernet 0/1"
+addr2,"12500, Research Blvd",Austin,TX,"78759","10.2.1.2","Fast Ethernet 0/1"
+addr3,"12500, Research Blvd","Austin","TX","78758","10.2.1.2","Fast Ethernet 0/2"
+addr4,"725, Alder Ave","San Jose","CA","95035","10.2.1.1","Giga Ethernet 0/2"

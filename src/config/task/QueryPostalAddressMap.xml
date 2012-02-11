@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XML Spy v4.3 U (http://www.xmlspy.com) by Chandrika Ramanujam (Cisco Systems, Inc.) -->
+<TASK NAME="QUERY_POSTAL_ADDRESS_MAP">
+	<COLLECTION ORDER="1">
+		<HANDLER>com.cisco.ettx.admin.collengine.sms.SMSDataCollector</HANDLER>
+		<COMPONENT_TASK>QueryPostalAddressMap</COMPONENT_TASK>
+	</COLLECTION>
+	<OUTPUT_DEFINITION>
+		<ATTRIBUTE NAME="postalAddressMaps" COLLECTION="true"/>
+	</OUTPUT_DEFINITION>
+</TASK>

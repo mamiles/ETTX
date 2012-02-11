@@ -1,0 +1,845 @@
+<% String contextPath = request.getContextPath(); %>
+<script language="JavaScript" src="<%=contextPath%>/scripts/utils.js"></script>
+<BODY LANGUAGE=JavaScript onload="return window_onload()"/>
+<!-- IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT
+  -- IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT
+  --
+  -- IF YOU ARE SEEING THIS COMMENT AND YOU ARE NOT EDITTING A TEMPLATE FILE STOP
+  -- EDITING AND GO EDIT THE TEMPLATE FILE ASSOCIATED WITH IT.
+  -->
+
+<%@ taglib uri="/WEB-INF/tlds/uii-contentarea-taglib.tld" prefix="uii" %>
+<%@ page import="com.cisco.dslnms.gui.web.beans.helper.generic.*" %>
+<%@ page import="com.cisco.dslnms.gui.web.util.*" %>
+<%@ page import="com.cisco.dslnms.gui.web.actions.BaseProvisioningAction" %>
+<%@ page import="java.util.*" %>
+<%@ page import="java.lang.reflect.*" %>
+<%@ page import="com.cisco.dslnms.gui.web.actions.WizardAction" %>
+<%@ page import="com.cisco.dslnms.actclass.*" %>
+
+<!-- #BeginEditable "beanName" -->
+<jsp:useBean id="deviceProvisioningFB" scope="session" class="com.cisco.dslnms.gui.web.beans.DeviceProvisioningFormBean"/>
+<%
+	int theFBSize = deviceProvisioningFB.size();
+	com.cisco.dslnms.gui.web.beans.helper.generic.ObjectDescriptor theObjectDescriptor = deviceProvisioningFB.getObjectDescriptor();
+%>
+<!-- #EndEditable -->
+<%
+	String theButtonAction = WizardAction.getWizardAction(request);
+	String provMode = WizardAction.getWizardProvMode(request);
+	String provString = "";
+	if (provMode != null) {
+		if (provMode.equals(WebGuiConstants.SUBSCRIBER_PROV_MODE)) {
+			provString = "Subscriber Provisioning - ";
+		} else if (provMode.equals(WebGuiConstants.DEVICE_PROV_MODE)) {
+			provString = "Device Provisioning - ";
+		}
+	}
+%>
+
+<!-- #BeginEditable "extraGlobalCode" -->
+<%
+	boolean disableSelectors = false;
+%>
+<!-- #EndEditable -->
+
+<script language="JavaScript" src="<%=contextPath%>/uii/jsrsClient.js"></script> 
+
+<table width="100%" height="100%" border="0" cellspacing="0" cellpadding="5"  BGCOLOR="E1E1E1" align="center">
+  
+<tr>     
+	
+<td width="100%" align="center" valign="middle"> 
+<!-- #BeginEditable "beanName8" -->
+<uii:layerDialog id="dialog1" currentLayer="<%=deviceProvisioningFB.getCurrentLayer()%>">
+<!-- #EndEditable -->
+<!-- #BeginEditable "actionName" -->
+<uii:form action=""> 
+<!-- #EndEditable -->
+              
+<table height="200" width="511" border="0" cellspacing="1" cellpadding="2" bgcolor="#FFFFFF">
+<tr> 
+   <td colspan="3" nowrap background="<%=contextPath%>/RSRC/en_US/images/vertlines_dk.gif" bgcolor="#669999"> 
+                    <uii:img page="/RSRC/en_US/images/shim.gif"/></td>
+</tr>
+<tr> 
+   <td noWrap height=22 background="<%=contextPath%>/RSRC/en_US/images/dia_title_bg2.gif" colspan="3" align="center"> 
+                    <b><%= provString%>Service Feature Data</b></td>
+</tr>
+
+<uii:layerOptions>
+   <tr> 
+	  <td nowrap bgcolor="#cecfce" colspan="1">&nbsp;Select A Service Feature: 
+	  		<uii:select property="selectedServiceFeature" disabled="<%= disableSelectors%>" onchange="UIIFormSubmit('uii_layer_id', 'dialog1');"> 
+                <uii:options property="sfList"></uii:options>
+            </uii:select>
+      </td>
+	  <td nowrap bgcolor="#cecfce" colspan="2"><uii:hidden property="selectedDevice"/></td>
+	</tr>
+
+</uii:layerOptions>
+
+<tr> 
+   <td noWrap height=22 background="<%=contextPath%>/RSRC/en_US/images/dia_title_bg2.gif" colspan="3" align="center"/> 
+</tr>
+
+
+<%
+	String layerName = "";
+	String style = "";
+	String deviceFdnProperty = "";
+	for (int i=0; i<theFBSize; i++) {
+		ServiceFeatureDescriptor sfDescriptor = theObjectDescriptor.getServiceFeature(i);
+		if (sfDescriptor.isSelected()) {
+			for(int t=0; t < sfDescriptor.size(); t++) {
+				DeviceDescriptor devDescriptor = sfDescriptor.getDeviceDescriptor(t);
+				layerName = sfDescriptor.getName() + "_" + devDescriptor.getName();
+				style = devDescriptor.getStyle(); 
+%>
+
+<uii:layerContents name="<%= layerName%>">
+			
+			<%
+				if (devDescriptor.getBlankScreenReason() != null &&
+					!devDescriptor.getBlankScreenReason().equals("")) {
+			%>
+				<tr> 
+					<td nowrap bgcolor="#cecfce" align="right">Error:</td>
+					<td width="100%" bgcolor="#cecfce"><%= devDescriptor.getBlankScreenReason()%></td>
+				</tr>
+			<%
+				}
+			%>
+			
+
+<!-- #BeginEditable "ForMainDataPageOnly" -->											
+			<%
+				// if subscriber privisioning then display a device fdn selection
+				if (provMode != null && provMode.equals(WebGuiConstants.SUBSCRIBER_PROV_MODE)) {
+					deviceFdnProperty = "objectDescriptor.serviceFeature" + i + ".device" + t + ".deviceFdn";
+					String selectorData = "data?" + LinkComponent.DEVICE_POPUP_TYPE + "#$" + deviceFdnProperty + 
+										", endpointtype?" + devDescriptor.getType() + ", rootlabel?Select a device";
+					String funcToCall = "return bringUpDeviceSelector(\'" + selectorData + "\');";
+			%>
+				<tr> 
+					<td nowrap bgcolor="#cecfce" align="right"><font color="#FF0000">* </font> Select Device:</td>
+					<td width="100%" bgcolor="#cecfce"><uii:text property="<%= deviceFdnProperty%>" regExp="/^[a-zA-Z0-9_=. //\\-\\@]+$/" errorMessage="invalid value for device FDN" readonly="true" size="40"/> </td>
+					<% 
+						if (theButtonAction != null && theButtonAction.equals(WebGuiConstants.BUTTON_ADD_SERVICE_ACTION)) {
+					%>
+						<td width="100%" bgcolor="#cecfce"><uii:button value="..." onclick="<%= funcToCall%>"/></td>
+					<% } %>
+				</tr>
+			<%
+				}
+			%>
+
+			<!-- If the style of the service feature is MultipleDataSet, all I need to display is a table 
+				This is a popup style. --> 
+			<%
+			if (style != null && style.equals(WebGuiConstants.MULTIPLE_DATA_SET)) {
+				String aStr = sfDescriptor.getName() + "_" + devDescriptor.getType() + "_MULTIPLE_SET";
+				String tableId = "TABLE_ID_" + aStr;
+				String tableName = "TABLE_NAME_" + aStr;
+				String tableDataName = "TABLE_DATA_" + aStr;
+			%>
+				<tr>
+					<td width="100%" bgcolor="#cecfce" colspan="3">
+						<uii:scrollingTable id="<%= tableId%>" tableName="<%= tableName%>"
+							name="<%= tableDataName%>" keyColumn="tableKey"
+							height="200" width="500"
+							selectionType="single">
+							<uii:stColumn header="tableKey" hide="true" property="tableKey"/>	
+							<%
+								for (int k=0; k<devDescriptor.size(); k++) {
+									String columnHeader = ((DisplayableComponent) devDescriptor.getComponent(k)).getDisplayableName();
+									String columnProperty = "column" + k + "Value";
+							%>
+									<uii:stColumn header="<%= columnHeader%>" property="<%= columnProperty%>" width="100"/> 
+							<% 	} %>
+						</uii:scrollingTable>
+					</td>
+				</tr>
+			<%
+			} else {
+			%>
+<!-- #EndEditable -->	
+
+			
+			<%		
+			for (int j=0; j<devDescriptor.size(); j++) {
+				DisplayableComponent aComponent = devDescriptor.getComponent(j);
+				if (aComponent == null) {
+					break;
+				}
+				
+				// if a component is invisible then just continue on to the next component
+				if (aComponent.isInvisible()) {
+					continue;
+				}
+				
+				boolean readonly = aComponent.isReadonly();
+				
+				String valueStr = "";
+				if (aComponent.isSingleValueComponent()) {
+					valueStr = ((SingleValueComponent) aComponent).getValue();
+				}
+				
+				String displayName = aComponent.getDisplayableName() + ":";
+				String propertyName = "objectDescriptor.serviceFeature" + i + ".device" + t + ".component" + j + ".value";
+
+				// determine if a tooltip has been provided, and if so build the tooltip field parameters
+				String toolTip = "";
+				String mouseover = "";
+				String mouseout = "";
+				String toolTipTxt = aComponent.getTooltip();
+				boolean toolTipProvided = false;
+				if ( toolTipTxt != null && !toolTipTxt.equals("") )
+				{
+				  toolTipProvided = true;
+				  String finalToolTipTxt = "";
+				  String ttfullclassname = "com.cisco.dslnms.gui.web.util.ToolTips";
+				  String ttclassname = "ToolTips";
+				  if ( toolTipTxt.startsWith(ttfullclassname) || toolTipTxt.startsWith(ttclassname) )
+				  {
+				    try
+					{
+                      // first, get an instance of Class representing the class containing the tooltip text
+					  // - there could be nested classes within ToolTips
+					  System.out.println("3_baseProvServiceFeatureData.dwt: toolTipTxt = " + toolTipTxt);
+					  String completeClassName = ttfullclassname;  // make sure we start at "com..."
+					  int preSubclassSeparatorIndex = toolTipTxt.indexOf(ttclassname) + ttclassname.length();
+					  int preFieldSeparatorIndex = toolTipTxt.lastIndexOf('.');
+					  System.out.println("3_baseProvServiceFeatureData.dwt: preSubclassSeparatorIndex = " + preSubclassSeparatorIndex);
+					  System.out.println("3_baseProvServiceFeatureData.dwt: preFieldSeparatorIndex = " + preFieldSeparatorIndex);
+					  String fieldName = toolTipTxt.substring(preFieldSeparatorIndex+1);
+					  if ( preSubclassSeparatorIndex < (preFieldSeparatorIndex-1) )
+					  {
+					    completeClassName += toolTipTxt.substring(preSubclassSeparatorIndex,preFieldSeparatorIndex);
+						System.out.println("3_baseProvServiceFeatureData.dwt: completeClassName = " + completeClassName);
+					  }
+					  System.out.println("3_baseProvServiceFeatureData.dwt: obtaining class from string {" + completeClassName + "}");
+					  Class ttClass = Class.forName(completeClassName);
+					  System.out.println("3_baseProvServiceFeatureData.dwt: obtaining field from class {" + ttClass + "} and field name " + fieldName);
+					  Field ttField = ttClass.getDeclaredField(fieldName);
+
+					  System.out.println("3_baseProvServiceFeatureData.dwt: obtaining object from field {" + ttField + "}");
+					  Object ttFieldObj = ttField.get(null);
+					  System.out.println("3_baseProvServiceFeatureData.dwt: narrowing Object to String");
+					  finalToolTipTxt = (String)ttFieldObj;
+					  System.out.println("3_baseProvServiceFeatureData.dwt: ToolTip string obtained \"" + finalToolTipTxt + "\"");
+					}
+					catch (Exception e)
+					{
+					  System.out.println("3_baseProvServiceFeatureData.dwt: exception caught {" + e + "}");
+					  finalToolTipTxt = toolTipTxt;
+					}
+				  }
+				  else
+				  {
+				    finalToolTipTxt = toolTipTxt;
+				  }
+				  mouseover = "drs('" + finalToolTipTxt + "'); return true;";
+				  mouseout = "nd(); return true;";
+				  toolTip = "onmouseover=\""
+				          + mouseover
+						  + "\" onmouseout=\""
+						  + mouseout
+						  + "\"";
+				}
+				
+			 	if (aComponent.isTextField()) { %>
+				  <tr> 
+				    <td nowrap bgcolor="#cecfce" align="right"><% if (aComponent.isRequired()) { %> <font color="#FF0000">* </font> <% } %><%= displayName%></td>
+					<% if (toolTipProvided ) { %> <td width="100%" bgcolor="#cecfce"><uii:text property="<%= propertyName%>" value="<%= valueStr%>" readonly="<%= readonly%>" size="40" onmouseover="<%= mouseover%>" onmouseout="<%= mouseout%>"/></td>
+					<% } else { %> <td width="100%" bgcolor="#cecfce"><uii:text property="<%= propertyName%>" value="<%= valueStr%>" readonly="<%= readonly%>" size="40"/></td> <% } %>
+				  </tr>
+			    <% } else if (aComponent.isPasswordField()) { %>
+				  <tr> 
+					<td nowrap bgcolor="#cecfce" align="right"><% if (aComponent.isRequired()) { %> <font color="#FF0000">* </font> <% } %><%= displayName%></td>
+					<% if (toolTipProvided ) { %> <td width="100%" bgcolor="#cecfce"><uii:password property="<%= propertyName%>" value="<%= valueStr%>" readonly="<%= readonly%>" size="40" onmouseover="<%= mouseover%>" onmouseout="<%= mouseout%>"/></td>
+					<% } else { %> <td width="100%" bgcolor="#cecfce"><uii:password property="<%= propertyName%>" value="<%= valueStr%>" readonly="<%= readonly%>" size="40"/></td> <% } %>
+				  </tr>
+			    <% } else if (aComponent.isIpAddressField()) { %>
+				  <tr> 
+					<td nowrap bgcolor="#cecfce" align="right"><% if (aComponent.isRequired()) { %> <font color="#FF0000">* </font> <% } %><%= displayName%></td>
+					<% if (toolTipProvided ) { %> <td width="100%" bgcolor="#cecfce"><uii:ip id="" property="<%= propertyName%>" allowBlankValue="true" value="<%= valueStr%>" readonly="<%= readonly%>" size="40" ipVersion="ipv4" onmouseover="<%= mouseover%>" onmouseout="<%= mouseout%>"/></td>
+					<% } else { %> <td width="100%" bgcolor="#cecfce"><uii:ip id="" property="<%= propertyName%>" allowBlankValue="true" value="<%= valueStr%>" readonly="<%= readonly%>" size="40" ipVersion="ipv4"/></td> <% } %>
+				  </tr>
+				<% } else if (aComponent.isNetMaskField()) { %>
+				  <tr> 
+					<td nowrap bgcolor="#cecfce" align="right"><% if (aComponent.isRequired()) { %> <font color="#FF0000">* </font> <% } %><%= displayName%></td>
+					<% if (toolTipProvided ) { %> <td width="100%" bgcolor="#cecfce"><uii:netMask id="" property="<%= propertyName%>" allowBlankValue="true" value="<%= valueStr%>" readonly="<%= readonly%>" format="1" onmouseover="<%= mouseover%>" onmouseout="<%= mouseout%>"/></td>
+					<% } else { %> <td width="100%" bgcolor="#cecfce"><uii:netMask id="" property="<%= propertyName%>" allowBlankValue="true" value="<%= valueStr%>" readonly="<%= readonly%>" format="1"/></td> <% } %>
+				  </tr>
+				<% } else if (aComponent.isIntegerField()) {
+				  propertyName = "objectDescriptor.serviceFeature" + i + ".device" + t + ".component" + j + ".intValue"; %>
+				  <tr> 
+					<td nowrap bgcolor="#cecfce" align="right"><% if (aComponent.isRequired()) { %> <font color="#FF0000">* </font> <% } %><%= displayName%></td>
+					<% if (toolTipProvided ) { %> <td width="100%" bgcolor="#cecfce"><uii:integer id="" property="<%= propertyName%>" allowBlankValue="true" value="<%= valueStr%>" readonly="<%= readonly%>" minValue="0" maxValue="4294967295" size="40" onmouseover="<%= mouseover%>" onmouseout="<%= mouseout%>"/></td>
+					<% } else { %> <td width="100%" bgcolor="#cecfce"><uii:integer id="" property="<%= propertyName%>" allowBlankValue="true" value="<%= valueStr%>" readonly="<%= readonly%>" minValue="0" maxValue="4294967295" size="40"/></td> <% } %>
+				  </tr>
+				<% } else if (aComponent.isSelectorComponent()) {
+				  String textFieldProperty = "objectDescriptor.serviceFeature" + i + ".device" + t + ".component" + j + ".value";
+				  Vector objTypes = ((SelectorComponent) aComponent).getPopupFilterList();
+				  String objTypesStr = "";
+				  for (int h=0; h<objTypes.size(); h++) {
+				  	if (h != 0) {
+						objTypesStr += "$%";
+					}
+				  	objTypesStr += (String) objTypes.elementAt(h);
+				  }
+				  String rootLabel = "Select a node";
+				  String popupType = ((SelectorComponent) aComponent).getButtonComponent().getInvokationType();
+				  String theEndpointType = ActEndPointMOC.attr_classIdentifier;
+				  if (popupType.equals(LinkComponent.INTERFACE_POPUP_TYPE)) {
+                		theEndpointType = ActPortMOC.attr_classIdentifier;
+						rootLabel = "Select an interface";
+            		} else if (popupType.equals(LinkComponent.SUB_INTERFACE_POPUP_TYPE)) {
+                		theEndpointType = ActEndPointMOC.attr_classIdentifier;
+						rootLabel = "Select an endpoint";
+            		} else if (popupType.equals(LinkComponent.DEVICE_POPUP_TYPE)) {
+                		theEndpointType = devDescriptor.getType();
+						rootLabel = "Select a device";
+            		}
+					String data = "nothing";
+					String selectorData = "data?" + popupType + "#$" + j + 
+										"#%endpointtype?" + theEndpointType + 
+										"#%rootfdn?" + devDescriptor.getDeviceFdn() + 
+										"#%roottype?" + devDescriptor.getType() +
+										"#%rootmodel?" + devDescriptor.getModel() +
+										"#%rootlabel?" + rootLabel +
+										"#%objecttypes?" + objTypesStr;
+					String funcToCall = "return bringUpSelector(\'" + selectorData + "\');";
+					String errorMsg = "invalid value for " + displayName;
+					String theTextValue = aComponent.getValue();
+			%>
+				<tr> 
+					<td nowrap bgcolor="#cecfce" align="right"><% if (aComponent.isRequired()) { %> <font color="#FF0000">* </font> <% } %><%= displayName%></td>
+					<% if (toolTipProvided ) { %> <td width="100%" bgcolor="#cecfce"><uii:text property="<%= textFieldProperty%>" regExp="/^[a-zA-Z0-9_=. //\\-\\@]+$/" errorMessage="<%= errorMsg%>" readonly="true" size="40" onmouseover="<%= mouseover%>" onmouseout="<%= mouseout%>"/> </td>
+					<% } else { %> <td width="100%" bgcolor="#cecfce"><uii:text property="<%= textFieldProperty%>" regExp="/^[a-zA-Z0-9_=. //\\-\\@]+$/" errorMessage="<%= errorMsg%>" readonly="true" size="40"/> </td> <% } %>
+					<td width="100%" bgcolor="#cecfce"><uii:button value="..." onclick="<%= funcToCall%>"/></td>
+				</tr>			
+			<% 
+				} else if (aComponent.isCheckBox()) {
+					CheckBoxComponent aCheckBox = (CheckBoxComponent) aComponent;
+					//out.print("\nCHECK BOX: " + aCheckBox);
+					String isChecked = String.valueOf(aCheckBox.getValue());
+					//out.print("\nIS CHECKED: " + isChecked);
+					boolean isDisabled = aCheckBox.isDisabled();
+					String funcName = "javascript:checkBox" + layerName + "_component" + "_" + j + "(this);";
+			 %>
+				<tr> 
+					<td nowrap bgcolor="#cecfce" align="right"><% if (aComponent.isRequired()) { %> <font color="#FF0000">* </font> <% } %><%= displayName%></td>
+					<% if (toolTipProvided ) { %> <td width="100%" bgcolor="#cecfce"><uii:checkbox property="<%= propertyName%>" value="<%= isChecked%>" disabled="<%= isDisabled%>" onclick="<%= funcName%>" onmouseover="<%= mouseover%>" onmouseout="<%= mouseout%>"/></td>
+					<% } else { %> <td width="100%" bgcolor="#cecfce"><uii:checkbox property="<%= propertyName%>" value="<%= isChecked%>" disabled="<%= isDisabled%>" onclick="<%= funcName%>"/></td> <% } %>
+				</tr>
+			<% 
+				} else if (aComponent.isTable()) {
+					String selectionType = "multiple";
+					if (theButtonAction != null && theButtonAction.equals(WebGuiConstants.BUTTON_VIEW_SERVICE_ACTION)) {
+						selectionType = "none";
+					}
+					TableComponent aTableComponent = (TableComponent) aComponent;
+					String aStr = sfDescriptor.getName() + "_" + devDescriptor.getType() + "_" +
+									 aTableComponent.getDisplayableName();
+					String tableId = "TABLE_ID_" + aStr;
+					String tableName = "TABLE_NAME_" + aStr;
+					String tableDataName = "TABLE_DATA_" + aStr;
+					Vector componentList = aTableComponent.getComponentList();
+			%>
+				<tr>
+					<td width="100%" bgcolor="#cecfce" colspan="3">
+						<uii:scrollingTable id="<%= tableId%>" tableName="<%= tableName%>"
+							name="<%= tableDataName%>" keyColumn="tableKey"
+							height="200" width="500"
+							selectionType="<%= selectionType%>">
+							<uii:stColumn header="tableKey" hide="true" property="tableKey"/>	
+							<%
+								String removeProperty = "column" + componentList.size() + "Value";
+								for (int k=0; k<componentList.size(); k++) {
+									DisplayableComponent columnComponent = (DisplayableComponent) componentList.elementAt(k);
+									// if it is invisible then ignore it
+									if (columnComponent.isInvisible()) {
+										continue;
+									}
+									String columnHeader = columnComponent.getDisplayableName();
+									String columnProperty = "column" + k + "Value";
+									if (columnComponent.isReadonly()) {
+							%>
+										<uii:stColumn header="<%= columnHeader%>" property="<%= columnProperty%>" width="100"/> 
+									<% } else { 
+										String dataType = "text";
+										if (columnComponent.isIpAddressField()) {
+											dataType = "ip";
+										} else if (columnComponent.isIntegerField()) {
+											dataType = "number";
+										} 
+										if (columnComponent.isDropdownList()) {
+											String choiceProperty = columnComponent.getVariableName();
+									%>
+										<uii:stColumn header="<%= columnHeader%>" property="<%= columnProperty%>" width="100" dataType="text" editType="choice" choiceValues="dropdownListChoices"/>
+										<% } else { %>
+										<uii:stColumn header="<%= columnHeader%>" property="<%= columnProperty%>" width="100" dataType="<%= dataType%>" editType="edit"/> 
+										<% } %>
+									<% } %>
+							<% 	} %>
+							
+							<% 
+								if (theButtonAction != null && theButtonAction.equals(WebGuiConstants.BUTTON_ADD_SERVICE_ACTION)) {
+							%>
+										<uii:stColumn header=" " property="<%= removeProperty%>" width="100"/> 
+							<%	} %>
+						</uii:scrollingTable>
+					</td>
+				</tr>
+			<% 
+				} else if (aComponent.isRadioButtonGroupComponent()) {
+					RadioButtonGroupComponent aButtonGroup = (RadioButtonGroupComponent) aComponent;
+					Vector componentList = aButtonGroup.getComponentList();
+					boolean isDisabled = aButtonGroup.isDisabled();
+			%>
+				<tr> 
+					<td nowrap bgcolor="#cecfce" align="right"><%= displayName%></td>
+					<td width="100%" bgcolor="#cecfce">
+					<%
+						for (int k=0; k<componentList.size(); k++) {
+							RadioButtonComponent aRadioButton = (RadioButtonComponent) componentList.elementAt(k);
+							String aRadioButtonValue = aRadioButton.getValue();
+							String funcName = "javascript:radioButton" + layerName + "_component" + "_" + j + "(this);";
+					%>
+						<uii:radio property="<%= propertyName%>" value="<%= aRadioButtonValue%>" disabled="<%= isDisabled%>" 
+									onclick="<%= funcName%>" mockupChecked="checked" /><%= aRadioButtonValue%>
+					<%	} 	%>
+					</td>
+				</tr>
+			<% 
+				} else if (aComponent.isDropdownList()) {
+					DropdownListComponent aDropdownComponent = (DropdownListComponent) aComponent;
+					boolean isDisabled = aDropdownComponent.isDisabled();
+					String valueListProperty = "objectDescriptor.serviceFeature" + i + ".device" + t + ".component" + j + ".valueList";
+			 %>
+				<tr> 
+					<td nowrap bgcolor="#cecfce" align="right"><%= displayName%></td>
+					<td width="100%" bgcolor="#cecfce"><uii:select property="<%= propertyName%>" disabled="<%= isDisabled%>"><uii:options property="<%= valueListProperty%>"/></uii:select></td>
+				</tr>	
+			<% } %>
+		<% } %>		<!-- END of FOR loop for deviceDescriptor.size() -->
+		<% } %>		<!-- END of else statement of MULTIPLE_DATA_SET style -->	
+	   <tr> 
+		  <td nowrap bgcolor="#cecfce" align="right" colspan="3" height="100%">&nbsp; </td>
+	   </tr>
+	   <tr bgcolor="999999"> 
+		  <td colspan="3" nowrap><uii:img page="/RSRC/en_US/images/shim.gif" /></td>
+	   </tr>
+	   <tr bgcolor="silver"> 
+		  <td colspan="3" bgcolor="silver"> 
+		  
+<!-- #BeginEditable "FormButtons" -->
+		  
+			 <table cellspacing=3 cellpadding=0 border=0 width="100%">
+			 <tr> 
+				<td width="100%"><uii:img page="/RSRC/en_US/images/shim.gif" width="20" height="5"/></td>
+				<% 
+					for (int j=0; j<devDescriptor.size(); j++) {
+						DisplayableComponent aComponent = devDescriptor.getComponent(j);
+						if (aComponent == null) {
+							break;
+						}
+						String displayName = aComponent.getDisplayableName();
+						if (aComponent.isActionButton()) {
+				%>
+						<td nowrap> <uii:button property="groupButtonAction" value="<%= displayName%>" /> </td>
+					<% } %>
+				<% } %>
+				
+				<% if (theButtonAction != null && theButtonAction.equals(WebGuiConstants.BUTTON_ADD_SERVICE_ACTION) &&
+						devDescriptor.getStyle() != null) {
+						if (devDescriptor.getStyle().equals(WebGuiConstants.MULTIPLE_DATA_SET_TABLE)) {
+							String useDefaultFuncName = "return useDefault" + layerName + "();";
+				%>
+						<td nowrap> <uii:button value="Use Default" onclick="<%= useDefaultFuncName%>"/> </td>
+				<%
+						} else if (devDescriptor.getStyle().equals(WebGuiConstants.MULTIPLE_DATA_SET)) {
+							String aStr = sfDescriptor.getName() + "_" + devDescriptor.getType() + "_MULTIPLE_SET";
+							String tableName = "TABLE_NAME_" + aStr;
+							String funcToCall = "return checkMultipleDataSetTableSelection(\'" + tableName + "\');";
+				%>
+						<td nowrap> <uii:button value="Add" submitValue="Add" property="popup"
+										popupWidth="400" popupHeight="500" popupFeatures="resizable=1"/> </td>
+						<td nowrap> <uii:button value="Edit" onclick="<%= funcToCall%>" submitValue="Edit" property="popup"
+										popupWidth="400" popupHeight="500" popupFeatures="resizable=1"/> </td>
+						<td nowrap> <uii:button value="Remove" onclick="<%= funcToCall%>" property="groupButtonAction"/> </td>
+				<%
+						} else {
+							String resetFuncName = "return reset" + layerName + "();";
+				%>
+	  					<td nowrap> <uii:button value="Reset Values" onclick="<%= resetFuncName%>"/> </td>
+				<% 		}
+					} 
+				%>
+			 </tr>
+			 </table>
+			 
+			 <table cellspacing=3 cellpadding=0 border=0 width="100%">
+			 <tr> 
+				<td width="100%"><uii:img page="/RSRC/en_US/images/shim.gif" width="20" height="5"/></td>
+				<td nowrap> <uii:button value="Config Preview" submitValue="ConfigPreview" property="popup" popupWidth="400" 
+							popupHeight="500" popupFeatures="resizable=1" /> </td>
+				<td nowrap> <uii:button value="Download Method" submitValue="ConfigDownload" property="popup" popupWidth="400" 
+							popupHeight="500" popupFeatures="resizable=1" /> </td>
+				<% if(com.cisco.dslnms.gui.web.util.InventoryMgrWrapper.getIsAdministator((SecurityService.SecurityToken)session.getAttribute(WebGuiConstants.SESSION_USER_TOKEN_ATTR))) { %>
+				<td nowrap> <uii:button value="Show XML" onclick="return showXML();"/> </td>
+				<% } %>
+				<td nowrap> <uii:button value="Show Template" onclick="return showTemplate();"/> </td>
+			 </tr>
+			 </table>
+
+<!-- #EndEditable -->		  			 
+			 
+		  </td>
+	   </tr>
+	   <tr> 
+		  <td colspan="3" nowrap bgcolor="#cecfce" background="<%=contextPath%>/RSRC/en_US/images/vertlines_dk.gif"> 
+						<uii:img page="/RSRC/en_US/images/shim.gif"/></td>
+	   </tr>
+	</uii:layerContents>
+		<% } %>
+	<% } %>
+<% } %>
+
+</table>
+</uii:form>
+</uii:layerDialog>
+</td>
+
+
+</tr>
+</table>
+
+<script language="JavaScript" type="text/javascript">
+
+<!--
+
+<!-- #BeginEditable "WizardSpecifics" -->
+	wizardItemHandlers.push("downloadConfirm(wizid, wizAction)");
+	function downloadConfirm(anId, anAction) {
+		if (anAction == 'Next') {
+			var theAnswer = confirm("Start downloading config to the device.\nProceed?");
+			if (!theAnswer) {
+				return false;
+			}
+		}
+		return true;
+	}
+<!-- #EndEditable -->
+
+function removeTableRow(aKeyValue) {
+	UIIFormSubmit("removeTableRow", aKeyValue);
+	return true;
+}
+
+// Functions to bring up the end-point selector
+function bringUpSelector(theDataStr) {
+	var theVals = theDataStr.split("#%");
+	var theData = theVals[0] + ", " + theVals[1] + ", " + theVals[2] + ", " + theVals[3] + ", " + theVals[4] + "," + theVals[5] + "," + theVals[6];
+	jsrsExecute("<%= contextPath %>/end_point_selector.do", showEndPointSelector, "doShowSelector", theData, false);
+	return false;
+}
+
+// Functions to bring up the device selector
+function bringUpDeviceSelector(theDataStr) {
+	jsrsExecute("<%= contextPath %>/end_point_selector.do", showEndPointSelector, "doShowSelector", theDataStr, false);
+	return false;
+}
+
+function showEndPointSelector() {
+    var theWindow = CJ_dialogWin('<%= contextPath %>/end_point_selector.do',
+                                    'EndPointSelector', 600, 425,
+                                    'status:yes;resizable:yes');
+}
+
+function handleSelectionResult(aValue) {
+    if(aValue == "null") {
+        // Cancel button was pressed, do nothing.
+    } else {
+		var theVals = aValue.split("#!/");
+		if (theVals.length >= 2) {
+			var dataVal = theVals[1];
+			var dataVals = dataVal.split("#$");
+			if (dataVals.length >= 1) {
+				var popupType = dataVals[0];
+				if (popupType == "Device") {
+					// this is a device selector
+					UIIFormSubmit("setDevicePopupValue", aValue);
+					return;
+				}
+			}
+		}
+		UIIFormSubmit("setPopupValue", aValue);
+    }
+}
+
+function checkMultipleDataSetTableSelection(aTableName) {
+	if (document.getElementById(aTableName) != null) {
+		if (document.getElementById(aTableName).value == "") {
+			alert("A record needs to be selected in order to perform the selected action.");
+			return false;
+		}
+	}
+	return true;
+}
+
+function showTemplate() {
+	// The template name is set in the .jsp files not in the template file because the template
+	// file does not have access to the bean.  The template name is set in the session and the
+	// show_template action gets it from there.
+	CJ_dialogWin('<%= contextPath %>/show_template.do',
+						'ShowTemplate', 625, 450,
+						'status=yes,resizable=yes')
+	return false;
+}
+
+function showXML() {
+	// The XML name is set in the .jsp files not in the template file because the template
+	// file does not have access to the bean.  The XML name is set in the session and the
+	// show_template action gets it from there.
+	CJ_dialogWin('<%= contextPath %>/show_xml.do',
+						'ShowXML', 625, 450,
+						'status=yes,resizable=yes')
+	return false;
+}
+
+// script generations
+<%
+	Hashtable funcToCallTable = new Hashtable();
+	for (int i=0; i<theFBSize; i++) {
+		ServiceFeatureDescriptor sfDescriptor = theObjectDescriptor.getServiceFeature(i);
+		if (sfDescriptor.isSelected()) {
+			for(int t=0; t < sfDescriptor.size(); t++) {
+				DeviceDescriptor devDescriptor = sfDescriptor.getDeviceDescriptor(t);
+				String layerName = sfDescriptor.getName() + "_" + devDescriptor.getName();
+				String partialName = "objectDescriptor.serviceFeature" + i + ".device" + t + ".component";
+				Vector funcToCall = new Vector();
+						
+				// generate script for check box component of this device descriptor
+				for (int j=0; j<devDescriptor.size(); j++) {
+					DisplayableComponent aComponent = devDescriptor.getComponent(j);
+					String funcName = layerName + "_component" + "_" + j;
+					
+					if (aComponent.isCheckBox() && !aComponent.isInvisible()) {
+						String aParam = "document.getElementById(\"" + partialName + j + ".value\")";
+						String aFuncToCall = "checkBox" + funcName + "(" + aParam+ ");";
+						String aFuncToCallOnload = "if (" + aParam + " != null) {\n" + aFuncToCall + "\n}\n";
+						funcToCall.add(aFuncToCallOnload);
+						
+						out.print("function checkBox" + funcName + "(aCheckBox) {");
+						out.print("\n");
+						CheckBoxComponent aCheckBox = (CheckBoxComponent) aComponent;
+						Vector disableList = aCheckBox.getDisableVarList();
+						//out.print("\talert(\"i am here: " + funcName + ". Disable size: " + disableList.size() + "\");\n");
+						if (disableList != null) {
+							for (int k=0; k<disableList.size(); k++) {
+								String varName = (String) disableList.elementAt(k);
+								int componentIndex = devDescriptor.getIndexOfVariable(varName);
+								DisplayableComponent theComponent = devDescriptor.getComponent(varName);
+								if (componentIndex != -1) {
+									if (theComponent.isIntegerField()) {
+										out.print("\tdocument.getElementById(\"" + partialName + componentIndex + ".intValue\").disabled = aCheckBox.checked;\n");
+									} else {
+										out.print("\tdocument.getElementById(\"" + partialName + componentIndex + ".value\").disabled = aCheckBox.checked;\n");
+									}
+								}
+							}
+						}
+						
+						Vector enableList = aCheckBox.getEnableVarList();
+						//out.print("\talert(\"i am here: " + funcName + ". enable size: " + enableList.size() + "\");\n");
+						if (enableList != null) {
+							for (int k=0; k<enableList.size(); k++) {
+								String varName = (String) enableList.elementAt(k);
+								int componentIndex = devDescriptor.getIndexOfVariable(varName);
+								DisplayableComponent theComponent = devDescriptor.getComponent(varName);
+								if (componentIndex != -1) {
+									if (theComponent.isIntegerField()) {
+										out.print("\tdocument.getElementById(\"" + partialName + componentIndex + ".intValue\").disabled = !aCheckBox.checked;\n");
+									} else {
+										out.print("\tdocument.getElementById(\"" + partialName + componentIndex + ".value\").disabled = !aCheckBox.checked;\n");
+									}
+								}
+							}
+						}
+						out.print("\n\treturn;");
+						out.print("\n}\n\n");
+					}
+					
+					// generate script for radio button as well
+					if (aComponent.isRadioButtonGroupComponent() && !aComponent.isInvisible()) {
+						String aParam = "document.getElementById(\"" + partialName + j + ".value\")";
+						String aFuncToCall = "radioButton" + funcName + "(" + aParam+ ");";
+						String aFuncToCallOnload = "if (" + aParam + " != null) {\n" + aFuncToCall + "\n}\n";
+						funcToCall.add(aFuncToCallOnload);
+						
+						out.print("function radioButton" + funcName + "(aButton) {");
+						out.print("\n");
+						out.print("\tif (aButton == null) { return; }\n");
+						//out.print("\talert(\"the button is: \" + aButton.value);\n");
+						
+						RadioButtonGroupComponent aRadioGroup = (RadioButtonGroupComponent) aComponent;
+						Vector componentList = aRadioGroup.getComponentList();
+						boolean isDisabled = aRadioGroup.isDisabled();
+						for (int k=0; k<componentList.size(); k++) {
+							RadioButtonComponent aRadioButton = (RadioButtonComponent) componentList.elementAt(k);
+							String aRadioButtonValue = aRadioButton.getValue();
+							out.print("\t if (aButton.value == \"" + aRadioButtonValue + "\") {\n");
+							Vector enableList = aRadioButton.getEnableVarList();
+							for (int h=0; h<enableList.size(); h++) {
+								String varName = (String) enableList.elementAt(h);
+								int componentIndex = devDescriptor.getIndexOfVariable(varName);
+								DisplayableComponent theComponent = devDescriptor.getComponent(varName);
+								if (componentIndex != -1) {
+									if (theComponent.isIntegerField()) {
+										out.print("\t\tdocument.getElementById(\"" + partialName + componentIndex + ".intValue\").disabled = false;\n");
+									} else {
+										out.print("\t\tdocument.getElementById(\"" + partialName + componentIndex + ".value\").disabled = false;\n");
+									}
+								}
+							}			
+							Vector disableList = aRadioButton.getDisableVarList();
+							for (int h=0; h<disableList.size(); h++) {
+								String varName = (String) disableList.elementAt(h);
+								int componentIndex = devDescriptor.getIndexOfVariable(varName);
+								DisplayableComponent theComponent = devDescriptor.getComponent(varName);
+								if (componentIndex != -1) {
+									if (theComponent.isIntegerField()) {
+										out.print("\t\tdocument.getElementById(\"" + partialName + componentIndex + ".intValue\").disabled = true;\n");
+									} else {
+										out.print("\t\tdocument.getElementById(\"" + partialName + componentIndex + ".value\").disabled = true;\n");
+									}
+								}
+							}
+							// I also need to disable the enable list of other buttons other than the one I am checking
+							Vector enableListOfOthers = aRadioGroup.getEnableListForButtonsOtherThan(aRadioButtonValue);
+							for (int h=0; h<enableListOfOthers.size(); h++) {
+								String varName = (String) enableListOfOthers.elementAt(h);
+								int componentIndex = devDescriptor.getIndexOfVariable(varName);
+								DisplayableComponent theComponent = devDescriptor.getComponent(varName);
+								if (componentIndex != -1) {
+									if (theComponent.isIntegerField()) {
+										out.print("\t\tdocument.getElementById(\"" + partialName + componentIndex + ".intValue\").disabled = true;\n");
+									} else {
+										out.print("\t\tdocument.getElementById(\"" + partialName + componentIndex + ".value\").disabled = true;\n");
+									}
+								}
+							}
+							out.print("\t}\n");					
+						}
+						
+						out.print("\n\treturn;");
+						out.print("\n}\n\n");
+					}
+				}
+				
+				// generate the script to reset values
+				if (theButtonAction != null && theButtonAction.equals(WebGuiConstants.BUTTON_ADD_SERVICE_ACTION) &&
+					devDescriptor.getStyle() != null && 
+					!devDescriptor.getStyle().equals(WebGuiConstants.MULTIPLE_DATA_SET_TABLE)) {
+					out.print("function reset" + layerName + "() {");
+					out.print("\n");
+					
+					if (devDescriptor.size() > 0) {
+						out.print("\tif (!confirm(\"Reset all fields to default values?\")) {\n");
+						out.print("\t\treturn false\n");
+						out.print("\t}\n\n");
+					}
+					
+					for (int j=0; j<devDescriptor.size(); j++) {
+						DisplayableComponent aComponent = devDescriptor.getComponent(j);
+						if (aComponent.isCheckBox() && !aComponent.isInvisible()) {
+							boolean defaultValue = ((CheckBoxComponent) aComponent).getDefaultBoolValue();
+							out.print("\tdocument.getElementById(\"" + partialName + j + ".value\").checked = " + defaultValue + ";\n");
+						} else if (aComponent.isSingleValueComponent() && !aComponent.isInvisible()) {
+							String defaultValue = ((SingleValueComponent) aComponent).getDefaultValue();
+							if (aComponent.isIntegerField()) {
+								out.print("\tdocument.getElementById(\"" + partialName + j + ".intValue\").value = \"" + defaultValue + "\";\n");
+							} else {
+								out.print("\tdocument.getElementById(\"" + partialName + j + ".value\").value = \"" + defaultValue + "\";\n");
+							}
+						} 
+						out.print("\n");
+					}
+					
+					out.print("\n\t//Calling these functions to disable/enable proper fields");
+					for (int j=0; j<funcToCall.size(); j++) {
+						String aFuncName = (String) funcToCall.elementAt(j);
+						out.print("\n\t" + aFuncName);
+					}
+					
+					out.print("\n\n\treturn false;");
+					out.print("\n}\n\n");
+				}
+				
+				// generate script to use default values for table
+				if (theButtonAction != null && theButtonAction.equals(WebGuiConstants.BUTTON_ADD_SERVICE_ACTION) &&
+					devDescriptor.getStyle() != null && 
+					devDescriptor.getStyle().equals(WebGuiConstants.MULTIPLE_DATA_SET_TABLE)) {
+					out.print("function useDefault" + layerName + "() {");
+					out.print("\n");
+					out.print("\tif (!confirm(\"Add a new row using default values?\")) {\n");
+					out.print("\t\treturn false\n");
+					out.print("\t}\n\n");
+					
+					for (int j=0; j<devDescriptor.size(); j++) {
+            			if (devDescriptor.getComponent(j).isTable()) {
+							TableComponent theTableComponent = (TableComponent) devDescriptor.getComponent(j);
+							Vector columnComponentList = theTableComponent.getComponentList();
+							String tableName = "TABLE_NAME_" + sfDescriptor.getName() + "_" + devDescriptor.getType() + "_" +
+												theTableComponent.getDisplayableName();
+							String submitStr = BaseProvisioningAction.EMPTY_TABLE_KEY + theTableComponent.getUIISubmitableString();
+							out.print("\n\tUIIFormSubmit(\"Use_Default\",\"" + tableName + "%#%" + submitStr + "\");");
+						}
+					}
+					
+					out.print("\n\n\treturn true;");
+					out.print("\n}\n\n");
+				}
+
+				funcToCallTable.put(sfDescriptor.getName() + "_" + devDescriptor.getName(), funcToCall);
+			}
+		}
+	}
+	
+	// generate the window_onload script
+	// Note that I can only call some functions based on the current selected service feature and device
+	out.print("\n\nwindow.onload=function() {\n");
+	out.print("\n\tif (window != null) {");
+	out.print("\n\t\tel = document.getElementById(\"heightRef\");");
+    out.print("\n\t\tif (el != null) {");
+    out.print("\n\t\t\twindow.top.resizeTo(el.offsetWidth+12, el.offsetHeight+50);");
+	out.print("\n\t\t}");
+	out.print("\n\t}");
+    out.print("\n\n");
+	
+	out.print("\n\tvar sfName = document.getElementById(\"selectedServiceFeature\").value;");
+	out.print("\n\tvar devName = document.getElementById(\"selectedDevice\").value;");
+	out.print("\n\tvar layerName = sfName + \"_\" + devName;");
+	//out.print("\n\talert(layerName);");
+	
+	Enumeration keys = funcToCallTable.keys();
+	while (keys.hasMoreElements()) {
+		String layerName = (String) keys.nextElement();
+		out.print("\n\tif (layerName == \"" + layerName + "\") {");
+		Vector funcsToCall = (Vector) funcToCallTable.get(layerName);
+		for (int i=0; i<funcsToCall.size(); i++) {
+			String aFuncName = (String) funcsToCall.elementAt(i);
+			out.print("\n\t\t" + aFuncName);
+		}
+		out.print("\n\t}");
+	}
+	out.print("\n\treturn disableWizardCancelAndBackValidation();");
+	out.print("\n}\n\n");
+	
+%>							
+					
+//-->
+</script>

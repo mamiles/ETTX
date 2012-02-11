@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XML Spy v4.3 U (http://www.xmlspy.com) by Chandrika Ramanujam (Cisco Systems, Inc.) -->
+<TASK NAME="DELETE_SUBSCRIBER_DEVICE">
+	<COLLECTION ORDER="1">
+		<HANDLER>com.cisco.ettx.admin.collengine.sms.SMSDataCollector</HANDLER>
+		<COMPONENT_TASK>DeleteSubscriberDevice</COMPONENT_TASK>
+	</COLLECTION>
+	<OUTPUT_DEFINITION>
+	</OUTPUT_DEFINITION>
+</TASK>

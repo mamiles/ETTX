@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+          "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+
+
+
+<!--
+
+     This is a blank Struts configuration file with an example
+
+     welcome action/page and other commented sample elements.
+
+
+
+     Tiles and the Struts Validator are configured using the factory defaults
+
+     and are ready-to-use.
+
+
+
+     NOTE: If you have a generator tool to create the corresponding Java classes
+
+     for you, you could include the details in the "form-bean" declarations.
+
+     Otherwise, you would only define the "form-bean" element itself, with the
+
+     corresponding "name" and "type" attributes, as shown here.
+
+-->
+
+
+
+
+
+<struts-config>
+
+
+
+<!-- ==================================== Data Source Configuration -->
+
+<!--
+
+ <data-sources>
+
+   <data-source>
+
+     <set-property
+
+        property="autoCommit"
+
+        value="false"/>
+
+     <set-property
+
+        property="description"
+
+        value="Example Data Source Configuration"/>
+
+     <set-property
+
+        property="driverClass"
+
+        value="org.postgresql.Driver"/>
+
+     <set-property
+
+        property="maxCount"
+
+        value="4"/>
+
+     <set-property
+
+        property="minCount"
+
+        value="2"/>
+
+     <set-property
+
+        property="password"
+
+        value="mypassword"/>
+
+     <set-property
+
+        property="url"
+
+        value="jdbc:postgresql://localhost/mydatabase"/>
+
+     <set-property
+
+        property="user"
+
+        value="myusername"/>
+
+   </data-source>
+
+ </data-sources>
+
+-->
+
+
+
+<!-- ======================================== Form Bean Definitions -->
+
+
+
+    <form-beans>
+
+		<!--
+        <form-bean name="loginForm"
+				   type="com.cisco.ettx.provisioning.form.LoginForm" />
+		-->
+
+		<form-bean name="loginForm" type="org.apache.struts.validator.DynaValidatorForm">
+  			<form-property name="username" type="java.lang.String"/>
+			<form-property name="password" type="java.lang.String"/>
+		</form-bean>
+		
+		<form-bean name="taskCheckForm" type="org.apache.struts.action.DynaActionForm">
+			<form-property name="taskId" type="java.lang.String"/>
+		</form-bean>
+		
+		<form-bean name="subscriberDetailsForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="availableServices" type="com.cisco.ettx.provisioning.action.ETTXServiceBean[]"/>
+			<form-property name="availableSwitches" type="com.cisco.ettx.provisioning.action.ETTXSwitchBean[]"/>
+			<form-property name="cardExpiry"	type="java.lang.String"/>
+			<form-property name="cardNumber" 	type="java.lang.String"/>
+			<form-property name="cardType" 		type="java.lang.String"/>
+			<form-property name="city" 			type="java.lang.String"/>
+			<form-property name="country" 		type="java.lang.String"/>
+			<form-property name="dob" 			type="java.lang.String"/>
+			<form-property name="forename" 		type="java.lang.String"/>
+			<form-property name="homeNumber" 	type="java.lang.String"/>
+			<form-property name="initials"  	type="java.lang.String"/>
+			<form-property name="mobileNumber" 	type="java.lang.String"/>
+			<form-property name="password" 		type="java.lang.String"/>
+			<form-property name="postcode" 		type="java.lang.String"/>
+			<form-property name="screenName" 	type="java.lang.String"/>
+			<form-property name="selectedPort" 	type="java.lang.String"/>			
+			<form-property name="selectedService" 	type="java.lang.String"/>
+			<form-property name="selectedSwitch" 	type="java.lang.String"/>
+			<form-property name="state" 		type="java.lang.String"/>
+			<form-property name="street" 		type="java.lang.String"/>
+			<form-property name="surname" 		type="java.lang.String"/>
+			<form-property name="username" 		type="java.lang.String"/>
+			<form-property name="pageTitle"		type="java.lang.String"/>
+			<form-property name="nextTitle"		type="java.lang.String"/>
+			<form-property name="submit"		type="java.lang.String"/>
+			<form-property name="page"			type="java.lang.Integer"/>
+		</form-bean>
+		
+		<!-- Form used to hold the result of a subscriber search and
+			 subsequent selection of one of these results
+		-->
+		<form-bean name="allSubscribersForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="searchResult" type="com.cisco.ettx.provisioning.action.ETTXSubscriberBean[]"/>
+			<form-property name="subscriber" type="java.lang.String" />
+		</form-bean>
+		
+    <!-- sample form bean descriptor for a DynaActionForm
+
+        <form-bean
+
+            name="logonForm"
+
+            type="org.apache.struts.action.DynaActionForm">
+
+            <form-property
+
+                name="username"
+
+                type="java.lang.String"/>
+
+            <form-property
+
+                name="password"
+
+                type="java.lang.String"/>
+
+    end sample -->
+
+
+
+    </form-beans>
+
+
+
+
+
+<!-- ================================= Global Exception Definitions -->
+
+
+
+    <global-exceptions>
+
+        <!-- sample exception handler
+
+        <exception
+
+            key="expired.password"
+
+            type="app.ExpiredPasswordException"
+
+            path="/changePassword.jsp"/>
+
+        end sample -->
+
+    </global-exceptions>
+
+
+
+
+
+<!-- =================================== Global Forward Definitions -->
+
+
+
+    <global-forwards>
+        <!-- Default forward to "Welcome" action -->
+        <!-- Demonstrates using index.jsp to forward -->
+
+        <forward name="welcome" path="/auth/Welcome.do"/>
+            
+        <forward name="login" path="/loginPage.do"/>
+        
+        <forward name="home" path="/auth/homePage.do"/>
+        
+        <!-- Forwards used in progress checking by default -->
+        <forward name="task/progress/forward/check" path="/progress/check.do"/>
+        <forward name="task/progress/forward/Complete" path="todo" />
+        <forward name="task/progress/forward/Failed" path="todo" />
+        <forward name="task/progress/forward/Running" path=".autoSubmitLayout" />
+        <forward name="task/progress/forward/New" path=".autoSubmitLayout" />        
+        <!-- not done yet        
+        <forward name="task/progress/forward/Paused" path="<todo>" />
+        <forward name="task/progress/forward/Timedout" path="<todo>" />
+        <forward name="task/progress/forward/Waiting" path="<todo>" />
+        -->
+        
+    </global-forwards>
+
+
+
+
+
+<!-- =================================== Action Mapping Definitions -->
+
+
+
+    <action-mappings>
+            <!-- Default "Welcome" action -->
+            <!-- Forwards to Welcome.jsp -->
+
+        <action path="/auth/Welcome"
+				type="org.apache.struts.actions.ForwardAction"
+				parameter="/pages/Welcome.jsp"/>
+				
+		<action path="/loginPage"
+				type="org.apache.struts.actions.ForwardAction"			
+				parameter=".loginPage" />
+
+		<action path="/auth/homePage"
+				type="org.apache.struts.actions.ForwardAction"
+				parameter=".homePage" />				
+				
+		<action path="/Login"
+				type="com.cisco.ettx.provisioning.action.LoginAction"
+				input=".loginPage"
+				validate="true"
+				name="loginForm"
+				scope="request">		
+			<forward name="failure" path=".loginPage"/>
+			<forward name="success" path="/auth/homePage.do" redirect="true"/>
+		</action>
+		
+		<action path="/auth/Logout"
+				type="com.cisco.ettx.provisioning.action.LogoutAction">				
+			<forward name="success" path="/auth/homePage.do" redirect="true"/>
+		</action>
+		
+		<action path="/progress/check"
+				type="com.cisco.ettx.provisioning.action.ProgressCheckAction"
+				name="taskCheckForm"
+				scope="request">
+			<forward name="failure" path=".progressCheckFailure"/>
+			<forward name="task/forwards/pactestComplete" path=".task.Complete"/>
+			<forward name="task/forwards/pactestFailed" path=".task.Failed"/>
+			<forward name="task/forwards/registrationSuccess" path=".task.Complete"/>
+			<forward name="task/forwards/registrationFailed" path=".task.Failed"/>
+			<forward name="task/forwards/unregistrationSuccess" path=".homePage" />
+			<forward name="task/forwards/unregistrationFailed" path=".task.Failed" />
+		</action>
+
+        <!-- First page of registration wizard -->
+        <!--
+        <action path="/auth/register/Begin"
+				type="org.apache.struts.actions.ForwardAction"
+				parameter=".register.subscriber.details" />				
+		-->
+		
+		<action path="/auth/register/Begin"
+				type="com.cisco.ettx.provisioning.action.PrepareRegistrationWizardAction"
+				name="subscriberDetailsForm"
+				scope="session"
+				validate="false"
+				parameter="registration.details.title"
+				input=".homePage">
+			<forward name="failure" path=".homePage"/>
+			<forward name="registration/details" path=".register.subscriber.details" />
+		</action>			
+
+		<action path="/auth/register/Wizard"
+				type="com.cisco.ettx.provisioning.action.RegistrationWizardAction"
+				name="subscriberDetailsForm"
+				scope="session"
+				validate="true"
+				input=".register.subscriber.details">
+	        <forward name="registration/details" path=".register.subscriber.details" />
+	        <forward name="registration/payment" path=".register.subscriber.payment" />
+	        <forward name="registration/login"   path=".register.subscriber.login" />
+	        <forward name="registration/service" path=".register.subscriber.services" />
+	        <forward name="registration/summary" path=".register.subscriber.summary" />
+		</action>
+
+		<action path="/auth/search"
+				type="com.cisco.ettx.provisioning.action.SubscriberSearchAction"
+				name="allSubscribersForm"
+				scope="session"
+				validate="false"
+				input=".homePage">
+			<forward name="search/result" path=".search.result" />
+			<forward name="faiure" path=".homePage"/>	
+		</action>
+
+		<action path="/auth/delete/subscriber"
+				type="com.cisco.ettx.provisioning.action.UnregisterAction"
+				name="allSubscribersForm"
+				scope="session"
+				validate="true"
+				input=".search.result">
+	        <forward name="failure" path=".search.result" />
+	        <forward name="tasks/forwards/unregistrationSuccess" path=".homePage" />
+		</action>
+
+		<action path="/auth/TestProgressAction"
+				type="com.cisco.ettx.provisioning.action.TestProgressAction" />
+
+    <!-- sample input and input submit actions
+
+
+
+        <action
+
+            path="/Input"
+
+            type="org.apache.struts.actions.ForwardAction"
+
+            parameter="/pages/Input.jsp"/>
+
+
+
+        <action
+
+            path="/InputSubmit"
+
+            type="app.InputAction"
+
+            name="inputForm"
+
+            scope="request"
+
+            validate="true"
+
+            input="/pages/Input.jsp"/>
+
+
+
+    end samples -->
+
+
+
+
+
+    </action-mappings>
+
+
+
+
+
+<!-- ===================================== Controller Configuration -->
+
+
+
+    <controller
+
+       processorClass="org.apache.struts.tiles.TilesRequestProcessor"/>
+
+
+
+
+
+<!-- ================================ Message Resources Definitions -->
+
+
+
+    <message-resources parameter="resources.application"/>
+
+
+
+
+
+<!-- ======================================= Plug Ins Configuration -->
+
+
+  <!-- ========== Tiles plugin ===================  -->
+  <!--												-->
+  <!--
+     This plugin initialize Tiles definition factory. This later can takes some
+	 parameters explained here after. The plugin first read parameters from web.xml, then
+	 overload them with parameters defined here. All parameters are optional.
+	 The plugin should be declared in each struts-config file.
+       - definitions-config: (optional) 
+            Specify configuration file names. There can be several comma 
+		    separated file names (default: ?? )
+       - moduleAware: (optional - struts1.1) 
+            Specify if the Tiles definition factory is module aware. If true (default), 
+			there will be one factory for each Struts module. 
+			If false, there will be one common factory for all module. In this later case, 
+			it is still needed to declare one plugin per module. The factory will be 
+			initialized with parameters found in the first initialized plugin (generally the
+			one associated with the default module).
+			  true : One factory per module. (default)
+			  false : one single shared factory for all modules
+	   - definitions-parser-validate: (optional)
+	        Specify if xml parser should validate the Tiles configuration file.
+			  true : validate. DTD should be specified in file header. (default)
+			  false : no validation
+			  
+	  Paths found in Tiles definitions are relative to the main context.
+  -->
+  <!-- comment following if struts1.0.x -->
+  <plug-in className="org.apache.struts.tiles.TilesPlugin" >
+    <set-property property="definitions-config" 
+	                 value="/WEB-INF/tiles-defs.xml" />
+    <set-property property="moduleAware" value="true" />
+    <set-property property="definitions-parser-validate" value="true" />
+  </plug-in>
+
+  <!-- end comment if struts1.0.x -->
+
+  <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+    <set-property
+        property="pathnames"
+        value="/WEB-INF/validator-rules.xml,/WEB-INF/validation.xml"/>
+  </plug-in>
+
+</struts-config>
+

@@ -1,0 +1,33 @@
+# The information in this file was pulled from Sun's
+# Solaris Patches for Java 2, Standard Edition, v1.4.1
+# web page at http://java.sun.com/j2se/1.4/install-solaris-patches.html
+# Patches that were listed on that page but were not listed
+# in Sun's comprehensive list of patches were omitted here.
+#
+# This file contains patch information for the product.
+# The columns are space separated and have the following
+# meanings.
+#
+#    component - The component that requires this patch
+#    SunOS version - what version of SunOS this patch
+#      is relevent for
+#    patch - The number of the patch
+#    rev - The revision of the patch
+#    required - Whether the patch is required or recommended
+#    description - The remainder of the line is a description
+
+jdk-1.4.1 5.8 108652 64 required X11 6.4.1: Xsun patch
+jdk-1.4.1 5.8 108921 16 required CDE 1.4: dtwm patch
+jdk-1.4.1 5.8 108940 49 required Motif 1.2.7 and 2.1.1: Runtime library patch for Solaris 8
+jdk-1.4.1 5.8 112003 03 required SunOS 5.8: Unable to load fontset in 64-bit Solaris 8 iso-1 or iso-15
+jdk-1.4.1 5.8 108773 17 required SunOS 5.8: IIIM and X Input & Output Method patch
+jdk-1.4.1 5.8 111293 04 required SunOS 5.8: /usr/lib/libdevinfo.so.1 patch
+jdk-1.4.1 5.8 111310 01 required SunOS 5.8: /usr/lib/libdhcpagent.so.1 patch
+jdk-1.4.1 5.8 112472 01 required SunOS 5.8: Font2DTest2 abort when Lucida Sans Thai Typewriter
+jdk-1.4.1 5.8 109147 21 required SunOS 5.8: linker patch
+jdk-1.4.1 5.8 111111 03 required SunOS 5.8: /usr/bin/nawk patch
+jdk-1.4.1 5.8 112396 02 required SunOS 5.8: /usr/bin/fgrep patch
+jdk-1.4.1 5.8 108987 12 required SunOS 5.8: Patch for patchadd and patchrm
+jdk-1.4.1 5.8 108528 18 required SunOS 5.8: kernel update patch
+jdk-1.4.1 5.8 108989 02 required SunOS 5.8: /usr/kernel/sys/acctctl and /usr/kernel/sys/exacctsys
+jdk-1.4.1 5.8 108827 38 required SunOS 5.8: /usr/lib/libthread.so.1 patch

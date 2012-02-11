@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<library>
+  <!--JBuilder Library Definition File-->
+  <fullname>ETTX</fullname>
+  <class>
+    <path>build/gui/WEB-INF/classes</path>
+    <path>build/server/WEB-INF/classes</path>
+    <path>[lib/axis-ant.jar]</path>
+    <path>[lib/axis.jar]</path>
+    <path>[lib/commons-discovery.jar]</path>
+    <path>[lib/commons-logging.jar]</path>
+    <path>[lib/csr/axis.jar]</path>
+    <path>[lib/csr/commons-beanutils.jar]</path>
+    <path>[lib/csr/commons-collections.jar]</path>
+    <path>[lib/csr/commons-dbcp.jar]</path>
+    <path>[lib/csr/commons-digester.jar]</path>
+    <path>[lib/csr/commons-discovery.jar]</path>
+    <path>[lib/csr/commons-fileupload.jar]</path>
+    <path>[lib/csr/commons-lang.jar]</path>
+    <path>[lib/csr/commons-logging.jar]</path>
+    <path>[lib/csr/commons-pool.jar]</path>
+    <path>[lib/csr/commons-resources.jar]</path>
+    <path>[lib/csr/commons-validator.jar]</path>
+    <path>[lib/csr/jakarta-oro.jar]</path>
+    <path>[lib/csr/jaxrpc.jar]</path>
+    <path>[lib/csr/log4j-1.2.4.jar]</path>
+    <path>[lib/csr/saaj.jar]</path>
+    <path>[lib/csr/smc-client.jar]</path>
+    <path>[lib/csr/struts.jar]</path>
+    <path>[lib/jakarta-regexp-1.2.jar]</path>
+    <path>[lib/jaxrpc.jar]</path>
+    <path>[lib/jta25b.jar]</path>
+    <path>[lib/log4j-1.2.4.jar]</path>
+    <path>[lib/objselector.jar]</path>
+    <path>[lib/ogs-objselector.jar]</path>
+    <path>[lib/saaj.jar]</path>
+    <path>[lib/sms_engine_api.jar]</path>
+    <path>[lib/struts.jar]</path>
+    <path>[lib/taglibs-i18n.jar]</path>
+    <path>[lib/tibrvj.jar]</path>
+    <path>[lib/tibrvjweb.jar]</path>
+    <path>[lib/uii.jar]</path>
+    <path>[lib/wsdl4j.jar]</path>
+    <path>[lib/xerces.jar]</path>
+    <path>[webapps/ettx_admin/jtelnet/jta25b.jar]</path>
+  </class>
+  <lastmodsaved>1062109843467</lastmodsaved>
+</library>

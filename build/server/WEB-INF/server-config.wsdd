@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+ <globalConfiguration>
+  <parameter name="adminPassword" value="admin"/>
+  <parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl"/>
+  <parameter name="sendXsiTypes" value="true"/>
+  <parameter name="sendMultiRefs" value="true"/>
+  <parameter name="sendXMLDeclaration" value="true"/>
+  <requestFlow>
+   <handler type="java:org.apache.axis.handlers.JWSHandler">
+    <parameter name="scope" value="session"/>
+   </handler>
+   <handler type="java:org.apache.axis.handlers.JWSHandler">
+    <parameter name="scope" value="request"/>
+    <parameter name="extension" value=".jwr"/>
+   </handler>
+  </requestFlow>
+ </globalConfiguration>
+ <handler name="LocalResponder" type="java:org.apache.axis.transport.local.LocalResponder"/>
+ <handler name="URLMapper" type="java:org.apache.axis.handlers.http.URLMapper"/>
+ <handler name="RPCDispatcher" type="java:org.apache.axis.providers.java.RPCProvider"/>
+ <handler name="Authenticate" type="java:org.apache.axis.handlers.SimpleAuthenticationHandler"/>
+ <handler name="MsgDispatcher" type="java:org.apache.axis.providers.java.MsgProvider"/>
+ <service name="urn:leaseHistoryService" provider="java:RPC">
+  <parameter name="allowedMethods" value="runLeaseHistoryArchive"/>
+  <parameter name="className" value="com.cisco.ettx.admin.server.axis.services.LeaseHistoryService"/>
+ </service>
+ <service name="AdminService" provider="java:MSG">
+  <parameter name="allowedMethods" value="AdminService"/>
+  <parameter name="enableRemoteAdmin" value="false"/>
+  <parameter name="className" value="org.apache.axis.utils.Admin"/>
+  <namespace>http://xml.apache.org/axis/wsdd/</namespace>
+ </service>
+ <service name="urn:authenticate" provider="java:RPC">
+  <parameter name="allowedMethods" value="login,logout,checkPermission"/>
+  <parameter name="className" value="com.cisco.ettx.admin.server.axis.services.AuthenticateService"/>
+ </service>
+ <service name="Version" provider="java:RPC">
+  <parameter name="allowedMethods" value="getVersion"/>
+  <parameter name="className" value="org.apache.axis.Version"/>
+ </service>
+ <service name="urn:compConfig" provider="java:RPC">
+  <parameter name="allowedMethods" value="getCompConfig,setCompConfig,getAllComponents,changeCompHost,deleteCompHost"/>
+  <parameter name="className" value="com.cisco.ettx.admin.server.axis.services.CompConfigService"/>
+ </service>
+ <service name="urn:toolbarConfig" provider="java:RPC">
+  <parameter name="allowedMethods" value="getToolbarElements,setToolbarElements,addToolbarElement,deleteToolbarElement,changeToolbarElement"/>
+  <parameter name="className" value="com.cisco.ettx.admin.server.axis.services.ToolbarConfigService"/>
+  <namespace>http://soapinterop.org/</namespace>
+ </service>
+ <service name="urn:dataCollection" provider="java:RPC">
+  <parameter name="allowedMethods" value="executeTask,iterateRecords"/>
+  <parameter name="className" value="com.cisco.ettx.admin.server.axis.services.DataCollectionService"/>
+ </service>
+ <service name="urn:systemConfig" provider="java:RPC">
+  <parameter name="allowedMethods" value="getSystemConfig,setSystemConfig"/>
+  <parameter name="className" value="com.cisco.ettx.admin.server.axis.services.SystemConfigService"/>
+ </service>
+ <service name="urn:logDisplay" provider="java:RPC">
+  <parameter name="allowedMethods" value="getLogFilenames,getLogFile"/>
+  <parameter name="className" value="com.cisco.ettx.admin.server.axis.services.LogDisplayService"/>
+ </service>
+ <transport name="http">
+  <requestFlow>
+   <handler type="URLMapper"/>
+   <handler type="java:org.apache.axis.handlers.http.HTTPAuthHandler"/>
+  </requestFlow>
+ </transport>
+ <transport name="local">
+  <responseFlow>
+   <handler type="java:org.apache.axis.transport.local.LocalResponder"/>
+  </responseFlow>
+ </transport>
+ <typeMapping encodingStyle="http://schemas.xmlsoap.org/soap/encoding" serializer="org.apache.axis.encoding.ser.ArraySerializerFactory" deserializer="org.apache.axis.encoding.ser.ArrayDeserializerFactory" type="java:com.cisco.ettx.admin.common.ComponentHostData[]" qname="ns1:ArrayOfComponentHostData" xmlns:ns1="urn:adminServices"/>
+ <typeMapping encodingStyle="http://schemas.xmlsoap.org/soap/encoding" serializer="org.apache.axis.encoding.ser.ArraySerializerFactory" deserializer="org.apache.axis.encoding.ser.ArrayDeserializerFactory" type="java:com.cisco.ettx.admin.common.SMSComponent[]" qname="ns2:ArrayOfComponent" xmlns:ns2="urn:adminServices"/>
+ <typeMapping encodingStyle="http://schemas.xmlsoap.org/soap/encoding" serializer="org.apache.axis.encoding.ser.ArraySerializerFactory" deserializer="org.apache.axis.encoding.ser.ArrayDeserializerFactory" type="java:com.cisco.ettx.admin.common.ToolbarElement[]" qname="ns3:ArrayOfToolbarElement" xmlns:ns3="urn:adminServices"/>
+ <beanMapping languageSpecificType="java:com.cisco.ettx.admin.common.SystemConfiguration" qname="ns4:SystemConfiguration" xmlns:ns4="urn:BeanService"/>
+ <beanMapping languageSpecificType="java:com.cisco.ettx.admin.common.ToolbarElement" qname="ns5:ToolbarElement" xmlns:ns5="urn:BeanService"/>
+ <beanMapping languageSpecificType="java:com.cisco.ettx.admin.common.ComponentHostData" qname="ns6:ComponentHostData" xmlns:ns6="urn:BeanService"/>
+ <beanMapping languageSpecificType="java:com.cisco.ettx.admin.common.SMSComponent" qname="ns7:SMSComponent" xmlns:ns7="urn:BeanService"/>
+ <beanMapping languageSpecificType="java:com.cisco.ettx.admin.common.ApplLog" qname="ns8:ApplLog" xmlns:ns8="urn:BeanService"/>
+ <beanMapping languageSpecificType="java:com.cisco.ettx.admin.common.AttrResult" qname="ns9:AttrResult" xmlns:ns9="urn:BeanService"/>
+ <beanMapping languageSpecificType="java:com.cisco.ettx.admin.common.SubsDeviceInfo" qname="ns10:SubsDeviceInfo" xmlns:ns10="urn:BeanService"/>
+ <beanMapping languageSpecificType="java:com.cisco.ettx.admin.common.AdminServicesException" qname="ns11:AdminServicesException" xmlns:ns11="urn:BeanService"/>
+ <beanMapping languageSpecificType="java:com.cisco.ettx.admin.common.AdminServicesNotification" qname="ns12:AdminServicesNotification" xmlns:ns12="urn:BeanService"/>
+</deployment>

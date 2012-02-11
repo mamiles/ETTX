@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- edited with XML Spy v4.3 U (http://www.xmlspy.com) by Marvin Miles (Cisco Systems, Inc.) -->
+<!DOCTYPE appTypes SYSTEM "./appTypes.dtd">
+<!--
+  This appTypes document created for ETTx SMS Admin Application
+  hvo 02/08/02
+-->
+<appTypes>
+	<cee>
+		<banner>
+			<label>BAC-ETTx Administration Tool</label>
+			<image fileRef="./ciscoLogo.gif"/>
+		</banner>
+		<toolBar>
+			<toolBarItem>
+				<label>Logout</label>
+				<navContentArea screenID="logout" fileRef="/WEB-INF/screens/logout.jsp"/>
+			</toolBarItem>
+			<toolBarItem>
+				<label>Help</label>
+				<navContentArea screenID="globalHelp" fileRef="/WEB-INF/screens/help.jsp"/>
+			</toolBarItem>
+			<toolBarItem>
+				<label>About</label>
+				<navContentArea screenID="about" fileRef="/WEB-INF/screens/about.jsp"/>
+			</toolBarItem>
+		</toolBar>
+		<area>
+			<areaItem>
+				<label toolTip="Reports">Reports</label>
+				<subArea>
+					<subAreaItem>
+						<label toolTip="Subscribers">Subscribers</label>
+						<contentAreaSet>
+							<navContentArea screenID="querySubs" contentAreaTitle="Subscriber Query" fileRef="/WEB-INF/screens/QuerySubscribers.jsp"/>
+							<appContentArea screenID="subsRecords" contentAreaTitle="View Subscribers" fileRef="/WEB-INF/screens/rfw/RFTabularReport.jsp"/>
+							<appContentArea screenID="viewSubscriberRecord" contentAreaTitle="Subscriber Record" fileRef="/WEB-INF/screens/ViewSubscriberRecord.jsp"/>
+						</contentAreaSet>
+					</subAreaItem>
+					<subAreaItem>
+						<label toolTip="Lease History">Lease History</label>
+						<TOC>
+							<TOCItem>
+								<label toolTip="Archive lease history">Archive</label>
+								<navContentArea screenID="leaseHistoryExport" contentAreaTitle="Lease History Archive" fileRef="/WEB-INF/screens/LeaseHistoryExport.jsp"/>
+							</TOCItem>
+							<TOCItem>
+								<label toolTip="Query lease history">Query</label>
+								<contentAreaSet>
+									<navContentArea screenID="leaseHistoryQuery" contentAreaTitle="Lease History Query" fileRef="/WEB-INF/screens/LeaseHistoryQuery.jsp"/>
+									<appContentArea screenID="leaseHistoryRecords" contentAreaTitle="View Lease History" fileRef="/WEB-INF/screens/rfw/RFTabularReport.jsp"/>
+								</contentAreaSet>
+							</TOCItem>
+						</TOC>
+					</subAreaItem>
+				</subArea>
+			</areaItem>
+			<areaItem>
+				<label toolTip="Troubleshoot">Troubleshoot</label>
+				<subArea>
+					<subAreaItem>
+						<label>Subscribers</label>
+						<contentAreaSet>
+							<navContentArea screenID="tsQuerySubs" contentAreaTitle="Subscriber Query" fileRef="/WEB-INF/screens/TSQuerySubscribers.jsp"/>
+							<appContentArea screenID="tsSubsRecords" contentAreaTitle="View Subscribers" fileRef="/WEB-INF/screens/TSViewSubscriberRecords.jsp"/>
+							<appContentArea screenID="subsTSResult" contentAreaTitle=" Troubleshoot Action Result" fileRef="/WEB-INF/screens/SubsTroubleshootResult.jsp"/>
+							<appContentArea screenID="telnetToSwitch" contentAreaTitle=" Telnet To Switch" fileRef="/WEB-INF/screens/TelnetToSwitch.jsp"/>
+						</contentAreaSet>
+					</subAreaItem>
+					<subAreaItem>
+						<label toolTip="View Application Component Logs">View Component Logs</label>
+						<contentAreaSet>
+							<navContentArea screenID="selectLogs" contentAreaTitle="Select or Search Component Logs to Display" fileRef="/WEB-INF/screens/SelectLogs.jsp"/>
+							<appContentArea screenID="viewLogs" contentAreaTitle="Select Component Logs to Display" fileRef="/WEB-INF/screens/ViewLogs.jsp"/>
+						</contentAreaSet>
+					</subAreaItem>
+				</subArea>
+			</areaItem>
+			<areaItem>
+				<label toolTip="Subscriber Management">Subscriber Management</label>
+				<subArea>
+					<subAreaItem>
+						<label toolTip="Manage Subscriber">Manage Subscriber</label>
+						<contentAreaSet>
+							<navContentArea screenID="smQuerySubs" contentAreaTitle="Query Subscribers" fileRef="/WEB-INF/screens/SMQuerySubscribers.jsp">
+								<tasks>
+									<taskID id="Cisco_SMC_Provisioning_Activate"/>
+									<taskID id="Cisco_SMC_Inventory_Modify"/>
+								</tasks>
+							</navContentArea>
+							<appWizard>
+								<appWizardItem>
+									<label>Subscriber Details</label>
+									<appContentArea screenID="subDetails" contentAreaTitle="Subscriber Details (Step 1)" fileRef="/WEB-INF/screens/SubscriberDetails.jsp"/>
+								</appWizardItem>
+								<appWizardItem>
+									<label>Login Details</label>
+									<appContentArea screenID="loginDetails" contentAreaTitle="Login Details (Step 2)" fileRef="/WEB-INF/screens/LoginDetails.jsp"/>
+								</appWizardItem>
+								<appWizardItem>
+									<label>Service Details</label>
+									<appContentArea screenID="serviceDetails" contentAreaTitle="Service Details (Step 3)" fileRef="/WEB-INF/screens/ServiceDetails.jsp"/>
+								</appWizardItem>
+								<appWizardItem>
+									<label>Subscriber Summary</label>
+									<appContentArea screenID="subSummary" contentAreaTitle="Subscriber Summary (Step 4)" fileRef="/WEB-INF/screens/SubscriberSummary.jsp"/>
+								</appWizardItem>
+							</appWizard>
+							<appContentArea screenID="smViewSubs" contentAreaTitle="View Subscriber Records" fileRef="/WEB-INF/screens/SMViewSubscriberRecords.jsp"/>
+							<appContentArea screenID="editSubsProfile" contentAreaTitle="Edit Subscriber Profile" fileRef="/WEB-INF/screens/EditSubscriberProfile.jsp"/>
+							<appContentArea screenID="editServiceParms" contentAreaTitle="Edit Service Parameters" fileRef="/WEB-INF/screens/EditServiceParameters.jsp"/>
+							<appContentArea screenID="viewSubsDevices" contentAreaTitle="View Subscriber MAC Addresses " fileRef="/WEB-INF/screens/ViewSubsDevices.jsp"/>
+							<appContentArea screenID="editSubsDevice" contentAreaTitle="Edit Subscriber MAC Address" fileRef="/WEB-INF/screens/EditSubsDevice.jsp"/>
+						</contentAreaSet>
+					</subAreaItem>
+					<subAreaItem>
+						<label toolTip="Query Postal Address Map">Postal Address Map Query</label>
+						<contentAreaSet>
+							<navContentArea screenID="queryAddressMap" contentAreaTitle="Query Postal Address Map" fileRef="/WEB-INF/screens/QueryPostalAddressMap.jsp">
+								<tasks>
+									<taskID id="Cisco_SMC_Inventory_Query"/>
+								</tasks>
+							</navContentArea>
+							<appContentArea screenID="viewAddressMap" contentAreaTitle="View Subscriber Records" fileRef="/WEB-INF/screens/PostalAddressMapView.jsp"/>
+						</contentAreaSet>
+					</subAreaItem>
+				</subArea>
+			</areaItem>
+			<areaItem>
+				<label toolTip="Administration Configuration">Configuration</label>
+				<subArea>
+					<subAreaItem>
+						<label toolTip="System Configuration">System Configuration</label>
+						<TOC>
+							<TOCItem>
+								<label toolTip="System">System</label>
+								<navContentArea screenID="systemConfig" contentAreaTitle="System Configuration" fileRef="/WEB-INF/screens/SystemConfiguration.jsp"/>
+							</TOCItem>
+							<TOCItem>
+								<label toolTip="Toolbar">Toolbar</label>
+								<contentAreaSet>
+									<navContentArea screenID="toolbarConfig" contentAreaTitle="Toolbar Configuration" fileRef="/WEB-INF/screens/ToolbarConfiguration.jsp"/>
+									<appContentArea screenID="editToolbar" contentAreaTitle="Edit Toolbar Configuration" fileRef="/WEB-INF/screens/EditToolbarConfiguration.jsp"/>
+								</contentAreaSet>
+							</TOCItem>
+						</TOC>
+					</subAreaItem>
+					<subAreaItem>
+						<label toolTip="Component Configuration">Component Configuration</label>
+						<TOC>
+							<TOCItem>
+								<label>Inventory Management</label>
+								<contentAreaSet>
+									<navContentArea screenID="BAC" contentAreaTitle="Component Configuration" fileRef="/WEB-INF/screens/CompConfiguration.jsp"/>
+									<appContentArea screenID="editCompHostBAC" contentAreaTitle="Edit Component Configuration" fileRef="/WEB-INF/screens/EditCompHostConfiguration.jsp"/>
+								</contentAreaSet>
+							</TOCItem>
+							<TOCItem>
+								<label>Policy Engine</label>
+								<contentAreaSet>
+									<navContentArea screenID="SPE" contentAreaTitle="Component Configuration" fileRef="/WEB-INF/screens/CompConfiguration.jsp"/>
+									<appContentArea screenID="editCompHostSPE" contentAreaTitle="Edit Component Configuration" fileRef="/WEB-INF/screens/EditCompHostConfiguration.jsp"/>
+								</contentAreaSet>
+							</TOCItem>
+							<TOCItem>
+								<label>System Configuration</label>
+								<contentAreaSet>
+									<navContentArea screenID="SMS" contentAreaTitle="Component Configuration" fileRef="/WEB-INF/screens/CompConfiguration.jsp"/>
+									<appContentArea screenID="editCompHostSMS" contentAreaTitle="Edit Component Configuration" fileRef="/WEB-INF/screens/EditCompHostConfiguration.jsp"/>
+								</contentAreaSet>
+							</TOCItem>
+							<TOCItem>
+								<label>DHCP Server</label>
+								<contentAreaSet>
+									<navContentArea screenID="CNR" contentAreaTitle="Component Configuration" fileRef="/WEB-INF/screens/CompConfiguration.jsp"/>
+									<appContentArea screenID="editCompHostCNR" contentAreaTitle="Edit Component Configuration" fileRef="/WEB-INF/screens/EditCompHostConfiguration.jsp"/>
+								</contentAreaSet>
+							</TOCItem>
+							<TOCItem>
+								<label>Provisioning Server</label>
+								<contentAreaSet>
+									<navContentArea screenID="BPR" contentAreaTitle="Component Configuration" fileRef="/WEB-INF/screens/CompConfiguration.jsp"/>
+									<appContentArea screenID="editCompHostBPR" contentAreaTitle="Edit Component Configuration" fileRef="/WEB-INF/screens/EditCompHostConfiguration.jsp"/>
+								</contentAreaSet>
+							</TOCItem>
+						</TOC>
+					</subAreaItem>
+				</subArea>
+			</areaItem>
+			<areaItem>
+				<label toolTip="Toolbar">Toolbar</label>
+				<navContentArea screenID="toolbarView" contentAreaTitle="Toolbar" fileRef="/WEB-INF/screens/ToolbarView.jsp"/>
+			</areaItem>
+		</area>
+	</cee>
+	<monitoring/>
+</appTypes>

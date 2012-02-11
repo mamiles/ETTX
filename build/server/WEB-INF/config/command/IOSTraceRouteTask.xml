@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XML Spy v4.3 U (http://www.xmlspy.com) by Chandrika Ramanujam (Cisco Systems, Inc.) -->
+<COMMAND_HANDLER TASK_NAME="TRACE_ROUTE">
+	<COMMAND>
+		<PART VALUE="trace ip "/>
+		<PART ATTR_MAP="edgeRouterId"/>
+	</COMMAND>
+	<ACCESS ACCESS_CLASS="com.cisco.ettx.admin.collengine.command.IOSDeviceAccess">
+		<HOST_NAME ATTR_MAP="switchIPAddress"/>
+		<USER_NAME ATTR_MAP="switchUserID"/>
+		<PASSWORD ATTR_MAP="switchPassword"/>
+		<SECURE_SHELL VALUE="no"/>
+	</ACCESS>
+	<OUTPUT_PARSER PARSER_CLASS="com.cisco.ettx.admin.collengine.command.NoParser">
+		<OUTPUT_ATTR>traceOutput</OUTPUT_ATTR>
+	</OUTPUT_PARSER>
+</COMMAND_HANDLER>

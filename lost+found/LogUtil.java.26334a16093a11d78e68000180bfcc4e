@@ -1,0 +1,23 @@
+//************************************************************
+// Copyright (c) 2001, 2002 Cisco Systems, Inc.
+// All rights reserved
+//************************************************************
+
+package com.cisco.ettx.admin.common.util;
+
+import java.util.*;
+import org.apache.log4j.*;
+
+public class LogUtil 
+{
+    public static Logger getLogger(Class pClassName)
+    {
+	if( pClassName == null ) {
+	    System.out.println("Class Name is null...");
+	    return null;
+	}
+
+	Logger logger = Logger.getLogger(pClassName);
+	return logger;
+    }
+}

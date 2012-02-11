@@ -1,0 +1,206 @@
+<% String contextPath = request.getContextPath(); %>
+<script language="JavaScript" src="<%=contextPath%>/scripts/utils.js"></script>
+<BODY LANGUAGE=JavaScript onload="return window_onload()"/>
+<!-- IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT
+  -- IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT
+  --
+  -- IF YOU ARE SEEING THIS COMMENT AND YOU ARE NOT EDITTING A TEMPLATE FILE STOP
+  -- EDITING AND GO EDIT THE TEMPLATE FILE ASSOCIATED WITH IT.
+  -->
+  
+<%@ taglib uri="/WEB-INF/tlds/uii-contentarea-taglib.tld" prefix="uii" %>
+<%@ page import="com.cisco.dslnms.gui.web.beans.helper.generic.*" %>
+<%@ page import="com.cisco.dslnms.gui.web.util.*" %>
+<%@ page import="com.cisco.dslnms.gui.web.actions.WizardAction" %>
+<!-- #BeginEditable "beanName" -->
+<jsp:useBean id="deviceProvisioningFB" scope="session" class="com.cisco.dslnms.gui.web.beans.DeviceProvisioningFormBean"/>
+<!-- #EndEditable -->
+<!-- #BeginEditable "beanName1" -->
+<%
+	ObjectDescriptor theObjDesc = deviceProvisioningFB.getObjectDescriptor();
+	int numSf = theObjDesc.size();
+%>
+<!-- #EndEditable -->
+<%
+	String theButtonAction = WizardAction.getWizardAction(request);
+	String provMode = (String) session.getAttribute(WizardAction.WIZARD_PROVISIONING_MODE);
+	String provString = "";
+	if (provMode != null) {
+		if (provMode.equals(WebGuiConstants.SUBSCRIBER_PROV_MODE)) {
+			provString = "Subscriber Provisioning - ";
+		} else if (provMode.equals(WebGuiConstants.DEVICE_PROV_MODE)) {
+			provString = "Device Provisioning - ";
+		}
+	}
+%>
+
+<table width="100%" height="100%" border="0" cellspacing="0" cellpadding="5"  BGCOLOR="E1E1E1">
+  <tr> 
+    <td width="100%" align="center" valign="center"> 
+<!-- #BeginEditable "actionName" -->
+	  <uii:form action=""> 
+<!-- #EndEditable -->
+        <table width="350" border="0" cellspacing="1" cellpadding="2" bgcolor="#FFFFFF">
+          <tr> 
+            <td colspan="2" nowrap background="/RSRC/en_US/images/vertlines_dk.gif" bgcolor="#669999"> 
+              <uii:img page="/RSRC/en_US/images/shim.gif"/></td>
+          </tr>
+          <tr> 
+            <td noWrap height=22 background="/RSRC/en_US/images/dia_title_bg2.gif" colspan="2" align="center"> 
+              <b><%= provString%>Service Feature Selection</b></td>
+          </tr>               
+		<tr> 	
+            <td nowrap bgcolor="#cecfce" align="right">&nbsp;</td>
+<!-- #BeginEditable "beanName2" -->
+            <td width="100%" bgcolor="#cecfce">Role: <%= deviceProvisioningFB.getObjectDescriptor().getRoleId()%></td>				
+<!-- #EndEditable -->				
+		</tr>             
+		  <tr> 
+             <td nowrap bgcolor="#cecfce" align="right"></td>
+            <td width="100%" bgcolor="#cecfce">&nbsp;</td>				
+		</tr>            
+		<% if(numSf > 1) { %>
+		  <tr> 
+             <td nowrap bgcolor="#cecfce" align="right"></td>
+            <td width="100%" bgcolor="#cecfce"><uii:checkbox property="selectAll" onclick="javascript:doSelect(this)"/> Select All</td>				
+		</tr>
+		<% } %>
+		<%
+					for (int i=0; i<theObjDesc.size(); i++) {
+						ServiceFeatureDescriptor theSfDesc = theObjDesc.getServiceFeature(i);
+						String sfName = theSfDesc.getName();
+						String cbPropertyName = "objectDescriptor.serviceFeature" + i + ".selected";
+						boolean shouldBeDisabled = !theSfDesc.canBeAddedMore();
+						String startItalic = "<i>";
+						String endItalic = "</i>";
+						if (theSfDesc.canBeAddedMore()) {
+							startItalic = "";
+							endItalic = "";
+						}
+				  %>
+
+		  	<tr> 
+                  		<td nowrap bgcolor="#cecfce" align="right"><%= startItalic%><%= sfName%><%= endItalic%></td>
+						<td width="100%" bgcolor="#cecfce"><uii:checkbox property="<%= cbPropertyName%>" disabled="<%= shouldBeDisabled%>" 
+								onclick="javascript:doSelect(this)" /></td>
+										
+														
+			</tr>
+		<% } %>
+          <tr> 
+            <td nowrap bgcolor="#cecfce" align="right">&nbsp;</td>
+            <td width="100%" bgcolor="#cecfce">&nbsp; </td>
+          </tr>
+          <tr bgcolor="silver"> 
+            <td colspan="2" nowrap><uii:img page="/RSRC/en_US/images/shim.gif" /></td>
+          </tr>
+          <tr> 
+            <td colspan="2" nowrap bgcolor="#cecfce" background="/RSRC/en_US/images/vertlines_dk.gif"> 
+              <uii:img page="/RSRC/en_US/images/shim.gif"/></td>
+          </tr>
+        </table>
+        </uii:form>
+    </td>
+    <td valign="top" align="right"> <uii:instructions>
+                  <p> Enter the content area instructions here.</p>
+                  <p>Enter the content area instructions here.</p>
+                  </uii:instructions>
+    </td>
+  </tr>
+</table>
+
+<script language="JavaScript" type="text/javascript">
+<!--
+
+
+<%
+// generate a function to automatically check or un-check all check boxes
+out.print("\nfunction checkUnCheckAllFeatures(aButton) {");
+for (int i=0; i<theObjDesc.size(); i++) {
+	ServiceFeatureDescriptor theSfDesc = theObjDesc.getServiceFeature(i);
+	if (theSfDesc.canBeAddedMore()) {
+		String aStr = "document.getElementById(\"objectDescriptor.serviceFeature" + i + ".selected\").checked = aButton.checked;";
+		out.print("\n\t" + aStr); 
+	}
+}
+out.print("\n}");
+
+
+out.print("\n\nfunction shouldTurnOnCheckAllButton(aButton) {");
+out.print("\n\tvar theCheckBox;");
+for (int i=0; i<theObjDesc.size(); i++) {
+	ServiceFeatureDescriptor theSfDesc = theObjDesc.getServiceFeature(i);
+	if (theSfDesc.canBeAddedMore()) {
+		String aStr = "document.getElementById(\"objectDescriptor.serviceFeature" + i + ".selected\");";
+		out.print("\n\ttheCheckBox = " + aStr);
+		out.print("\n\tif (theCheckBox != aButton && !theCheckBox.checked) {");
+		out.print("\n\t\treturn false;");
+		out.print("\n\t}");
+	}
+}
+out.print("\nreturn true;");
+out.print("\n}");
+%>
+
+function doSelect(aButton) {
+    var theNumSF = <%= numSf%>;
+	// If there is only 1 service feature the selectAll button is not displayed, so we don't need
+	// to worry about setting it.  Plus, it will cause errors as the following code tries to access
+	// the select all button.
+	if(theNumSF <= 1) {
+		return;
+	}
+	
+    var theSelectAllButton = document.getElementById("selectAll");
+    if(aButton == theSelectAllButton) {
+		checkUnCheckAllFeatures(theSelectAllButton);
+	} else {
+	    var theCheckSelectAll;
+	    
+	    if(aButton.checked) {
+	        theCheckSelectAll = true;
+	        // If a single button has been checked (not the select all one) then go through all the rest of the 
+	        // single buttons and if they are all checked then set the select all button to checked.
+			theCheckSelectAll = shouldTurnOnCheckAllButton(aButton);
+			/*
+	        for (var i=0; i < theNumSF; i++) {
+	            var theCheckBox = document.getElementById("objectDescriptor.serviceFeature" + i + ".selected");
+		        if(theCheckBox != aButton && !theCheckBox.checked) {
+		            theCheckSelectAll = false;
+		        }
+	        }
+			*/
+	    } else {
+	        // If a single button has been unchecked (not the select all one) then that means that they are
+	        // not all selected so set the select all button to false;
+	        theCheckSelectAll = false;
+	    }
+	    
+	    theSelectAllButton.checked = theCheckSelectAll;
+	}
+}
+function window_onload() {
+	disableWizardCancelAndBackValidation();
+	wizardItemHandlers.push( "checkThatSomethingIsSelected(wizid, wizAction)" );
+}
+function checkThatSomethingIsSelected(anId, anAction) {
+	if ( anAction == 'Next') {
+		var theSomethingIsSelected = false;
+		// Check that at least one box is checked.
+		for (var i=0; i < <%= numSf%>; i++) {
+			var theCheckBox = document.getElementById("objectDescriptor.serviceFeature" + i + ".selected");
+			if(theCheckBox.checked) {
+				theSomethingIsSelected = true;
+			}
+		}
+		if(!theSomethingIsSelected) {
+			alert("A service feature must be selected in order to continue.");
+		}
+		return theSomethingIsSelected;
+	}
+	
+	// otherwise return true
+	return true;
+}
+//-->
+</script>

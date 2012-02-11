@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!DOCTYPE form-validation PUBLIC
+          "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.0//EN"
+          "http://jakarta.apache.org/commons/dtds/validator_1_0.dtd">
+
+<form-validation>
+
+    <global>
+
+        <!-- An example global constant
+        <constant>
+            <constant-name>postalCode</constant-name>
+            <constant-value>^\d{5}\d*$</constant-value>
+        </constant>
+        end example-->
+        
+        <constant>
+        	<constant-name>usernameMask</constant-name>
+        	<constant-value>^[a-zA-Z0-9]*$</constant-value>
+        </constant>
+        <constant>
+        	<constant-name>usernameLength</constant-name>
+        	<constant-value>20</constant-value>
+        </constant>
+
+    </global>
+
+    <formset>
+    	<form name="loginForm">
+    		<field property="username"
+    			   depends="required,maxlength,mask">
+    			<arg0 key="login.username"/>
+				<arg1 name="maxlength" key="${var:maxlength}" resource="false"/>
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>${usernameLength}</var-value>
+				</var>
+      			<var>
+        			<var-name>mask</var-name>
+        			<var-value>${usernameMask}</var-value>
+      			</var>
+			</field>
+    		<field property="password"
+    			   depends="required,maxlength">
+				<arg0 key="login.password"/>
+				<arg1 name="maxlength" key="${var:maxlength}" resource="false"/>				
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>20</var-value>
+				</var>
+			</field>
+		</form>
+		
+    	<form name="subscriberDetailsForm">
+			<!-- no payment details in EFT1		
+    		<field page="2" property="cardExpiry" depends="required,date">
+    			<arg0 key="subscriber.card.expiry"/>
+      			<var>
+        			<var-name>datePattern</var-name>
+        			<var-value>MM/yyyy</var-value>
+      			</var>
+			</field>	
+    		<field page="2" property="cardNumber" depends="required,creditCard">
+				<arg0 key="subscriber.card.number"/>
+			</field>
+			<field page="2" property="cardType" depends="required">
+				<arg0 key="subscriber.card.type"/>
+			</field>
+			-->
+			<field page="1" property="city" depends="required">
+				<arg0 key="subscriber.city"/>
+			</field>
+			<field page="1" property="country" depends="required">
+				<arg0 key="subscriber.country"/>
+			</field>
+			<field page="1" property="dob" depends="date">
+				<arg0 key="subscriber.dob"/>
+				<var>
+        			<var-name>datePatternStrict</var-name>
+        			<var-value>dd/MM/yyyy</var-value>
+				</var>
+			</field>
+			<field page="1" property="forename" depends="required">
+				<arg0 key="subscriber.forename"/>
+			</field>
+			<field page="1" property="homeNumber" depends="mask">
+				<msg name="mask" key="errors.numeric" />
+				<arg0 key="subscriber.phone.home"/>
+				<var>
+					<var-name>mask</var-name>
+					<var-value>[0-9]+</var-value>
+				</var>
+			</field>
+			<field page="1" property="initials" depends="mask">
+				<msg name="mask" key="errors.letters"/>
+				<arg0 key="subscriber.initials"/>
+				<var>
+					<var-name>mask</var-name>
+					<var-value>[a-zA-Z]*</var-value>
+				</var>	
+			</field>
+			<field page="1" property="mobileNumber" depends="mask">
+				<msg name="mask" key="errors.numeric" />
+				<arg0 key="subscriber.phone.mobile"/>
+				<var>
+					<var-name>mask</var-name>
+					<var-value>[0-9]+</var-value>
+				</var>
+			</field>
+			<field page="2" property="password" depends="required,minlength,maxlength">
+				<arg0 key="subscriber.password"/>
+				<arg1 name="minlength" key="${var:minlength}" resource="false"/>				
+				<arg1 name="maxlength" key="${var:maxlength}" resource="false"/>
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>20</var-value>
+				</var>
+				<var>
+					<var-name>minlength</var-name>
+					<var-value>6</var-value>
+				</var>
+			</field>
+			<field page="1" property="postcode" depends="required">
+				<arg0 key="subscriber.postcode"/>
+			</field>
+			<field page="2" property="screenName" depends="required">
+				<arg0 key="subscriber.screenName"/>
+			</field>
+			<field page="1" property="street" depends="required">
+				<arg0 key="subscriber.street"/>
+			</field>
+			<field page="1" property="surname" depends="required">
+				<arg0 key="subscriber.surname"/>
+			</field>
+			<field page="2" property="username" depends="required,mask,maxlength">
+    			<arg0 key="subscriber.username"/>
+				<arg1 name="maxlength" key="${var:maxlength}" resource="false"/>
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>${usernameLength}</var-value>
+				</var>
+      			<var>
+        			<var-name>mask</var-name>
+        			<var-value>${usernameMask}</var-value>
+      			</var>
+			</field>
+
+			<!-- Service Selection page validations -->
+			<field page="3" property="selectedService" depends="required">
+				<msg name="required" key="errors.choose" />			
+				<arg0 key="registration.service.prompt" />
+			</field>
+			<field page="3" property="selectedSwitch" depends="required">
+				<msg name="required" key="errors.choose" />
+				<arg0 key="registration.service.switch.prompt" />
+			</field>
+			<field page="3" property="selectedPort" depends="required,mask">
+				<msg name="mask" key="errors.port" />
+				<arg0 key="registration.service.port.prompt" />
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^[a-zA-Z]+[0-9]+\/[0-9]+$</var-value>
+				</var>
+			</field>
+		</form>		
+		
+		<form name="allSubscribersForm">
+			<field property="subscriber" depends="required">
+				<arg0 key="subscriberSearch.result.id"/>
+			</field>
+		</form>
+		
+    </formset>
+
+    <!-- An example formset for another locale
+    <formset language="fr">
+
+        <constant>
+            <constant-name>postalCode</constant-name>
+            <constant-value>^[0-9a-zA-Z]*$</constant-value>
+        </constant>
+
+   </formset>
+   -->
+
+</form-validation>

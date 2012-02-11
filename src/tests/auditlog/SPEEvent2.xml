@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XML Spy v4.3 U (http://www.xmlspy.com) by Chandrika Ramanujam (Cisco Systems, Inc.) -->
+<CNS_EVENT EventCategory="ERR" EventName="SPE.ObjectModify.ERROR" EventId="Event 2">
+	<EVENT_MESSAGE Time="Jan 10, 2003" ObjectName="Subscriber 1" UserName="chandrika" Message="Unable to modify subscriber"/>
+	<EVENT_MESSAGE Time="Jan 10, 2003" Message="Subscriber was subscribed to a service"/>
+</CNS_EVENT>

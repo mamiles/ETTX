@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+ <!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+       "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+
+
+<!--
+     This is a blank Tiles definition file with a commented example.
+-->
+
+<tiles-definitions>
+
+    <definition name=".mainLayout" path="/layouts/mainLayout.jsp">
+        <put name="header" value="/common/header.jsp" />
+        <put name="menu"   value=".mainMenu" />
+        <put name="footer" value="/common/footer.jsp" />
+        <put name="body"   value=".portal.body" />
+    </definition>
+
+    <definition name=".mainMenu" path="/layouts/vboxLayout.jsp" >
+        <putList name="componentsList" >
+            <add value=".menu.tasks" />
+            <add value=".menu.admin" />
+            <!-- <add value=".menu.logout" /> -->
+      </putList>
+    </definition>
+    
+    <!-- Menu definitions -->
+	<!-- The tasks menu definition -->
+	<definition name=".menu.tasks" path="/layouts/menu.jsp" >
+  		<put name="title" value="Tasks" />
+		<putList name="items" >
+   			<item value="Create Subscriber" link="/auth/register/Begin.do" />
+<!--   			<item value="Modify Subscriber" link="/todo.jsp" /> -->
+   			<item value="Delete Subscriber" link="/auth/search.do" />
+		</putList>
+	</definition>
+
+	<!-- The Admin menu definition -->
+	<definition name=".menu.admin" path="/layouts/menu.jsp" >
+  		<put name="title" value="Admin" />
+		<putList name="items" >
+<!--			<item value="PAC Progress Test" link="/auth/TestProgressAction.do" />
+ -->
+<!--   			<item value="Configure API" link="/todo.jsp" /> -->
+<!--   			<item value="Test API" link="/todo.jsp" /> -->
+   			<item value="Logout" link="/auth/Logout.do" />
+		</putList>
+	</definition>    
+    
+    <definition name=".wizardLayout" path="/layouts/registrationWizard.jsp">
+        <put name="header" value="/common/header.jsp" />
+        <put name="footer" value="/common/footer.jsp" />
+    	<put name="action"	   value="/auth/register/Wizard" />
+   		<put name="pageNumber" value="1" />
+   		<put name="title" 	   value="page.title" />
+   		<put name="focus" 	   value="page.focus" />
+   		<put name="nextTitle"  value="page.nextTitle" />
+   		<put name="wizardBody" value="registrationBody" />
+   	</definition>
+    
+    <definition name=".autoSubmitLayout" path="/layouts/autoSubmitLayout.jsp">
+		<put name="milliseconds"  value="3000" />    
+    	<put name="header" value="/common/header.jsp" />
+    	<put name="footer" value="/common/footer.jsp" />
+    	<put name="body"   value="/pages/inProgress.jsp" />
+    </definition>
+    
+    <definition name=".homePage" extends=".mainLayout">
+    	<put name="body" value="/pages/homeBody.jsp" />
+    </definition>
+
+    <definition name=".loginPage" extends=".mainLayout">
+        <put name="hideMenu" value="true" />
+        <put name="header" value="/common/header.jsp" />
+        <put name="footer" value="/common/footer.jsp" />
+        <put name="body"   value="/pages/loginBody.jsp" />
+    </definition>
+    
+    <definition name=".progressCheckFailure" extends=".mainLayout">
+    	<put name="body" value="/pages/progressCheckFail.jsp" />
+    </definition>
+    
+    <definition name=".task.Complete" extends=".mainLayout">
+    	<put name="body" value="/pages/taskComplete.jsp" />
+    </definition>
+
+    <definition name=".task.Failed" extends=".mainLayout">
+    	<put name="body" value="/pages/taskFailed.jsp" />
+    </definition>
+    
+    <!-- Registration wizard pages. To modify order of the pages in the
+    	 wizard, modify the pageNumber and nextTitle attributes (nextTitle
+    	 is the name of the page the should be forwarded to next by the
+    	 Action
+   	-->
+    <definition name=".register.subscriber.details" extends=".wizardLayout">
+   		<put name="pageNumber" value="1" />
+   		<put name="title" 	   value="registration.details.title" />
+   		<put name="focus" 	   value="forename" />
+   		<put name="nextTitle"  value="registration.login.title" />
+    	<put name="wizardBody"   value="/pages/subscriberDetails.jsp" />
+    </definition>
+
+<!-- No need for payment details in current EFT1 incarnation
+    <definition name=".register.subscriber.payment" extends=".wizardLayout">
+    	<put name="pageNumber" value="2" />
+   		<put name="title" 	   value="registration.payment.title" />
+   		<put name="focus" 	   value="cardType" />
+   		<put name="nextTitle"  value="registration.login.title" />
+    	<put name="wizardBody"   value="/pages/subscriberPayment.jsp" />
+    </definition>
+-->    
+    
+    <definition name=".register.subscriber.login" extends=".wizardLayout">
+    	<put name="pageNumber" value="2" />
+   		<put name="title" 	   value="registration.login.title" />
+   		<put name="focus" 	   value="username" />
+   		<put name="nextTitle"  value="registration.service.title" />
+    	<put name="wizardBody"   value="/pages/subscriberLoginDetails.jsp" />
+    </definition>
+    
+    <definition name=".register.subscriber.services" extends=".wizardLayout">
+    	<put name="pageNumber" value="3" />
+   		<put name="title" 	   value="registration.service.title" />
+   		<put name="focus" 	   value="selectedPort" />
+   		<put name="nextTitle"  value="registration.summary.title" />
+    	<put name="wizardBody"   value="/pages/subscriberService.jsp" />
+    </definition>
+    
+    <definition name=".register.subscriber.summary" extends=".wizardLayout">
+    	<put name="pageNumber" value="4" />
+   		<put name="title" 	   value="registration.summary.title" />
+   		<put name="focus" 	   value="submit" />
+   		<put name="nextTitle"  value="registration.start.button" />
+    	<put name="wizardBody"   value="/pages/subscriberSummary.jsp" />
+    </definition>    
+        
+    <definition name=".search.result" extends=".mainLayout">
+    	<put name="body" value="/pages/searchResult.jsp" />
+    </definition>        
+        
+	<!-- Error reporting for form based pages -->
+	<definition name=".error.table" path="/common/errorTable.jsp"/>
+        
+        
+        
+    <!-- sample tiles definitions
+
+
+    <definition name="${YOUR_DEFINITION_HERE}">
+    </definition>
+
+    end samples -->
+
+</tiles-definitions>

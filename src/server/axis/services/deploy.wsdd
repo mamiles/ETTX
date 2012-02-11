@@ -1,0 +1,119 @@
+<!-- Use this file to deploy some handlers/chains and services  -->
+<!-- Two ways to do this:                                       -->
+<!--   java org.apache.axis.utils.Admin deploy.wsdd              -->
+<!--      from the same dir that the Axis engine runs           -->
+<!-- or                                                         -->
+<!--   java org.apache.axis.client.http.AdminClient deploy.wsdd  -->
+<!--      after the axis server is running                      -->
+
+ <deployment 	name="ettxAdmin" xmlns="http://xml.apache.org/axis/wsdd/"
+			xmlns:java="http://xml.apache.org/axis/wsdd/providers/java"
+		xmlns:ns2="urn:BeanService"
+            xmlns:xsd="http://www.w3.org/2000/10/XMLSchema"
+			xmlns:xsi="http://www.w3.org/2000/10/XMLSchema-instance">
+
+<!-- Authentication Service -->
+  <service name="urn:authenticate" provider="java:RPC" >
+    <parameter name="className" value="com.cisco.ettx.admin.server.axis.services.AuthenticateService" />
+    <parameter name="allowedMethods" value="login,logout,checkPermission" />
+  </service>
+
+<!-- System Configuration Service -->
+  <service name="urn:systemConfig" provider="java:RPC" >
+    <parameter name="className" value="com.cisco.ettx.admin.server.axis.services.SystemConfigService" />
+    <parameter name="allowedMethods" value="getSystemConfig,setSystemConfig" />
+  </service>
+
+<!-- Toolbar Configuration Service -->
+  <service name="urn:toolbarConfig" provider="java:RPC" >
+    <namespace>http://soapinterop.org/</namespace>
+    <parameter name="className" value="com.cisco.ettx.admin.server.axis.services.ToolbarConfigService" />
+    <parameter name="allowedMethods" value="getToolbarElements,setToolbarElements,addToolbarElement,deleteToolbarElement,changeToolbarElement" />
+  </service>
+
+<!-- Component Configuration Service -->
+  <service name="urn:compConfig" provider="java:RPC" >
+    <parameter name="className" value="com.cisco.ettx.admin.server.axis.services.CompConfigService" />
+    <parameter name="allowedMethods" value="getCompConfig,setCompConfig,getAllComponents,changeCompHost,deleteCompHost" />
+  </service>
+
+<!-- Log Display Service -->
+  <service name="urn:logDisplay" provider="java:RPC" >
+    <parameter name="className" value="com.cisco.ettx.admin.server.axis.services.LogDisplayService" />
+    <parameter name="allowedMethods" value="getLogFilenames,getLogFile" />
+  </service>
+
+<!-- Log Display Service -->
+  <service name="urn:dataCollection" provider="java:RPC" >
+    <parameter name="className" value="com.cisco.ettx.admin.server.axis.services.DataCollectionService" />
+    <parameter name="allowedMethods" value="executeTask,iterateRecords" />
+  </service>
+
+<!-- Log Display Service -->
+  <service name="urn:leaseHistoryService" provider="java:RPC" >
+    <parameter name="className" value="com.cisco.ettx.admin.server.axis.services.LeaseHistoryService" />
+    <parameter name="allowedMethods" value="runLeaseHistoryArchive" />
+  </service>
+
+      <beanMapping
+        qname="ns1:SystemConfiguration" xmlns:ns1="urn:BeanService"
+        languageSpecificType="java:com.cisco.ettx.admin.common.SystemConfiguration"
+      />
+      <beanMapping
+        qname="ns1:ToolbarElement" xmlns:ns1="urn:BeanService"
+        languageSpecificType="java:com.cisco.ettx.admin.common.ToolbarElement"
+      />
+      <beanMapping
+        qname="ns1:ComponentHostData" xmlns:ns1="urn:BeanService"
+        languageSpecificType="java:com.cisco.ettx.admin.common.ComponentHostData"
+      />
+      <beanMapping
+        qname="ns1:SMSComponent" xmlns:ns1="urn:BeanService"
+        languageSpecificType="java:com.cisco.ettx.admin.common.SMSComponent"
+      />
+      <beanMapping
+        qname="ns1:ApplLog" xmlns:ns1="urn:BeanService"
+        languageSpecificType="java:com.cisco.ettx.admin.common.ApplLog"
+      />
+      <beanMapping
+        qname="ns1:AttrResult" xmlns:ns1="urn:BeanService"
+        languageSpecificType="java:com.cisco.ettx.admin.common.AttrResult"
+      />
+      <beanMapping
+        qname="ns1:SubsDeviceInfo" xmlns:ns1="urn:BeanService"
+        languageSpecificType="java:com.cisco.ettx.admin.common.SubsDeviceInfo"
+      />
+      <beanMapping
+        qname="ns1:AdminServicesException" xmlns:ns1="urn:BeanService"
+        languageSpecificType="java:com.cisco.ettx.admin.common.AdminServicesException"
+      />
+      <beanMapping
+        qname="ns1:AdminServicesNotification" xmlns:ns1="urn:BeanService"
+        languageSpecificType="java:com.cisco.ettx.admin.common.AdminServicesNotification"
+      />
+
+      <typeMapping 
+        qname="ns1:ArrayOfComponentHostData" xmlns:ns1="urn:adminServices"
+        type="java:com.cisco.ettx.admin.common.ComponentHostData[]"
+	serializer="org.apache.axis.encoding.ser.ArraySerializerFactory"
+	deserializer="org.apache.axis.encoding.ser.ArrayDeserializerFactory"
+	encodingStyle="http://schemas.xmlsoap.org/soap/encoding"
+      />
+
+      <typeMapping 
+        qname="ns1:ArrayOfComponent" xmlns:ns1="urn:adminServices"
+        type="java:com.cisco.ettx.admin.common.SMSComponent[]"
+	serializer="org.apache.axis.encoding.ser.ArraySerializerFactory"
+	deserializer="org.apache.axis.encoding.ser.ArrayDeserializerFactory"
+	encodingStyle="http://schemas.xmlsoap.org/soap/encoding"
+      />
+
+      <typeMapping 
+        qname="ns1:ArrayOfToolbarElement" xmlns:ns1="urn:adminServices"
+        type="java:com.cisco.ettx.admin.common.ToolbarElement[]"
+	serializer="org.apache.axis.encoding.ser.ArraySerializerFactory"
+	deserializer="org.apache.axis.encoding.ser.ArrayDeserializerFactory"
+	encodingStyle="http://schemas.xmlsoap.org/soap/encoding"
+      />
+
+</deployment>

@@ -1,0 +1,158 @@
+#!/usr/bin/ksh
+
+#
+# Find out where ETTX_ROOT is located and execute ettx_env.sh script
+#
+# resolve links - $0 may be a softlink
+PRG="$0"
+
+while [ -h "$PRG" ]; do
+  ls=`ls -ld "$PRG"`
+  link=`expr "$ls" : '.*-> \(.*\)$'`
+  if expr "$link" : '.*/.*' > /dev/null; then
+    PRG="$link"
+  else
+    PRG=`dirname "$PRG"`/"$link"
+  fi
+done
+
+# Get standard environment variables
+PRGDIR=`dirname "$PRG"`
+ETTX_DIR=`cd "$PRGDIR" ; pwd`
+if [ -r "$ETTX_DIR"/jakarta-tomcat-4.0.6/bin/setenv.sh ]; then
+  . "$ETTX_DIR"/jakarta-tomcat-4.0.6/bin/setenv.sh
+fi
+
+user=`id | cut -d' ' -f1 | cut -d'(' -f2 | cut -d')' -f1`
+USER=$user
+host=`/usr/bin/hostname`
+
+function get_pid_of {
+    /usr/ucb/ps auxww | grep -v "grep " | grep $user | grep $1 | awk '{print $2}'
+}
+
+function kill_process {
+	print "\t\tStopping " $1 "....\c"
+	if [ "$2" != "" ]; then
+		kill -9 $2 1>/dev/null 2>&1
+		print " done"
+	else
+		print " not running"
+	fi
+}
+
+start_ettx_components() {
+
+	#
+	# start the tibco rvd daemon
+	#
+	run=`ps -ef |grep rvd | grep -v grep | grep $USER |wc -l`
+	if [ $run -eq 0 ]; then
+		echo "Starting tibco rvd deamon"
+		$ETTX_HOME/3rdparty/rv-6.8/bin/rvd -no-http -permanent -logfile $ETTX_HOME/logs/rvd.log
+	else
+		echo "Tibco rvd deamon already running"
+	fi
+
+
+	#
+	# Start the Web Server
+	#
+	run=`/usr/ucb/ps auxww |grep -v grep | grep $USER | grep org.apache.catalina.startup.Bootstrap |wc -l`
+	if [ $run -eq 0 ]; then
+		echo "Starting Web Server"
+		$CATALINA_HOME/bin/startup.sh
+	else
+		echo "Web Server is already running"
+	fi
+}
+
+stop_ettx_components() {
+
+	shutdown_tomcat
+#	shutdown_rvd
+}
+
+shutdown_tomcat() {
+	echo "Attempting to shutdown tomcat if it's running."
+	$CATALINA_HOME/bin/shutdown.sh >/dev/null
+	tomcat_pid=`get_pid_of org.apache.catalina.startup.Bootstrap`
+	kill -9 $tomcat_pid 1>/dev/null 2>&1
+	echo "Tomcat is not running"
+}
+
+shutdown_rvd() {
+	echo "Shutting down Tibco"
+	rvd_pid=`get_pid_of rvd`
+	kill_process "rvd" $rvd_pid
+	rvd_pid=`get_pid_of rvd`
+	kill_process "rvd" $rvd_pid
+	echo "Tibco rvd process shutdown successfully"
+}
+
+check_status() {
+	systemUp=0
+	echo "\n\n"
+	run=`/usr/ucb/ps auxww |grep -v grep | grep $USER | grep org.apache.catalina.startup.Bootstrap |wc -l`
+	if [ $run -eq 0 ]; then
+		echo "\tThe Tomcat web server is down.\n"
+	else
+		echo "\tThe Tomcat web server is up and running.\n"
+		systemUp=1
+	fi
+#	run=`/usr/ucb/ps auxww |grep -v grep | grep $USER | grep rvd |wc -l`
+#	if [ $run -eq 0 ]; then
+#		echo "\tThe Tibco server is down.\n"
+#	else
+#		echo "\tThe Tibco server is up and running.\n"
+#		systemUp=1
+#	fi
+	exit $systemUp
+}
+
+case "$1" in
+    start)
+	start_ettx_components
+	;;
+
+    stop)
+	stop_ettx_components
+	;;
+
+    status)
+	check_status
+	;;
+
+    about)
+	version=`cat $ETTX_HOME/.version`
+	echo
+	echo "***************************************************************************"
+	echo "***************************************************************************"
+	echo
+	echo "                        ETTX Admin Application"
+	echo
+	echo "                       Version $version"
+	echo
+	echo "***************************************************************************"
+	echo "***************************************************************************"
+	;;
+
+    restart)
+	stop_ettx_components
+	start_ettx_components
+	;;
+    *)
+
+	echo
+	echo "usage: $0 [start] [stop] [restart] [status] [about]"
+	echo
+	echo "	start			Start the system"
+	echo "	stop			Stop the system"
+	echo "	restart			Stop and start the system"
+	echo "	status			Show the status of each process"
+	echo "	about			Show the version"
+	exit 1
+	;;
+esac
+
+exit 0

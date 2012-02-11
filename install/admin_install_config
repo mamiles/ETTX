@@ -1,0 +1,94 @@
+# 
+#  ETTX Admin Application Installation configuration
+#
+#  Use this file to automaticly configure the ETTX
+#  Admin App so the installation does not ask any questions.
+#
+#
+#  Admin App Base Installation Directory
+#
+ETTX_RUNTIME_ROOT=/opt/ettx
+#
+#  SPE User id and Password for logging into Admin App
+#  The ETTX Admin Application needs to authenticate with SPE to allow the administrator to login.
+#
+ETTX_USERID=admin
+ETTX_PASSWORD=cisco
+#
+#  Default host prompt for remote servers.  Used in Remote Log Display (Telnet & SSH)
+#
+HOSTPROMPT=$
+#
+#  Admin App Client Tomcat Port  (http://<host>:<port>/ettx_admin)
+#	This port will be used to access the Admin App
+#
+TOMCAT_PORT=9040
+#
+#  The following Tomcat Web ports will be generated automaticly or they can be specified here.
+#  The Admin App Web Server requires 9 unused ports.  Please make sure
+#  that these ports are free and not being used by other Web servers.
+#  The Tomcat Client Web server port you enter will be the main port and the starting port.
+#  
+#  TOMCAT_SHUT_PORT	TOMCAT_PORT + 5
+#  TOMCAT_SSL_PORT	TOMCAT_PORT + 3
+#  AJP13_PORT		TOMCAT_PORT + 9
+#  WARP_PORT		TOMCAT_PORT + 8
+#
+#
+#  Server host name and port (By default the Admin App Server and Client will be on the same
+#  host, however, the server could be on a seperate host if the "SERVERHOST" is specified.
+#  You can also set the server port that will be used.  By default the hostname will be the
+#  current host and the server port will be the same as the client port.
+#
+#  SERVERHOST=<hostname>
+#  SERVERPORT=$TOMCAT_PORT
+#
+#
+#  The SMS API Host and Port must be specified for Admin App to work properly
+#
+SMSHOST=localhost
+SMSPORT=8000
+#
+#  The SPE API Host and Port must be specifed.
+#
+SPEHOST=localhost
+SPEPORT=8000
+#
+#
+#  The following are optional Log Display configuration for each ETTX application
+#
+#  CNR1_HOST=
+#  CNR1_LOGINID=
+#  CNR1_PASSWORD=
+#  CNR1_SECURE_SHELL=false
+#  CNR1_LOG_DIR1=
+#  CNR1_LOG_DIR2=
+#
+#  SMS1_HOST=
+#  SMS1_LOGINID=
+#  SMS1_PASSWORD=
+#  SMS1_SECURE_SHELL=false
+#  SMS1_LOG_DIR1=
+#  SMS1_LOG_DIR2=
+#
+#  SPE1_HOST=
+#  SPE1_LOGINID=
+#  SPE1_PASSWORD=
+#  SPE1_SECURE_SHELL=false
+#  SPE1_LOG_DIR1=
+#  SPE1_LOG_DIR2=
+#
+#  BPR1_HOST=
+#  BPR1_LOGINID=
+#  BPR1_PASSWORD=
+#  BPR1_SECURE_SHELL=false
+#  BPR1_LOG_DIR1=
+#  BPR1_LOG_DIR2=
+#
+#  BAC1_HOST=
+#  BAC1_LOGINID=
+#  BAC1_PASSWORD=
+#  BAC1_SECURE_SHELL=false
+#  BAC1_LOG_DIR1=
+#  BAC1_LOG_DIR2=
+#

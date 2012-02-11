@@ -1,0 +1,212 @@
+<% String contextPath = request.getContextPath(); %>
+<script language="JavaScript" src="<%=contextPath%>/scripts/utils.js"></script>
+<BODY LANGUAGE=JavaScript onload="return window_onload()"/>
+<!-- IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT
+  -- IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT
+  --
+  -- IF YOU ARE SEEING THIS COMMENT AND YOU ARE NOT EDITTING A TEMPLATE FILE STOP
+  -- EDITING AND GO EDIT THE TEMPLATE FILE ASSOCIATED WITH IT.
+  -->
+
+<%@ taglib uri="/WEB-INF/tlds/uii-contentarea-taglib.tld" prefix="uii" %>
+<%@ page import="com.cisco.dslnms.gui.web.beans.helper.generic.*" %>
+<%@ page import="com.cisco.dslnms.gui.web.util.*" %>
+<%@ page import="java.util.*" %>
+<%@ page import="com.cisco.dslnms.gui.web.actions.WizardAction" %>
+<%@ page import="com.cisco.dslnms.actclass.ActEndPointMOC" %>
+<!-- #BeginEditable "beanName" -->
+<jsp:useBean id="deviceProvisioningFB" scope="session" class="com.cisco.dslnms.gui.web.beans.DeviceProvisioningFormBean"/>
+<%
+	int theFBSize = deviceProvisioningFB.size();
+	com.cisco.dslnms.gui.web.beans.helper.generic.ObjectDescriptor theObjectDescriptor = deviceProvisioningFB.getObjectDescriptor();
+%>
+<!-- #EndEditable -->
+
+<%
+	boolean theHasHTTPDownload = false;
+	String theButtonAction = WizardAction.getWizardAction(request);
+	String provMode = (String) session.getAttribute(WizardAction.WIZARD_PROVISIONING_MODE);
+	String provString = "";
+	if (provMode != null) {
+		if (provMode.equals(WebGuiConstants.SUBSCRIBER_PROV_MODE)) {
+			provString = "Subscriber Provisioning - ";
+		} else if (provMode.equals(WebGuiConstants.DEVICE_PROV_MODE)) {
+			provString = "Device Provisioning - ";
+		}
+	}
+%>
+
+<script language="JavaScript" src="<%=contextPath%>/uii/jsrsClient.js"></script> 
+
+<table width="100%" height="100%" border="0" cellspacing="0" cellpadding="5"  BGCOLOR="E1E1E1" align="center">
+  
+<tr>     
+	
+<td width="100%" align="center" valign="middle"> 
+<!-- #BeginEditable "beanName8" -->
+<uii:layerDialog id="dialog1" currentLayer="<%=deviceProvisioningFB.getCurrentLayer()%>">
+<!-- #EndEditable -->
+<!-- #BeginEditable "actionName" -->
+<uii:form action=""> 
+<!-- #EndEditable -->
+              
+<table height="200" width="511" border="0" cellspacing="1" cellpadding="2" bgcolor="#FFFFFF">
+<tr> 
+   <td colspan="3" nowrap background="<%=contextPath%>/RSRC/en_US/images/vertlines_dk.gif" bgcolor="#669999"> 
+                    <uii:img page="/RSRC/en_US/images/shim.gif"/></td>
+</tr>
+<tr> 
+   <td noWrap height=22 background="<%=contextPath%>/RSRC/en_US/images/dia_title_bg2.gif" colspan="3" align="center"> 
+                    <b><%= provString%>Device Configuration Download</b></td>
+</tr>
+		  
+<uii:layerOptions>
+   <tr> 
+	  <td nowrap bgcolor="#cecfce" colspan="1">&nbsp;Select A Service Feature: 
+	  		<uii:select property="selectedServiceFeature" disabled="true" onchange="UIIFormSubmit('uii_layer_id', 'dialog1');"> 
+                <uii:options property="sfList"></uii:options>
+            </uii:select>
+      </td>
+	  <td nowrap bgcolor="#cecfce" colspan="2">&nbsp;Select A Device: 
+	  		<uii:select property="selectedDevice" disabled="true" onchange="UIIFormSubmit('uii_layer_id', 'dialog1');"> 
+                <uii:options property="deviceList"></uii:options>
+            </uii:select>
+      </td>
+	</tr>
+</uii:layerOptions>
+
+<tr> 
+   <td noWrap height=22 background="<%=contextPath%>/RSRC/en_US/images/dia_title_bg2.gif" colspan="3" align="center"/> 
+</tr>
+<%
+		
+	String layerName = "";
+	String style = "";
+	String deviceFdnProperty = "";
+	for (int i=0; i<theFBSize; i++) {
+		ServiceFeatureDescriptor sfDescriptor = theObjectDescriptor.getServiceFeature(i);
+		if (sfDescriptor.isSelected()) {
+			for(int t=0; t < sfDescriptor.size(); t++) {
+				DeviceDescriptor devDescriptor = sfDescriptor.getDeviceDescriptor(t);
+				layerName = sfDescriptor.getName() + "_" + devDescriptor.getName();
+				style = devDescriptor.getStyle(); 
+				String deviceProperty = "objectDescriptor.serviceFeature" + i + ".device" + t;
+				String downloadMethodProperty = deviceProperty + ".downloadMethod";
+				String downloadMethodListProperty = deviceProperty + ".downloadMethodList";
+				String consolePortProperty = deviceProperty + ".consolePort";
+				String fileNameProperty = deviceProperty + ".fileName";
+				String destinationProperty = deviceProperty + ".destination";
+				String destinationListProperty = deviceProperty + ".destinationList";
+				String syntaxCheckProperty = deviceProperty + ".syntaxCheck";
+				String funcToCall = "javascript:downloadMethodChanged(this, '" + deviceProperty + "')";
+%>
+
+<uii:layerContents name="<%= layerName%>">
+          <tr> 
+		     <td nowrap bgcolor="#cecfce" align="right">&nbsp;</td>
+            <td width="100%" bgcolor="#cecfce">&nbsp;</td>
+          </tr>
+		  
+          <tr> 
+             <td nowrap bgcolor="#cecfce" align="right">Download Method:</td>
+             <td width="100%" bgcolor="#cecfce"><uii:select property="<%= downloadMethodProperty%>" onchange="<%= funcToCall%>"><uii:options property="<%= downloadMethodListProperty%>" /></uii:select></td>
+          </tr>
+	<%  
+	// if HTTP download method then show the Syntax check box
+	if(devDescriptor.getDownloadMethod().equals(WebGuiConstants.IE2100_METHOD)) {
+	%>
+          <tr> 
+             <td nowrap bgcolor="#cecfce" align="right"></td>
+             <td width="100%" bgcolor="#cecfce"><font size="-2">Syntax Check: </font> <uii:checkbox property="<%= syntaxCheckProperty%>"/> 
+             </td>
+          </tr>
+	<% 
+	} 
+	%>  
+	
+	<% 		
+	// show the console port text field is Console method
+	if(devDescriptor.getDownloadMethod().equals(WebGuiConstants.CONSOLE_METHOD)) {
+	%>
+
+          <tr> 
+             <td nowrap bgcolor="#cecfce" align="right"></td>
+             <td width="100%" bgcolor="#cecfce"><font size="-2">Port Number:</font>    <uii:integer id="<%= consolePortProperty%>" property="<%= consolePortProperty%>" minValue="0" maxValue="999999" size="5"/></td>
+          </tr>
+	<% 
+	} 
+	%> 
+	 
+	<%
+	// show the file text field if File method
+	if(devDescriptor.getDownloadMethod().equals(WebGuiConstants.FILE_METHOD)) {
+	%>
+
+          <tr> 
+             <td nowrap bgcolor="#cecfce" align="right"></td>
+             <td width="100%" bgcolor="#cecfce"><font size="-2">File Name:</font>    <uii:text property="<%= fileNameProperty%>" size="20"/></td>
+          </tr>
+	<% 
+	} 
+	%>  
+	
+          <tr> 
+             <td nowrap bgcolor="#cecfce" align="right">Destination:</td>
+             <td width="100%" bgcolor="#cecfce"><uii:select property="<%= destinationProperty%>" ><uii:options property="<%= destinationListProperty%>" /></uii:select></td>
+          </tr>
+		  
+          <tr bgcolor="#999999"> 
+            <td colspan="2" nowrap><uii:img page="/RSRC/en_US/images/shim.gif" /></td>
+          </tr>
+		  
+          <tr> 
+            <td colspan="2" bgcolor="silver"> 
+			
+<!-- #BeginEditable "FormButtons" -->			
+              <table cellspacing=3 cellpadding=0 border=0 width="100%">
+                <tr> 
+                  <td width="100%"><uii:img page="/RSRC/en_US/images/shim.gif" width="20" height="5"/></td>
+				  <td nowrap><uii:button value="Ok" onclick="UIIFormSubmit('popup', 'SetDownloadMethod'); return self.close();"/></td>
+				  <td nowrap><uii:button value="Cancel" onclick="return self.close();"/></td>
+                </tr>
+              </table>
+<!-- #EndEditable -->
+
+            </td>
+          </tr>
+		  
+          <tr> 
+            <td colspan="2" nowrap bgcolor="#cecfce" background="/RSRC/en_US/images/vertlines_dk.gif"> 
+              <uii:img page="/RSRC/en_US/images/shim.gif"/></td>
+          </tr>
+	</uii:layerContents>
+		<% } %>
+	<% } %>
+<% } %>
+	
+        </table>	  
+</uii:form>
+</uii:layerDialog>
+    </td>
+  </tr>
+  	   <tr> 
+		  <td colspan="3" nowrap bgcolor="#cecfce" background="<%=contextPath%>/RSRC/en_US/images/vertlines_dk.gif"> 
+						<uii:img page="/RSRC/en_US/images/shim.gif"/></td>
+	   </tr>
+  
+</table>
+
+<script language="JavaScript" type="text/javascript">
+
+<!--
+
+function window_onload() {
+}
+
+function downloadMethodChanged(aSelect, aDeviceProperty) {
+	UIIFormSubmit('popup', 'ConfigDownload');
+	return true;
+}
+
+//-->
+</script>

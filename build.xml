@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- build.xml - a simple Ant buildfile -->
+<project name="ETTx Admin App Buildfile" default="all" basedir=".">
+
+	<!-- the directory containing the source code -->
+	<property name="src.dir" value="src"/>
+	<property name="src.i18n.dir" value="src/i18n"/>
+	<property name="cweb.dir" value="webapps/ettx_admin/WEB-INF"/>
+	<property name="capp.dir" value="webapps/ettx_admin"/>
+	<property name="sweb.dir" value="webapps/ettx_admin_server/WEB-INF"/>
+	<property name="sapp.dir" value="webapps/ettx_admin_server"/>
+	<property name="src.lib" value="lib"/>
+    <property name="src.csr.lib" value="lib/csr"/>
+    <property name="csr.config" value="config/csr"/>
+    <property name="csr.app.dir" value="webapps/csr"/>
+    <property name="csr.app.web.dir" value="${csr.app.dir}/WEB-INF"/>
+	<property name="tomcat.lib" value="/auto/austin-nms/ettx/3rdparty/jakarta-tomcat/jakarta-tomcat-4.0.6/common/lib"/>
+	
+	<!-- temporary build directories -->
+	<property name="build.dir" value="build"/>
+	<property name="dist.dir" value="build/dist"/>
+
+
+	<property name="build.gui" value="${build.dir}/gui"/>
+	<property name="build.gui.web" value="${build.gui}/WEB-INF"/>
+	<property name="build.gui.classes" value="${build.gui.web}/classes"/>
+	<property name="build.gui.lib" value="${build.gui.web}/lib"/>
+	<property name="build.gui.config" value="${build.gui.web}/config"/>
+    
+    <!-- Temporary addition for build of separate CSR application -->
+    <property name="build.csr" value="${build.dir}/csr" />
+    <property name="build.csr.web" value="${build.csr}/WEB-INF" />
+    <property name="build.csr.classes" value="${build.csr.web}/classes" />
+    <property name="build.csr.lib" value="${build.csr.web}/lib" />
+    <property name="build.csr.config" value="${build.csr.classes}/config" />
+    <property name="build.csr.resources" value="${build.csr.classes}/resources" />    
+    
+
+	<property name="build.server" value="${build.dir}/server"/>
+	<property name="build.server.web" value="${build.server}/WEB-INF"/>
+	<property name="build.server.classes" value="${build.server.web}/classes"/>
+	<property name="build.server.config" value="${build.server.web}/config"/>
+	<property name="build.server.lib" value="${build.server.web}/lib"/>
+
+
+	<property name="build.tests" value="${build.dir}/tests"/>
+	<property name="build.tests.classes" value="${build.tests}/classes"/>
+	<property name="src.tests" value="${src.dir}/tests"/>
+	
+	<!-- target to create the build directories prior to the compile target -->
+	<target name="prepare">
+		<mkdir dir="${build.gui}"/>
+		<mkdir dir="${build.gui.web}"/>
+		<mkdir dir="${build.gui.classes}"/>
+		<mkdir dir="${build.gui.config}"/>
+		<mkdir dir="${build.gui.lib}"/>
+	<!--	<mkdir dir="${build.csr}"/>		-->
+	<!--	<mkdir dir="${build.csr.web}"/>		-->
+	<!--	<mkdir dir="${build.csr.classes}"/>	-->
+	<!--	<mkdir dir="${build.csr.config}"/>	-->
+	<!--	<mkdir dir="${build.csr.lib}"/>        	-->
+        <!--	<mkdir dir="${build.csr.resources}"/>	-->
+		<mkdir dir="${build.server}"/>
+		<mkdir dir="${build.server.web}"/>
+		<mkdir dir="${build.server.classes}"/>
+		<mkdir dir="${build.server.config}"/>
+		<mkdir dir="${build.server.lib}"/>
+		<mkdir dir="${dist.dir}"/>
+	</target>
+
+	<target name="clean_gui" description="Removes generated files.">
+		<delete dir="${build.gui}"/>
+		<delete dir="${src.dir}/gui/axis/stubs/com"/>
+	</target>
+
+
+	<target name="wsdl2java" depends="prepare" description="Generates java from WSDL.">
+		<java classname="org.apache.axis.wsdl.WSDL2Java" fork="yes">
+			<classpath>
+				<fileset dir="${src.lib}">
+					<include name="**/*.jar"/>
+					<exclude name="csr/**"/>
+				</fileset>
+			</classpath>
+               		<arg line="-o ${src.dir}/client/axis/stubs -p com.cisco.ettx.admin.common"/>
+			<arg value="${src.dir}/client/axis/AdminServices.wsdl"/>
+		</java>
+		<delete file="${src.dir}/client/axis/stubs/com/cisco/ettx/admin/common/SMSComponent.java"/>
+		<delete file="${src.dir}/client/axis/stubs/com/cisco/ettx/admin/common/ComponentHostData.java"/>
+		<delete file="${src.dir}/client/axis/stubs/com/cisco/ettx/admin/common/SystemConfiguration.java"/>
+		<delete file="${src.dir}/client/axis/stubs/com/cisco/ettx/admin/common/ToolbarElement.java"/>
+		<delete file="${src.dir}/client/axis/stubs/com/cisco/ettx/admin/common/ApplLog.java"/>
+		<delete file="${src.dir}/client/axis/stubs/com/cisco/ettx/admin/common/AttrResult.java"/>
+		<delete file="${src.dir}/client/axis/stubs/com/cisco/ettx/admin/common/AdminServicesException.java"/>
+		<delete file="${src.dir}/client/axis/stubs/com/cisco/ettx/admin/common/AdminServicesNotification.java"/>
+	</target>
+
+	<target name="install_i18n" depends="prepare" description="Installs I18N in WEB_INF">
+                <copy todir="${build.gui.classes}" verbose="No">
+                        <fileset dir="${src.i18n.dir}" includes="**/*.*" />
+                </copy>
+	</target>
+    
+	<target name="clean_csr" description="Removes generated files from CSR build process.">
+		<delete dir="${build.csr}"/>
+	</target>  
+      
+    <target name="compile_csr" depends="prepare" description="Compile all the CSR source code.">
+        <javac srcdir="${src.dir}/csr" destdir="${build.csr.classes}">
+            <classpath>
+				<fileset dir="${tomcat.lib}">
+					<include name="**/servlet.jar"/>
+				</fileset>
+                <!-- struts 1.1 libs -->
+                <fileset dir="${src.csr.lib}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </javac>
+    </target>
+    
+    <target name="install_csr_config" depends="prepare" description="Copies CSR application config and resource files to build directory.">
+        <copy todir="${build.csr.config}" verbose="No">
+		    <fileset dir="${csr.config}/config" includes="application.properties"/>
+        </copy>
+        <copy todir="${build.csr.classes}" verbose="No">
+            <fileset dir="${csr.config}/config" includes="log4j.properties"/>
+        </copy>
+        <copy todir="${build.csr.resources}" verbose="No">
+            <fileset dir="${csr.config}/resources" includes="*"/>
+        </copy>
+	</target>
+        
+	<target name="csr" depends="compile_csr,install_csr_config" description="Creates war file for CSR application.">
+		<war warfile="${dist.dir}/csr.war" basedir="${csr.app.dir}" webxml="${csr.app.web.dir}/web.xml">
+			<lib dir="${src.csr.lib}" includes="*.jar"/>
+            <classes dir="${build.csr.classes}" includes="**/*"/>
+		</war>
+	</target>
+
+	<target name="compile_gui" depends="wsdl2java,install_i18n" description="Compiles all gui source code.">
+		<javac srcdir="${src.dir}/common" destdir="${build.gui.classes}">
+			<classpath>
+				<fileset dir="${src.lib}">
+					<include name="**/*.jar"/>
+					<exclude name="csr/**"/>
+				</fileset>
+				<fileset dir="${tomcat.lib}">
+					<include name="**/servlet.jar"/>
+				</fileset>
+			</classpath>
+		</javac>
+		<javac srcdir="${src.dir}/client" destdir="${build.gui.classes}">
+			<classpath>
+				<fileset dir="${src.lib}">
+					<include name="**/*.jar"/>
+					<exclude name="csr/**"/>
+				</fileset>
+				<fileset dir="${tomcat.lib}">
+					<include name="**/servlet.jar"/>
+				</fileset>
+			</classpath>
+		</javac>
+		<javac srcdir="${src.dir}/gui" destdir="${build.gui.classes}">
+			<classpath>
+				<fileset dir="${src.lib}">
+					<include name="**/*.jar"/>
+					<exclude name="csr/**"/>
+				</fileset>
+				<fileset dir="${tomcat.lib}">
+					<include name="**/servlet.jar"/>
+				</fileset>
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="deploy_gui" depends="compile_gui" description="Deploys client WSDD">
+		<java classname="org.apache.axis.utils.Admin" fork="yes">
+			<classpath>
+				<pathelement path="${build.gui.classes}"/>
+				<fileset dir="${src.lib}">
+					<include name="**/*.jar"/>
+					<exclude name="csr/**"/>
+				</fileset>
+				<fileset dir="${tomcat.lib}">
+					<include name="**/servlet.jar"/>
+				</fileset>
+			</classpath>
+			<arg value="client"/>
+			<arg value="${src.dir}/client/axis/deploy.wsdd"/>
+		</java>
+                <move todir="${build.gui.web}" verbose="No">
+                        <fileset dir="." includes="client-config.wsdd" />
+                </move>
+	</target>
+
+	<target name="install_gui_config" depends="prepare" description="Copies GUI config parameters">
+                <copy todir="${build.gui.config}" verbose="No">
+			<fileset dir="${src.dir}/config" includes="gui*.*"/>
+                </copy>
+	</target>
+
+	<target name="gui" depends="deploy_gui,install_i18n,install_gui_config" description="Creates war file">
+		<war warfile="${dist.dir}/ettx_admin.war" basedir="${capp.dir}" webxml="${cweb.dir}/web.xml">
+			<lib dir="${src.lib}" includes="*.jar" excludes="csr/**" />
+			<fileset dir="${build.gui}" includes="**/*"/>
+		</war>
+	</target>
+
+	<target name="clean_server" description="Removes server generated files.">
+		<delete dir="${build.server}"/>
+	</target>
+
+	<target name="compile_server" depends="prepare" description="Compiles all server source code.">
+		<javac srcdir="${src.dir}/common" destdir="${build.server.classes}">
+			<classpath>
+				<fileset dir="${src.lib}">
+					<include name="**/*.jar"/>
+					<exclude name="csr/**"/>
+				</fileset>
+				<fileset dir="${tomcat.lib}">
+					<include name="**/servlet.jar"/>
+				</fileset>
+			</classpath>
+		</javac>
+		<javac srcdir="${src.dir}/server" destdir="${build.server.classes}">
+			<classpath>
+				<fileset dir="${src.lib}">
+					<include name="**/*.jar"/>
+					<exclude name="csr/**"/>
+				</fileset>
+				<fileset dir="${tomcat.lib}">
+					<include name="**/servlet.jar"/>
+				</fileset>
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="deploy_server" depends="compile_server" description="Deploys server WSDD">
+		<java classname="org.apache.axis.utils.Admin" fork="yes">
+			<classpath>
+				<pathelement path="${build.server.classes}"/>
+				<fileset dir="${src.lib}">
+					<include name="**/*.jar"/>
+					<exclude name="csr/**"/>
+				</fileset>
+				<fileset dir="${tomcat.lib}">
+					<include name="**/servlet.jar"/>
+				</fileset>
+			</classpath>
+			<arg value="server"/>
+			<arg value="${src.dir}/server/axis/services/deploy.wsdd"/>
+		</java>
+                <move todir="${build.server.web}" verbose="No">
+                        <fileset dir="." includes="server-config.wsdd" />
+                </move>
+	</target>
+	
+	<target name="deploy_sms_config" depends="compile_server" description="Deploys client WSDD for SMS">
+		<java classname="org.apache.axis.utils.Admin" fork="yes">
+			<classpath>
+				<pathelement path="${build.server.classes}"/>
+				<fileset dir="${src.lib}">
+					<include name="**/*.jar"/>
+					<exclude name="csr/**"/>
+				</fileset>
+				<fileset dir="${tomcat.lib}">
+					<include name="**/servlet.jar"/>
+				</fileset>
+			</classpath>
+			<arg value="client"/>
+			<arg value="${src.dir}/server/axis/client-deploy.wsdd"/>
+		</java>
+                <move file="client-config.wsdd" todir="${build.server.web}" verbose="No"/>
+	</target>
+
+	<target name="install_server_config" depends="prepare" description="Copies server config parameters">
+                <copy todir="${build.server.config}" verbose="No">
+			<fileset dir="${src.dir}/config" includes="server*.*,*.properties,*.xml,auditlog.config,*/**"/>
+                </copy>
+	</target>
+
+	<target name="server" depends="deploy_server,deploy_sms_config,install_server_config" description="Creates war file for server">
+		<war warfile="${dist.dir}/ettx_admin_server.war" basedir="${sapp.dir}" webxml="${sweb.dir}/web.xml">
+			<lib dir="${src.lib}" includes="*.jar" excludes="csr/**" />
+			<fileset dir="${build.server}" includes="**/*"/>
+		</war>
+	</target>
+
+	<target name="clean" depends="clean_server,clean_gui,clean_csr" description="Removes all generated files.">
+	</target>
+
+	<target name="prepare_tests">
+		<mkdir dir="${build.tests}"/>
+		<mkdir dir="${build.tests.classes}"/>
+	</target>
+
+	<target name="clean_tests">
+		<delete dir="${build.tests}"/>
+	</target>
+
+	<target name="compile_tests" depends="prepare_tests" description="Compiles all server source code.">
+		<javac srcdir="${src.dir}/common" destdir="${build.tests.classes}">
+			<classpath>
+				<fileset dir="${src.lib}">
+					<include name="**/*.jar"/>
+					<exclude name="csr/**"/>
+				</fileset>
+				<fileset dir="${tomcat.lib}">
+					<include name="**/servlet.jar"/>
+				</fileset>
+			</classpath>
+		</javac>
+		<javac srcdir="${src.dir}/client" destdir="${build.tests.classes}">
+			<classpath>
+				<fileset dir="${src.lib}">
+					<include name="**/*.jar"/>
+					<exclude name="csr/**"/>
+				</fileset>
+				<fileset dir="${tomcat.lib}">
+					<include name="**/servlet.jar"/>
+				</fileset>
+			</classpath>
+		</javac>
+		<javac srcdir="${src.tests}" destdir="${build.tests.classes}">
+			<classpath>
+				<fileset dir="${src.lib}">
+					<include name="**/*.jar"/>
+					<exclude name="csr/**"/>
+				</fileset>
+				<fileset dir="${tomcat.lib}">
+					<include name="**/servlet.jar"/>
+				</fileset>
+			</classpath>
+		</javac>
+		<java classname="org.apache.axis.utils.Admin" fork="yes">
+			<classpath>
+				<pathelement path="${build.gui.classes}"/>
+				<fileset dir="${src.lib}">
+					<include name="**/*.jar"/>
+					<exclude name="csr/**"/>
+				</fileset>
+				<fileset dir="${tomcat.lib}">
+					<include name="**/servlet.jar"/>
+				</fileset>
+			</classpath>
+			<arg value="client"/>
+			<arg value="${src.dir}/client/axis/deploy.wsdd"/>
+		</java>
+                <move todir="${build.tests}" verbose="No">
+                        <fileset dir="." includes="client-config.wsdd" />
+                </move>
+	</target>
+
+
+	<target name="tests" depends="clean_tests,compile_tests" description="Builds test sources"/>
+
+	<target name="all" depends="clean,server,gui" description="Cleans and rebuilds the Admin App"/>
+	
+</project>
+

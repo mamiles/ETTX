@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LEASEHISTORY>
+  <DEFAULTS>
+    <IPFORMAT>address,client-binary-client-id,client-dns-name,client-domain-name,client-flags,client-host-name,client-id,client-last-transaction-time,client-mac-addr,client-os-type,expiration,flags,lease-renewal-time,namespace-id,relay-agent-circuit-id,relay-agent-option,relay-agent-remote-id,relay-agent-server-id-override,relay-agent-subnet-selection,relay-agent-vpn-id,start-time-of-state,state,vendor-class-id</IPFORMAT>
+  </DEFAULTS>
+</LEASEHISTORY>

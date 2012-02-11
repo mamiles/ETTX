@@ -1,0 +1,178 @@
+<% String contextPath = request.getContextPath(); %>
+<script language="JavaScript" src="<%=contextPath%>/scripts/utils.js"></script>
+<BODY LANGUAGE=JavaScript onload="return disableWizardCancelAndBackValidation()"/>
+<!-- IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT
+  -- IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT
+  --
+  -- IF YOU ARE SEEING THIS COMMENT AND YOU ARE NOT EDITTING A TEMPLATE FILE STOP
+  -- EDITING AND GO EDIT THE TEMPLATE FILE ASSOCIATED WITH IT.
+  -->
+  
+<%@ page language="java" %>
+<%@ taglib uri="/WEB-INF/tlds/uii-contentarea-taglib.tld" prefix="uii" %>
+<%@ taglib uri="/WEB-INF/tlds/ogs-objectselector-taglib.tld" prefix="ogs" %>
+<%@ page import="com.cisco.dslnms.gui.web.actions.WizardAction" %>
+<%@ page import="com.cisco.dslnms.gui.web.util.WebGuiConstants" %>
+<%
+	String deviceFdn = (String) session.getAttribute(WizardAction.WIZARD_FDN);
+		String provMode = (String) session.getAttribute(WizardAction.WIZARD_PROVISIONING_MODE);
+	String provString = "";
+	if (provMode != null) {
+		if (provMode.equals(WebGuiConstants.SUBSCRIBER_PROV_MODE)) {
+			provString = "Subscriber Provisioning - ";
+		} else if (provMode.equals(WebGuiConstants.DEVICE_PROV_MODE)) {
+			provString = "Device Provisioning - ";
+		}
+	}
+%>
+
+<script language="JavaScript" src="<%=contextPath%>/uii/jsrsClient.js"></script> 
+<script language="JavaScript" src="<%=contextPath%>/objectselector/scripts/ccnscDefinedFunctions.js"></script> 
+
+<!-- #BeginEditable "actionName" -->
+<uii:form method="post" action="">
+<!-- #EndEditable -->
+<table height="100%" border="0" cellspacing="0" cellpadding="5"  BGCOLOR="E1E1E1" align="center">
+  <tr> 
+    <td width="100%"> 
+      <table border="0" cellspacing="1" cellpadding="2" align="center">
+        <tr> 
+			<td valign="top" width="89%" height="350"> 		
+              <table width="350" border="0" cellspacing="1" cellpadding="1" align="center" bgcolor="#FFFFFF">
+                <tr> 
+                  <td colspan="2" nowrap background="/RSRC/en_US/images/vertlines_dk.gif" bgcolor="#669999"> 
+                    <uii:img page="/RSRC/en_US/images/shim.gif"/></td>
+                </tr>
+                <tr> 
+                  <td noWrap height=22 background="/RSRC/en_US/images/dia_title_bg2.gif" colspan="2" align="center"> 
+                    <b><%= provString%>Existing Roles</b></td>
+                </tr>
+                <tr> 
+                  <td nowrap bgcolor="#cecfce" align="right">&nbsp;</td>
+                  <td width="100%" bgcolor="#cecfce">&nbsp;</td>
+                </tr>  
+                <tr> 
+                  <td nowrap bgcolor="#cecfce" align="right">Device Id:</td>
+                  <td width="100%" bgcolor="#cecfce"><uii:text property="null" value="<%= deviceFdn%>" readonly="true" size="40"/></td>
+                </tr>
+				<tr> 
+                  <td colspan="2" nowrap>		  	  
+				  <ogs:contentAreaSelector osName="existingRoles"
+				    treeGenerator="com.cisco.nm.xms.ogs.client.ostaglib.util.RoleTreeGenerator"
+					selectionMode="single" 
+					preserveSelection="false" 
+					isGroupSelector="false"
+					width="300"
+            		height="300"/>
+				   </td>
+                </tr>
+                <tr bgcolor="silver"> 
+                  <td colspan="2" nowrap><uii:img page="/RSRC/en_US/images/shim.gif" /></td>
+                </tr>
+				          <tr> 
+          </tr>
+                <tr> 
+                  <td colspan="2" nowrap bgcolor="#cecfce" background="/RSRC/en_US/images/vertlines_dk.gif"> 
+                    <uii:img page="/RSRC/en_US/images/shim.gif"/></td>
+                </tr>
+              </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+    <td valign="top"> 
+      <TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="0" ALIGN="center">
+        <tr> 
+          <td> 
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr> 
+                <td><uii:img page="/RSRC/en_US/images/snv_left_04.gif" /></td>
+                <TD WIDTH="100%" NOWRAP BACKGROUND="/RSRC/en_US/images/snv_bg_04.gif"><b><FONT COLOR="White">&nbsp;Instruction</FONT></b> 
+                </TD>
+                <td><uii:img page="/RSRC/en_US/images/snv_right_04.gif" /></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr> 
+          <td bgcolor="FFFFCC"> 
+            <table width="100%" border="0" cellspacing="0" cellpadding="3">
+              <tr> 
+                <td> 
+                    <p>To add services, click on the Add Service button.  Note that you cannot add services to an existing role.</p>
+					<p>To delete services, select a role and then click on the Delete Service button.</p>
+                  </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr> 
+          <td> 
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr> 
+                <td><uii:img page="/RSRC/en_US/images/snv_left_btm_04.gif"/></td>
+                <td width="100%" background="/RSRC/en_US/images/snv_bg_btm_04.gif"> 
+                  <uii:img page="/RSRC/en_US/images/shim.gif"/></td>
+                <td><uii:img page="/RSRC/en_US/images/snv_right_btm_04.gif"/></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+
+<script language="JavaScript" type="text/javascript">
+<!--
+ //
+ //Application javascript functions for object selector start here
+ //
+ 
+function osOnLoad() {
+    objselSlide();
+}
+
+function multipleSelectionTriggerHandler(selectionArray) {
+}
+
+function populateScreen(aDataStr) {
+	var theVals = aDataStr.split("#!/");
+    document.forms[0].parent.value = theVals[0];
+    document.forms[0].name.value   = theVals[1];
+    document.forms[0].description.value = theVals[2];
+	document.forms[0].type.value = theVals[3];
+}
+
+function doNodeCheck() {
+
+	var selection = getSelection();
+	if(selection == null || selection.size() <= 0) {
+		alert("Nothing is currently selected to perform this action on.");
+		return false;
+	} 
+	var theObjID = selection.elementAt(0).elementAt(1);
+	if(theObjID.equals("")) {
+		var theLabel = selection.elementAt(0).elementAt(2);
+		alert("Nothing is currently selected to perform this action on.");
+		return false;
+		/*
+		if(theLabel.equals("Root")) {
+		    if(aType == "list") {
+		        alert("Devices can not be created under the Root so there are none to list.");
+		        return false;
+		    } else if(aType == "delete") {
+		        alert("Can not delete the Root node.");
+		        return false;
+		    }
+		}
+		*/
+	}
+	
+	return true;
+}
+//-->
+</script>
+
+</uii:form>

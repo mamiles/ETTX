@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XML Spy v4.3 U (http://www.xmlspy.com) by Chandrika Ramanujam (Cisco Systems, Inc.) -->
+<TASK NAME="TROUBLESHOOT_DATA_SERVICE">
+	<COLLECTION ORDER="1">
+		<HANDLER>com.cisco.ettx.admin.collengine.sms.SMSDataCollector</HANDLER>
+		<COMPONENT_TASK>GetAllDetailsForSubscriber</COMPONENT_TASK>
+	</COLLECTION>
+	<COLLECTION ORDER="2">
+		<HANDLER>com.cisco.ettx.admin.collengine.command.CommandExecutor</HANDLER>
+		<COMPONENT_TASK>PING_CPE</COMPONENT_TASK>
+	</COLLECTION>
+	<COLLECTION ORDER="3">
+		<HANDLER>com.cisco.ettx.admin.collengine.command.CommandExecutor</HANDLER>
+		<COMPONENT_TASK>TRACE_ROUTE</COMPONENT_TASK>
+	</COLLECTION>
+	<COLLECTION ORDER="4">
+		<HANDLER>com.cisco.ettx.admin.collengine.command.CommandExecutor</HANDLER>
+		<COMPONENT_TASK>SHOW_PORTS</COMPONENT_TASK>
+	</COLLECTION>
+	<OUTPUT_DEFINITION>
+		<ATTRIBUTE NAME="subscriberID"/>
+		<ATTRIBUTE NAME="loginID"/>
+		<ATTRIBUTE NAME="postalAddress"/>
+		<ATTRIBUTE NAME="postalCity"/>
+		<ATTRIBUTE NAME="postalState"/>
+		<ATTRIBUTE NAME="countryCode"/>
+		<ATTRIBUTE NAME="homeNumber" />
+		<ATTRIBUTE NAME="mobileNumber" />
+		<ATTRIBUTE NAME="subscriberName"/>
+		<ATTRIBUTE NAME="subscriberFirstName"/>
+		<ATTRIBUTE NAME="subscriberLastName"/>
+		<ATTRIBUTE NAME="subscribedServices"/>
+		<ATTRIBUTE NAME="subscriptionLevel" />
+		<ATTRIBUTE NAME="accountNumber" />
+		<ATTRIBUTE NAME="accountStatus" />
+		<ATTRIBUTE NAME="switchIPAddress" />
+		<ATTRIBUTE NAME="switchPortName" />
+		<ATTRIBUTE NAME="pingOutput" />
+		<ATTRIBUTE NAME="showPortOutput" />
+		<ATTRIBUTE NAME="traceOutput" />
+		<ATTRIBUTE NAME="ipAddresses" />
+		<ATTRIBUTE NAME="macAddresses" />
+	</OUTPUT_DEFINITION>
+</TASK>

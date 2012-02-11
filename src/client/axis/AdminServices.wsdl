@@ -1,0 +1,593 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="urn:adminServices" xmlns:impl="urn:adminServices" xmlns:intf="urn:adminServices" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns1="urn:BeanService" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+ <wsdl:types>
+  <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:BeanService">
+   <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+
+	<complexType name="SystemConfiguration">
+	    <sequence>
+		<element name="userID" nillable="true" type="string"/>
+		<element name="password" nillable="true" type="string"/>
+		<element name="purgeDur" type="int"/>
+		<element name="exportDir" nillable="true" type="string"/>
+		<element name="leaseHistorySchOn" type="boolean"/>
+		<element name="leaseHistoryExportDir" nillable="true" type="string"/>
+		<element name="leaseHistoryExportDay" nillable="true" type="int"/>
+		<element name="leaseHistoryExportTime" nillable="true" type="string"/>
+	    </sequence>
+	</complexType>
+	<element name="SystemConfiguration" nillable="true" type="tns1:SystemConfiguration" />
+	<complexType name="ToolbarElement">
+	    <sequence>
+		<element name="displayName" type="string"/>
+		<element name="urlLink" type="string"/>
+	    </sequence>
+	</complexType>
+	<complexType name="ComponentHostData">
+	<all/>
+	</complexType>
+	<element name="ComponentHostData" nillable="true" type="tns1:ComponentHostData" />
+	<complexType name="SMSComponent">
+	<all/>
+	</complexType>
+	<element name="SMSComponent" nillable="true" type="tns1:SMSComponent" />
+	<complexType name="SubsDeviceInfo">
+	<all/>
+	</complexType>
+	<element name="SubsDeviceInfo" nillable="true" type="tns1:SubsDeviceInfo" />
+	<complexType name="ApplLog">
+	<all/>
+	</complexType>
+	<element name="ApplLog" nillable="true" type="tns1:ApplLog" />
+   	<complexType name="AttrResult"/>
+   	<element name="AttrResult" nillable="true" type="tns1:AttrResult" />
+
+  <complexType name="AdminServicesException">
+    <sequence>
+		<element name="errorCode" type="string"/>
+    </sequence>
+   </complexType>
+   <element name="AdminServicesException" nillable="true" type="tns1:AdminServicesException"/>
+
+  <complexType name="AdminServicesNotification">
+    <sequence>
+		<element name="notification" type="string"/>
+    </sequence>
+   </complexType>
+   <element name="AdminServicesNotification" nillable="true" type="tns1:AdminServicesNotification"/>
+
+  </schema>
+  <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:adminServices">
+   <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+
+   <complexType name="ArrayOfToolbarElement">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:ToolbarElement[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+
+   <complexType name="ArrayOfSMSComponent">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:SMSComponent[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+
+   <complexType name="ArrayOfApplLog">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:ApplLog[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+
+   <complexType name="ArrayOfSubsDevices">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="tns1:SubsDeviceInfo[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+
+   <complexType name="ArrayOfString">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:string[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+  </schema>
+
+ </wsdl:types>
+  <!-- message declns -->
+  <message name="AdminServicesException">
+    <part name="fault" type="tns1:AdminServicesException"/>
+  </message>
+  <message name="AdminServicesNotification">
+    <part name="fault" type="tns1:AdminServicesNotification"/>
+  </message>
+  <message name="loginRequest">
+    <part name="userID" type="xsd:string"/>
+    <part name="password" type="xsd:string"/>
+  </message>
+  <message name="loginResponse">
+    <part name="return" type="xsd:string"/>
+  </message>
+  <message name="logoutRequest">
+    <part name="sessionID" type="xsd:string"/>
+  </message>
+  <message name="logoutResponse"/>
+  <message name="checkPermissionRequest">
+    <part name="sessionID" type="xsd:string"/>
+    <part name="taskIDList" type="impl:ArrayOfString"/>
+  </message>
+  <message name="checkPermissionResponse">
+    <part name="return" type="xsd:boolean"/>
+  </message>
+
+  <message name="getSystemConfigRequest">
+    <part name="sessionID" type="xsd:string"/>
+  </message>
+  <message name="getSystemConfigResponse">
+    <part name="return" type="tns1:SystemConfiguration"/>
+  </message>
+  <message name="setSystemConfigRequest">
+    <part name="sessionID" type="xsd:string"/>
+    <part name="config" type="tns1:SystemConfiguration"/>
+  </message>
+  <message name="setSystemConfigResponse"/>
+
+  <message name="getToolbarElementsRequest">
+    <part name="sessionID" type="xsd:string"/>
+  </message>
+  <message name="getToolbarElementsResponse">
+    <part name="return" type="impl:ArrayOfToolbarElement"/>
+  </message>
+  <message name="setToolbarElementsRequest">
+    <part name="sessionID" type="xsd:string"/>
+    <part name="elements" type="impl:ArrayOfToolbarElement"/>
+  </message>
+  <message name="setToolbarElementsResponse"/>
+  <message name="addToolbarElementRequest">
+    <part name="sessionID" type="xsd:string"/>
+    <part name="name" type="xsd:string"/>
+    <part name="url" type="xsd:string"/>
+  </message>
+  <message name="addToolbarElementResponse"/>
+  <message name="deleteToolbarElementRequest">
+    <part name="sessionID" type="xsd:string"/>
+    <part name="url" type="xsd:string"/>
+  </message>
+  <message name="deleteToolbarElementResponse"/>
+  <message name="changeToolbarElementRequest">
+    <part name="sessionID" type="xsd:string"/>
+    <part name="oldUrl" type="xsd:string"/>
+    <part name="name" type="xsd:string"/>
+    <part name="url" type="xsd:string"/>
+  </message>
+  <message name="changeToolbarElementResponse"/>
+
+  <message name="getCompConfigRequest">
+    <part name="sessionID" type="xsd:string"/>
+    <part name="compname" type="xsd:string"/>
+  </message>
+  <message name="getCompConfigResponse">
+    <part name="return" type="tns1:SMSComponent"/>
+  </message>
+  <message name="setCompConfigRequest">
+    <part name="sessionID" type="xsd:string"/>
+    <part name="comp" type="tns1:SMSComponent"/>
+  </message>
+  <message name="setCompConfigResponse"/>
+  <message name="getAllCompRequest">
+    <part name="sessionID" type="xsd:string"/>
+  </message>
+  <message name="getAllCompResponse">
+    <part name="return" type="impl:ArrayOfSMSComponent"/>
+  </message>
+  <message name="changeHostRequest">
+    <part name="sessionID" type="xsd:string"/>
+    <part name="compName" type="xsd:string"/>
+    <part name="oldHostName" type="xsd:string"/>
+    <part name="compHost" type="tns1:ComponentHostData"/>
+  </message>
+  <message name="changeHostResponse"/>
+  <message name="deleteHostRequest">
+    <part name="sessionID" type="xsd:string"/>
+    <part name="compName" type="xsd:string"/>
+    <part name="hostName" type="xsd:string"/>
+  </message>
+  <message name="deleteHostResponse"/>
+
+  <message name="getLogFilenamesRequest">
+    <part name="sessionID" type="xsd:string"/>
+    <part name="comps" type="impl:ArrayOfSMSComponent"/>
+    <part name="filter" nillable="true" type="xsd:string"/>
+  </message>
+  <message name="getLogFilenamesResponse">
+    <part name="return" type="impl:ArrayOfApplLog"/>
+  </message>
+
+  <message name="getLogFileRequest">
+    <part name="sessionID" type="xsd:string"/>
+    <part name="logDesc" type="tns1:ApplLog"/>
+  </message>
+  <message name="getLogFileResponse">
+    <part name="return" type="xsd:string"/>
+  </message>
+
+  <message name="executeTaskRequest">
+    <part name="sessionID" type="xsd:string"/>
+    <part name="taskname" type="xsd:string"/>
+    <part name="attrs" type="apachesoap:Map"/>
+    <part name="numrecords" type="xsd:int"/>
+  </message>
+  <message name="executeTaskResponse">
+    <part name="return" type="apachesoap:Map"/>
+  </message>
+
+  <message name="iterateRequest">
+    <part name="sessionID" type="xsd:string"/>
+    <part name="token" type="xsd:string"/>
+    <part name="numrecords" type="xsd:int"/>
+  </message>
+  <message name="iterateResponse">
+    <part name="return" type="tns1:AttrResult"/>
+  </message>
+
+  <message name="leaseHistoryArchiveRequest">
+    <part name="sessionID" type="xsd:string"/>
+    <part name="cnrHost" type="xsd:string"/>
+    <part name="startDate" type="xsd:date"/>
+    <part name="endDate" type="xsd:date"/>
+    <part name="archiveFile" type="xsd:string"/>
+  </message>
+  <message name="leaseHistoryArchiveResponse">
+    <part name="return" type="xsd:string"/>
+  </message>
+
+  <!-- port type declns -->
+  <portType name="Authenticate">
+    <operation name="login" >
+      <input  message="impl:loginRequest"/>
+      <output  message="impl:loginResponse"/>
+      <fault  message="impl:AdminServicesException"/>
+    </operation>
+    <operation name="logout" >
+      <input  message="impl:logoutRequest"/>
+      <output  message="impl:logoutResponse"/>
+      <fault  message="impl:AdminServicesException"/>
+    </operation>
+    <operation name="checkPermission" >
+      <input  message="impl:checkPermissionRequest"/>
+      <output  message="impl:checkPermissionResponse"/>
+      <fault  message="impl:AdminServicesException"/>
+    </operation>
+  </portType>
+  <portType name="Configuration">
+    <operation name="getSystemConfig" >
+      <input  message="impl:getSystemConfigRequest"/>
+      <output  message="impl:getSystemConfigResponse"/>
+      <fault  message="impl:AdminServicesException"/>
+    </operation>
+    <operation name="setSystemConfig" >
+      <input  message="impl:setSystemConfigRequest"/>
+      <output  message="impl:setSystemConfigResponse"/>
+      <fault  message="impl:AdminServicesException"/>
+    </operation>
+    <operation name="getToolbarElements" >
+      <input  message="impl:getToolbarElementsRequest"/>
+      <output  message="impl:getToolbarElementsResponse"/>
+      <fault  message="impl:AdminServicesException"/>
+    </operation>
+    <operation name="setToolbarElements" >
+      <input  message="impl:setToolbarElementsRequest"/>
+      <output  message="impl:setToolbarElementsResponse"/>
+      <fault  message="impl:AdminServicesException"/>
+    </operation>
+    <operation name="addToolbarElement" >
+      <input  message="impl:addToolbarElementRequest"/>
+      <output  message="impl:addToolbarElementResponse"/>
+      <fault  message="impl:AdminServicesException"/>
+    </operation>
+    <operation name="changeToolbarElement" >
+      <input  message="impl:changeToolbarElementRequest"/>
+      <output  message="impl:changeToolbarElementResponse"/>
+      <fault  message="impl:AdminServicesException"/>
+    </operation>
+    <operation name="deleteToolbarElement" >
+      <input  message="impl:deleteToolbarElementRequest"/>
+      <output  message="impl:deleteToolbarElementResponse"/>
+      <fault  message="impl:AdminServicesException"/>
+    </operation>
+    <operation name="getCompConfig" >
+      <input  message="impl:getCompConfigRequest"/>
+      <output  message="impl:getCompConfigResponse"/>
+      <fault  message="impl:AdminServicesException"/>
+    </operation>
+    <operation name="setCompConfig" >
+      <input  message="impl:setCompConfigRequest"/>
+      <output  message="impl:setCompConfigResponse"/>
+      <fault  message="impl:AdminServicesException"/>
+    </operation>
+    <operation name="getAllComponents" >
+      <input  message="impl:getAllCompRequest"/>
+      <output  message="impl:getAllCompResponse"/>
+      <fault  message="impl:AdminServicesException"/>
+    </operation>
+    <operation name="changeCompHost" >
+      <input  message="impl:changeHostRequest"/>
+      <output  message="impl:changeHostResponse"/>
+      <fault  message="impl:AdminServicesException"/>
+    </operation>
+    <operation name="deleteCompHost" >
+      <input  message="impl:deleteHostRequest"/>
+      <output  message="impl:deleteHostResponse"/>
+      <fault  message="impl:AdminServicesException"/>
+    </operation>
+  </portType>
+  <portType name="LogDisplay">
+    <operation name="getLogFilenames" >
+      <input  message="impl:getLogFilenamesRequest"/>
+      <output  message="impl:getLogFilenamesResponse"/>
+      <fault  message="impl:AdminServicesException"/>
+    </operation>
+    <operation name="getLogFile" >
+      <input  message="impl:getLogFileRequest"/>
+      <output  message="impl:getLogFileResponse"/>
+      <fault  message="impl:AdminServicesException"/>
+    </operation>
+  </portType>
+  <portType name="DataCollection">
+    <operation name="executeTask" >
+      <input  message="impl:executeTaskRequest"/>
+      <output  message="impl:executeTaskResponse"/>
+      <fault  message="impl:AdminServicesException"/>
+      <fault  message="impl:AdminServicesNotification"/>
+    </operation>
+    <operation name="iterateRecords" >
+      <input  message="impl:iterateRequest"/>
+      <output  message="impl:iterateResponse"/>
+      <fault  message="impl:AdminServicesException"/>
+    </operation>
+  </portType>
+  <portType name="LeaseHistoryService">
+    <operation name="runLeaseHistoryArchive" >
+      <input  message="impl:leaseHistoryArchiveRequest"/>
+      <output  message="impl:leaseHistoryArchiveResponse"/>
+      <fault  message="impl:AdminServicesException"/>
+    </operation>
+  </portType>
+
+  <!-- binding declns -->
+  <binding name="AuthenticateBinding" type="impl:Authenticate">
+    <wsdlsoap:binding style="rpc" 
+                  transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="login" parameterOrder="userID,password">
+      <wsdlsoap:operation soapAction="login"/>
+      <input>
+        <wsdlsoap:body use="encoded" namespace="urn:authenticate" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <wsdlsoap:body use="encoded" namespace="urn:authenticate" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+    <operation name="logout">
+      <wsdlsoap:operation soapAction="logout"/>
+      <input>
+        <wsdlsoap:body use="encoded" namespace="urn:authenticate" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <wsdlsoap:body use="encoded" namespace="urn:authenticate" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+    <operation name="checkPermission">
+      <wsdlsoap:operation soapAction="checkPermission"/>
+      <input>
+        <wsdlsoap:body use="encoded" namespace="urn:authenticate" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <wsdlsoap:body use="encoded" namespace="urn:authenticate" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+  </binding>
+
+  <!-- binding declns -->
+  <binding name="ConfigurationBinding" type="impl:Configuration">
+    <wsdlsoap:binding style="rpc" 
+                  transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="getSystemConfig">
+      <wsdlsoap:operation soapAction="getSystemConfig"/>
+      <input>
+        <wsdlsoap:body use="encoded" namespace="urn:systemConfig" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <wsdlsoap:body use="encoded" namespace="urn:systemConfig" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+    <operation name="setSystemConfig" parameterOrder="sessionID,systemConfig">
+      <wsdlsoap:operation soapAction="setSystemConfig"/>
+      <input>
+        <wsdlsoap:body use="encoded" namespace="urn:systemConfig" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <wsdlsoap:body use="encoded" namespace="urn:systemConfig" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+    <operation name="getToolbarElements">
+      <wsdlsoap:operation soapAction="getToolbarElements"/>
+      <input>
+        <wsdlsoap:body use="encoded" namespace="urn:toolbarConfig" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <wsdlsoap:body use="encoded" namespace="urn:toolbarConfig" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+    <operation name="setToolbarElements" parameterOrder="sessionID,elements">
+      <wsdlsoap:operation soapAction="setToolbarElements"/>
+      <input>
+        <wsdlsoap:body use="encoded" namespace="urn:toolbarConfig" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <wsdlsoap:body use="encoded" namespace="urn:toolbarConfig" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+    <operation name="addToolbarElement" parameterOrder="sessionID,name,url">
+      <wsdlsoap:operation soapAction="addToolbarElement"/>
+      <input>
+        <wsdlsoap:body use="encoded" namespace="urn:toolbarConfig" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <wsdlsoap:body use="encoded" namespace="urn:toolbarConfig" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+    <operation name="changeToolbarElement" parameterOrder="sessionID,oldUrl,name,url">
+      <wsdlsoap:operation soapAction="changeToolbarElement"/>
+      <input>
+        <wsdlsoap:body use="encoded" namespace="urn:toolbarConfig" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <wsdlsoap:body use="encoded" namespace="urn:toolbarConfig" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+    <operation name="deleteToolbarElement" parameterOrder="sessionID,url">
+      <wsdlsoap:operation soapAction="deleteToolbarElement"/>
+      <input>
+        <wsdlsoap:body use="encoded" namespace="urn:toolbarConfig" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <wsdlsoap:body use="encoded" namespace="urn:toolbarConfig" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+    <operation name="getCompConfig">
+      <wsdlsoap:operation soapAction="getCompConfig"/>
+      <input>
+        <wsdlsoap:body use="encoded" namespace="urn:compConfig" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <wsdlsoap:body use="encoded" namespace="urn:compConfig" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+    <operation name="setCompConfig" parameterOrder="sessionID,compConfig">
+      <wsdlsoap:operation soapAction="setCompConfig"/>
+      <input>
+        <wsdlsoap:body use="encoded" namespace="urn:compConfig" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <wsdlsoap:body use="encoded" namespace="urn:compConfig" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+    <operation name="getAllComponents">
+      <wsdlsoap:operation soapAction="getAllComponents"/>
+      <input>
+        <wsdlsoap:body use="encoded" namespace="urn:compConfig" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <wsdlsoap:body use="encoded" namespace="urn:compConfig" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+    <operation name="changeCompHost" parameterOrder="sessionID,compName,oldHostName,host">
+      <wsdlsoap:operation soapAction="changeCompHost"/>
+      <input>
+        <wsdlsoap:body use="encoded" namespace="urn:compConfig" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <wsdlsoap:body use="encoded" namespace="urn:compConfig" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+    <operation name="deleteCompHost" parameterOrder="sessionID,compName,host">
+      <wsdlsoap:operation soapAction="deleteCompHost"/>
+      <input>
+        <wsdlsoap:body use="encoded" namespace="urn:compConfig" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <wsdlsoap:body use="encoded" namespace="urn:compConfig" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+  </binding>
+
+  <!-- binding declns -->
+  <binding name="LogDisplayBinding" type="impl:LogDisplay">
+    <wsdlsoap:binding style="rpc" 
+                  transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="getLogFilenames" parameterOrder="sessionID,comps,filter">
+      <wsdlsoap:operation soapAction="getLogFilenames"/>
+      <input>
+        <wsdlsoap:body use="encoded" namespace="urn:logDisplay" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <wsdlsoap:body use="encoded" namespace="urn:logDisplay" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+    <operation name="getLogFile">
+      <wsdlsoap:operation soapAction="getLogFile"/>
+      <input>
+        <wsdlsoap:body use="encoded" namespace="urn:logDisplay" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <wsdlsoap:body use="encoded" namespace="urn:logDisplay" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+  </binding>
+
+  <!-- binding declns -->
+  <binding name="DataCollectionBinding" type="impl:DataCollection">
+    <wsdlsoap:binding style="rpc" 
+                  transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="executeTask" parameterOrder="sessionID,taskName,attrs,numRecords">
+      <wsdlsoap:operation soapAction="executeTask"/>
+      <input>
+        <wsdlsoap:body use="encoded" namespace="urn:dataCollection" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <wsdlsoap:body use="encoded" namespace="urn:dataCollection" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+    <operation name="iterateRecords" parameterOrder="sessionID,token,numRecords">
+      <wsdlsoap:operation soapAction="iterateRecords"/>
+      <input>
+        <wsdlsoap:body use="encoded" namespace="urn:dataCollection" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <wsdlsoap:body use="encoded" namespace="urn:dataCollection" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+  </binding>
+
+  <!-- binding declns -->
+  <binding name="LeaseHistoryServiceBinding" type="impl:LeaseHistoryService">
+    <wsdlsoap:binding style="rpc" 
+                  transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="runLeaseHistoryArchive" parameterOrder="sessionID,cnrHost,startDate,endDate,archiveFile">
+      <wsdlsoap:operation soapAction="runLeaseHistoryArhive"/>
+      <input>
+        <wsdlsoap:body use="encoded" namespace="urn:leaseHistoryService" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <wsdlsoap:body use="encoded" namespace="urn:leaseHistoryService" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+  </binding>
+
+  <!-- service decln -->
+  <service name="AdminServices">
+    <port name="Authenticate" binding="impl:AuthenticateBinding">
+	<wsdlsoap:address location="http://www.cisco.com/ettx_admin_server/services/adminService" />
+    </port>
+    <port name="Configuration" binding="impl:ConfigurationBinding">
+	<wsdlsoap:address location="http://www.cisco.com/ettx_admin_server/services/adminService" />
+    </port>
+    <port name="LogDisplay" binding="impl:LogDisplayBinding">
+	<wsdlsoap:address location="http://www.cisco.com/ettx_admin_server/services/adminService" />
+    </port>
+    <port name="DataCollection" binding="impl:DataCollectionBinding">
+	<wsdlsoap:address location="http://www.cisco.com/ettx_admin_server/services/adminService" />
+    </port>
+    <port name="LeaseHistoryService" binding="impl:LeaseHistoryServiceBinding">
+	<wsdlsoap:address location="http://www.cisco.com/ettx_admin_server/services/adminService" />
+    </port>
+  </service>
+</wsdl:definitions>

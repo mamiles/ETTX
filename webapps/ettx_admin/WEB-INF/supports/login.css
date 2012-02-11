@@ -1,0 +1,76 @@
+
+.HeaderTitle
+{
+    background-color:  #336699;
+    color: #FF6600;
+    width:100%;
+    font-family: Century Gothic;
+    font-style:italic;
+    font-weight: bold;
+    font-size: 12pt;
+}
+
+BODY 
+{
+background-color: #E7EaFE
+}
+
+table{
+border:0;
+cellpadding:0;
+cellspacing:0;
+}
+
+.ListHeader
+{
+    border-style:"groove"; 
+    border-width:"0"; 
+    border-color:"gray";
+    background-color:"lightblue";
+    color:'1A3B6C';
+}
+
+.Message{
+    font-family: Arial; 
+    font-size: 14pt;
+    color:black;
+    text-align:center;
+}
+.ListHeaderButton{
+    background-color:transparent;
+    width:100%;
+    border:1;
+    border-style:'';
+    border-color:'#ADD8E6'
+    
+}
+.NavButton{
+    background-image:url("/ipopt/images/buttonbg.gif");
+    color:blue;
+    font-weight:bold;
+}
+
+.ListTable{
+    border-style:"solid"; 
+    border-width:'1';
+    border-color:"gray";
+    background-color:"#FFFFFF";    
+}
+.ListCell
+{
+    border-style:"inset"; 
+    border-width:'1';
+    border-color:"gray";
+    background-color:"#FFFFFF";
+}
+
+H1 {font-family: Arial Black; font-size: 25pt;
+ color:orange; text-align:center; }
+H2 {font-family: Arial Black; font-size: 16pt;
+ color:blue; text-align:center; }
+
+LI {color:green; list-style-type:lower-roman}
+A:link {color:blue; text-decoration:none;}
+A:visited {color:blue; text-decoration:none;}
+A:hover {color:blue; text-decoration:none; font-weight:bold; background-color:#C0C0F0 }
+A:active {color:blue; text-decoration:none; font-weight:bold; background-color:#C0C0F0 }

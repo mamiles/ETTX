@@ -1,0 +1,161 @@
+SYSTEM REQUIREMENTS
+
+1.  Solaris 2.8 is required for running ETTX Admin Application.
+    
+2.  Solaris 8 should also be installed with all the necessary patches to support 
+    the Java 2 Standard Edition (J2SE) SDK version 1.4.0.  To review the patch 
+    requirements for JDK1.4.0 please go to the following URL:
+
+    http://java.sun.com/j2se/1.4/install-solaris-patches.html
+
+    It is also recommended that the latest Patch Cluster for Solaris 8 be installed.  
+    You can download the latest patch cluster at the following URL:
+
+    http://sunsolve.sun.com/pub-cgi/show.pl?target=patches/patch-access
+
+
+BUILDING THE SOFTWARE
+
+1.  Java 1.4.1_01 must be setup in your environment and path.  Make sure the following
+    is setup in your environment:
+
+	export JAVA_HOME=/auto/austin-nms/ettx/3rdparty/java/j2sdk1.4.1_01
+	export $JAVA_HOME/bin:$PATH
+
+2.  Ant 1.5.1 must also be setup in your path to build ETTX Admin App.  The following 
+    must be setup in your environment:
+
+	export ANT_HOME=/auto/austin-nms/ettx/jakarta-ant/jakarta-ant-1.5.1
+	export PATH=$ANT_HOME/bin:$PATH
+
+3.  The Clear Case for ETTX Admin App is using RAW Clear Case without any customized 
+    triggers or Cisco tools.  The vob cluster being used is nsm-vob1 which is located 
+    in San Jose.  You can access the vob by /vob/sms-admin
+
+    Command to setup view for building the application:
+
+	mkview -tag <userid>-sms-admin -host nsm-view1 \
+			-hpath /vws/bpo/<userid>-sms-admin \
+			-gpath /vws/bpo/<userid>-sms-admin \
+			/vws/bpo/<userid>-sms-admin
+
+4.  Setup the view you just created
+
+	cleartool setview <userid>-sms-admin
+
+5.  Change to the root directory in the vob.
+
+	cd /vob/sms-admin
+
+6.  Using ANT you can build the complete package.  Make sure you setup Java and Ant 
+    in your path as defined above.  The command "ant all " will build all targets:
+
+	ant all
+
+
+INSTALLATION
+
+   You have the ability to install ETTX from the VOB or create a TAR file of the installation
+that could be installed on any machine.
+
+
+INSTALLATION DIRECTLY FROM THE VOB
+
+1.  Change to the following directory:
+
+	cd /vob/sms-admin/install
+
+2.  Determine the installation directory.  If the directory does not exist you may want to 
+    create the directory manually if the user id you will be using to install does not have
+    write permissions to create the directory.  It does not mater if you use "root" or any other
+    user id but it is recommended that the same user id used to install the ETTX Admin App is 
+    also the same user id that runs the server.
+
+3.  Run the following script and specify the installation directory.  Make sure you have 
+    permissions to write the directory.  Also if you previously have install to that 
+    directory make sure you have brought down the server and it is OK to delete all the 
+    previous install files.
+
+	ettx_install.sh <install directory>
+
+    During the install you will be ask the following questions:
+    	
+    	a) Admin App installation directory
+    	b) SPE Admin User ID
+    	c) SPE Admin Password
+    	d) Default UNIX Host prompt
+    	e) Admin Web Server Port
+    	f) SMC Hostname
+    	g) SMC port
+    	h) SPE Hostname
+    	i) SPE port
+
+
+CREATING A COMPRESSED TAR TO BE INSTALLED ON ANY SOLARIS WORKSTATION
+
+1.  Change to the following directory:
+
+	cd /vob/sms-admin/install
+
+2.  Determine the installation directory.  If the directory does not exist you may want to 
+    create the directory manually if the user id you will be using to install does not have
+    write permissions to create the directory.  It does not mater if you use "root" or any other
+    user id but it is recommended that the same user id used to install the ETTX Admin App is 
+    also the same user id that runs the server.
+    
+3.  Run the following script to create the tar file.  You can specify the location to put
+    the tar file on the command line or the script will prompt where to put the file.
+    
+    	create_install_tar.sh <target directory>
+    	
+    The script will create "ettx_admin_install_YYYMMDD.tar.Z" in the target directory.
+    
+4.  To install ETTX, copy the ettx_admin_install_YYYMMDD.tar.Z to the machine of choice and
+    location of choice.
+
+5.  Uncompress and un tar the file
+
+	uncompress < ettx_admin_install_YYYMMDD.tar.Z | tar -xf -
+	
+6.  Change to the sub directory created "ettx_admin_install_YYYMMDD".
+
+	cd ettx_admin_install_YYYMMDD
+
+7.  Run the following script and specify the installation directory.  Make sure you have 
+    permissions to write the directory.  Also if you previously have install to that 
+    directory make sure you have brought down the server and it is ok to delete all the 
+    previous install files.
+
+	ettx_install.sh <install directory>
+
+    During the install you will be ask the following questions:
+    
+    	a) Admin App installation directory
+    	b) SPE Admin User ID
+    	c) SPE Admin Password
+    	d) Default UNIX Host prompt
+    	e) Admin Web Server Port
+    	f) SMC Hostname
+    	g) SMC port
+    	h) SPE Hostname
+    	i) SPE port
+
+RUNNING THE PROGRAM
+
+1.  It is highly recommended that server be started with the same user id as was used to 
+    install the software.
+
+2.  Change to the target installation directory.
+
+	For example (/opt/ettx)
+	
+	cd /opt/ettx
+
+3.  Run the ettx script to start the server.
+
+	ettx start
+	
+	ettx stop
+	
+	ettx status
+	
